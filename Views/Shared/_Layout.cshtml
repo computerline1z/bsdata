@@ -1,0 +1,84 @@
+﻿@model BSData.Models.Action_MenuItems
+@using BSData.Models;
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lt" lang="lt">
+<head>
+   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+   @*<meta name="author" content="haran">
+    <meta name="generator" content="author">*@ @*    <!-- Navigational metadata for large websites (an accessibility feature): -->
+    <link rel="top" href="./index.html" title="Homepage">
+    <link rel="up" href="./index.html" title="Up">
+    <link rel="first" href="./index.html" title="First page">
+    <link rel="previous" href="./index.html" title="Previous page">
+    <link rel="next" href="./index.html" title="Next page">
+    <link rel="last" href="./index.html" title="Last page">
+    <link rel="toc" href="./index.html" title="Table of contents">
+    <link rel="index" href="./index.html" title="Site map">*@ <link href="@Url.Content("~/Content/css-print.min.css")" rel="stylesheet" media="print" type="text/css" />
+   <link href="@Url.Content("~/Content/css-screen.min.css")" rel="stylesheet" media="screen" type="text/css" />
+   <title>@ViewBag.Title</title>
+</head>
+<body>
+   <!-- For non-visual user agents: -->
+   <div id="top">
+      <a href="#main-copy" class="doNotDisplay doNotPrint">Skip to main content.</a></div>
+   <!-- ##### Header ##### -->
+   <div id="header">@*      <div class="superHeader">
+         <div class="right"><span class="doNotDisplay">More related sites:</span>
+            @Html.Partial("_LogOnPartial")
+         </div>
+      </div>*@
+      @{ Html.RenderAction("Header", "Account"); }
+      <div class="midHeader">
+         <div class="left">
+            Šiandien @BSData.Classes.Date.GetFullDate()</div>
+         <div class="right">
+            @Html.Partial("_LogOnPartial")
+         </div>
+         <div style="clear: both" />
+      </div>
+      <div class="subHeader">
+         <a href="../Title/Proba.js" @((ViewBag.Title == "Titulinis") ? "class=highlight" : "")>Titulinis</a>
+         | <a href="../Start/Users" @((ViewBag.Title == "Darbuotojai") ? "class=highlight" : "")>Darbuotojai</a>
+         | <a href="../Start/Docs" @((ViewBag.Title == "Dokumentai") ? "class=highlight" : "")>Dokumentai</a>
+         | <a href="../Start/Clients" @((ViewBag.Title == "Klientai") ? "class=highlight" : "")>Klientai</a>
+         | <a href="../Start/Control" @((ViewBag.Title == "Kontrolė") ? "class=highlight" : "")>Kontrolė</a>
+         | <a href="../Start/Assets" @((ViewBag.Title == "Atsargos") ? "class=highlight" : "")>Atsargos</a>
+      </div>
+   </div>
+   @RenderBody()
+   <!-- ##### Footer ##### -->
+   <div id="footer">
+      <div class="left">
+         E-paštas: bsdata@bs.lt@*&nbsp;<a href="./index.html" title="Email webmaster">webmaster@your.company.com</a>*@<br />
+         <a href="./index.html" class="doNotPrint">Susisiekite su mumis</a>
+      </div>
+      <br class="doNotDisplay doNotPrint" />
+      <div class="right">
+         ©2011 UAB "Budrus sakalas"<br />
+         <a href="http://www.bs.lt" class="doNotPrint">www.bs.lt</a>
+      </div>
+   </div>
+   @*<script src="@Url.Content("~/Scripts/JSMain/jquery-1.4.4.min.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/General.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/fauxconsole.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSMain/json2.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSPlugins/jquery-ui-1.8.10.custom.min.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSPlugins/jquery.dataTables.min.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/MyPlugins.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/MyPlugins2.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/MyPlugins_ComboBox.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/Server.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSPlugins/jquery.validity.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/objFunc.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/clsLogin.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/clsGrid.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/clsDialogUi.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/clsEditableForm.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/clsEditableList.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSGeneral/clsEditableList_ovr_DriverList.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSForm/Start.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSForm/Tab_AccidentsList.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/JSForm/Tab_Lists.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/JSForm/Start.js")" type="text/javascript"></script>
+*@ </body>
+</html>

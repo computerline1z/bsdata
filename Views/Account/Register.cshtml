@@ -1,0 +1,103 @@
+﻿@model BSData.Models.RegisterModel
+@{
+   ViewBag.Title = "Register";
+   //ViewBag.Title = "Create account";
+   Layout = "Register_Layout.cshtml";
+}
+@{ Html.RenderAction("Header", "Account"); }
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { })) {
+   <div class="shadow" style="border: 2px solid #e8e8e4; background-color: #FFFFFF;">
+      <div class="content">
+         <div style="float: left; width: 100%;"><h2 style="padding: 0;">Naujo vartotojo sukūrimas</h2>
+            <br />
+            <p style="margin-bottom: 15px;">Suveskite duomenis į žemiau esančius laukus: </p>
+         </div>
+         <table border="0" cellspacing="0" width="100%" style="margin-left: 0px;">
+            <colgroup><col width="45%" />
+               <col width="50%" />
+               <col width="5%" />
+            </colgroup>
+            <tr valign="middle"><td style="text-align: left;">@Html.LabelFor(m => m.Position)</td><td>
+               @Html.TextBoxFor(m => m.Position, new { id = "Position", @class = "input_Long" })
+            </td><td style="padding-left: 5px;"><img src="../../Content/images/Question.png" alt="Jūsų pareigybės/ etato pavadinimas" title="Jūsų pareigybės/ etato pavadinimas" />
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.Position)
+            </td></tr>
+            <tr><td style="text-align: left; padding-right: 1em;">@Html.LabelFor(m => m.Name)</td><td colspan="2">
+               @Html.TextBoxFor(m => m.Name, new { id = "Name" })
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.Name)
+            </td></tr>
+            <tr><td style="text-align: left; padding-right: 1em;">@Html.LabelFor(m => m.LastName)</td><td colspan="2">
+               @Html.TextBoxFor(m => m.LastName, new { id = "LastName" })
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.LastName)
+            </td></tr>
+            <tr><td style="text-align: left; padding-right: 1em;">@Html.LabelFor(m => m.Birthday)</td><td colspan="2">
+               @Html.TextBoxFor(m => m.Birthday, new { id = "Birthday" })
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.Birthday)
+            </td></tr>
+            <tr valign="middle"><td style="text-align: left;">@Html.LabelFor(m => m.Work_from)</td><td>
+               @Html.TextBoxFor(m => m.Work_from, new { id = "Work_from", @Value = DateTime.Now.ToString("yyyy-MM-dd") })
+            </td><td style="padding-left: 5px;"><img src="../../Content/images/Question.png" alt="Nuo kada jūs pradedate dirbti" title="Nuo kada jūs pradedate dirbti" />
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.Work_from)
+            </td></tr>
+            <tr valign="middle"><td style="text-align: left;">@Html.LabelFor(m => m.SubDepID)</td><td>
+               @Html.DropDownListFor(x => x.SubDepID, new SelectList(Model.SubDeps, "Value", "Text"), new { @class = "input_Long" })
+            </td><td style="padding-left: 5px;"><img src="../../Content/images/Question.png" alt="Skyrius kuriame jūs dirbsite" title="Skyrius kuriame jūs dirbsite" />
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.SubDepID)
+            </td></tr>
+            <tr><td style="text-align: left; padding-right: 1em;">@Html.LabelFor(m => m.Phone_mob)</td><td colspan="2">
+               @Html.TextBoxFor(m => m.Phone_mob, new { id = "Phone_mob" })
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.Phone_mob)
+            </td></tr>
+            <tr><td style="text-align: left; padding-right: 1em;">@Html.LabelFor(m => m.Phone_work)</td><td colspan="2">
+               @Html.TextBoxFor(m => m.Phone_work, new { id = "Phone_work" })
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.Phone_work)
+            </td></tr>
+            <tr><td style="text-align: left; padding-right: 1em;">@Html.LabelFor(m => m.Email)</td><td colspan="2">
+               @Html.TextBoxFor(m => m.Email, new { id = "Email" })
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.Email)
+            </td></tr>
+            <tr><td style="text-align: left; padding-right: 1em;">@Html.LabelFor(m => m.Address)</td><td colspan="2">
+               @Html.TextBoxFor(m => m.Address, new { id = "Address", @class = "input_Long" })
+            </td></tr>
+            <tr><td>&nbsp;&nbsp;</td><td colspan="2" style="padding: 0 0 5px 5px;">
+               @Html.ValidationMessageFor(m => m.Address)
+            </td></tr>
+         </table>
+         <br />
+         <fieldset><legend>Vieta Capcha</legend><p>Jei Capcha nereikalingas išmesti visą fieldset</p>
+            <br />
+            <p>Įveskite simbolius, kuriuos matote žemiau esančiame paveikslėlyje.</p>
+         </fieldset>
+         <br />
+         @*         <p>
+            @Html.ActionLink("Paslaugų teikimo sutartį", "Sutartis", null, new { @style = "color: #2b7bcb;", target = "_blank" })
+            perskaičiau ir ją patvirtinu <span class="editor-label" id="ConfirmBlock">
+               @Html.CheckBoxFor(m => m.Accept, new { id = "chkConfirm" }) @Html.LabelFor(m => m.Accept)<br />
+               @Html.ValidationMessageFor(m => m.Accept)
+            </span>
+         </p>*@
+         <div style="height: 40px;">
+            @Html.ValidationSummary(true, "Registracija nepavyko. Pataisykite klaidas ir bandykite registruokitis iš naujo.")<br />
+         </div>
+         <input type="submit" id="btnCreateUser" value="Sukurti vartotoją" class="button" style="margin: 30px 0 20px 0; width: 250px; font-size: 13px; height: 25px;" />
+      </div>
+   </div>
+}

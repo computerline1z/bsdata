@@ -1,0 +1,37 @@
+﻿@model BSData.Models.ChangeEmailModel
+@{
+   ViewBag.Title = "Change Email";
+   Layout = "RecoverPassword_Layout.cshtml";
+}
+@{ Html.RenderAction("Header", "Account"); }
+@using (Html.BeginForm("ChangeEmail", "Account", FormMethod.Post, new { })) {
+   <div class="shadow" style="border: 2px solid #e8e8e4; background-color: #FFFFFF;">
+      <div class="content"><h2 style="padding: 0;">El. pašto keitimas</h2>
+         <br />
+         <div style="padding-bottom: 5px;">
+            @Html.LabelFor(m => m.OldEmail)
+         </div>
+         <div><!-- Seno email laukas -->
+            @Html.TextBoxFor(m => m.OldEmail, new { id = "oldEmail", @class = "input_Long_Disabled", disabled = true })
+         </div>
+         &nbsp;&nbsp;
+         <div style="padding-bottom: 5px;">
+            @Html.LabelFor(m => m.Email)
+         </div>
+         <div><!-- Naujo email laukas -->
+            @Html.TextBoxFor(m => m.Email, new { id = "newEmail", @class = "input_Long" })
+         </div>
+         &nbsp;&nbsp; <br />
+         <fieldset><legend>Vieta Capcha </legend><p>Jei Capcha nereikalingas išmesti visą fieldset</p>
+            <br />
+            <p>Įveskite simbolius, kuriuos matote žemiau esančiame paveikslėlyje.</p>
+            <p><span><b>TODO: </b></span>
+               Ką daryti, kai paštas pakeistas? (ar nueiti į naują langą "El. paštas pakeistas", ar grįžti į "LogOn" ar siųsti laišką (kad tuo pačiu pasikeistų ir slaptažodį ir t.t. ir pan.) </p>
+         </fieldset>
+         <div style="height: 40px;">
+            @Html.ValidationSummary(true, "Nepavyko. Pataisykite klaidas ir bandykite iš naujo.")<br />
+         </div>
+         <input type="submit" id="btnChangeEmail" value="Keisti" class="button" style="margin: 30px 0 20px 0;" />
+      </div>
+   </div>
+}

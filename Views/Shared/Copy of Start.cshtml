@@ -1,0 +1,32 @@
+﻿@model BSData.Models.Action_MenuItems
+@using BSData.Models;
+@{
+   ViewBag.Title = "Atsargos";
+}
+<!-- ##### Side Bar ##### -->
+<div id="side-bar">@*   <div><p class="sideBarTitle">Navigate this page</p>
+      <ul>
+         <li><a href="#introduction">› Introduction</a></li>
+         <li><a href="#cross-browser" title="Improved cross-browser compatibility">› Cross-browser</a></li>
+         <li><a href="#stylesheets" title="Modified stylesheets">› Stylesheets</a></li>
+         <li><a href="#accessibility" title="Improved accessibility">› Accessibility</a></li>
+      </ul>
+   </div>*@
+   <div>
+      <p class="sideBarTitle">Mat. vertybės</p>
+      <ul>
+         <li><a class="highlight" href="#">› Mano</a></li>
+         <li><a href="#">› Visos</a></li>
+      </ul>
+   </div>
+   <div>
+      <p class="sideBarTitle">Sim kortelės</p>
+      <ul>
+         <li><a href="#">› Kortelės</a></li>
+         <li><a href="#">› Pridėti naują kortelę</a></li>
+      </ul>
+   </div>
+</div>
+<div id="main-copy">
+   @Html.Partial("../Assets/List")
+</div>

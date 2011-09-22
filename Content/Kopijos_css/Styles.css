@@ -1,0 +1,30 @@
+﻿/*----------------------------------------------------------*/
+/* Basic attributes */
+body { padding: 0 10%; margin: 150px auto; font-size: 8pt; font-family: Verdana, Helvetica, Sans-Serif; color: #000; }
+h2 { text-align: left; color: #65809D; font-weight: bold; font-size: 2em; padding-bottom: 10px; font-family: Arial, Helvetica, Sans-Serif; }
+.content { margin: 0 40px; padding: 30px 0; background-color: #FFFFFF; }
+.komentaras { color: #8A8A8A; }
+.tekstas { font-size: 8pt; font-family: Verdana, Helvetica, Sans-Serif; color: #000; }
+/*----------------------------------------------------------*/
+/* Validation */
+.field-validation-error { color: #990000; }
+.field-validation-valid { display: none; }
+.input-validation-error { border: 1px solid #990000; background-color: #990000; }
+.validation-summary-errors { font-weight: bold; color: #990000; }
+.validation-summary-valid { display: none; }
+
+/*----------------------------------------------------------*/
+/* Submit button -> hyperlink */
+.buttonAsLink { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 100%; color: #2b7bcb; background-color: transparent; border-width: 0; cursor: pointer; text-decoration: underline; }
+.buttonAsLink_hover { color: #2b7bcb; background-color: transparent; border-width: 0; cursor: pointer; font-size: 100%; text-decoration: underline; }
+
+/*----------------------------------------------------------*/
+/* Input design */
+.input { width: 250px; background: #ffc; border: 1px inset; font-size: 10pt; height: 1.5em; padding-left: 5px; }
+.input_Long { width: 27em; background: #ffc; border: 1px inset; font-size: 10pt; height: 1.5em; padding-left: 5px; }
+.input_Long_Disabled { width: 27em; background: #EBEBE4; border: 1px inset; font-size: 10pt; height: 1.5em; padding-left: 5px; }
+.button { width: 90px; font-size: 8pt; height: 2.5em; }
+
+/*----------------------------------------------------------*/
+/* Effects */
+.shadow { -moz-box-shadow: 2px 2px 3px #e8e8e4; -webkit-box-shadow: 2px 2px 3px #e8e8e4; box-shadow: 2px 2px 3px #e8e8e4; /* 	-moz-box-shadow: 3px 3px 4px #C0C0C0; -webkit-box-shadow: 3px 3px 4px #C0C0C0; box-shadow: 3px 3px 4px #C0C0C0; 	*/ /* For IE 8 */ -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#C0C0C0')"; /* For IE 5.5 - 7 */ filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#C0C0C0'); }

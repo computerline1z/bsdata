@@ -1,0 +1,26 @@
+﻿@model BSData.Models.RegisterOKModel
+@{
+   ViewBag.Title = "Registered";
+   Layout = "Register_Layout.cshtml";
+}
+@{ Html.RenderAction("Header", "Account"); }
+@using (Html.BeginForm("RegisterOK", "Account", FormMethod.Post, new { })) {
+   <div class="shadow" style="border: 2px solid #e8e8e4; background-color: #FFFFFF;">
+      <div class="content"><h2>informacijos valdymo sistema</h2>
+         <p>Ačiū! </p>
+         <br />
+         <div><p>Jūsų el. pašto adresu <span><a href="@Model.Mailer" style = "color: #2b7bcb;">@Html.Raw(Model.Email)</a>
+         </span>
+            sistema išsiuntė pranešimą - atidarykite jame esančią nuorodą, kad galėtumėte pradėti naudotis sistema. </p>
+            <br />
+         </div>
+         <p>Jei laiško negavote, <span>
+            @Html.ActionLink(" pakartokite siuntimą", "RegisterOK_1", new { id = Model.UserId.ToString() }, new { @style = "color: #2b7bcb;" })
+         </span>
+            arba <span>
+               @Html.ActionLink(" pakeiskite el. pašto adresą", "ChangeEmail", new { id = Model.UserId.ToString() }, new { @style = "color: #2b7bcb;" })
+            </span>
+            . </p>
+      </div>
+   </div>
+}
