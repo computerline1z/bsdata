@@ -1,0 +1,528 @@
+﻿#divEditableForm {
+  background: none;
+  background-color: #f8f7f2;
+}
+table thead tr th {
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 0.5em;
+}
+/* ##### BS(m�s�) Styles ##### */
+html {
+  overflow-y: scrool;
+  min-height: 101%;
+}
+/*del scroolo*/
+label input[type=checkbox] {
+  padding-left: 0px;
+  margin-left: 0px;
+  cursor: pointer;
+}
+label.toplabel > span {
+  display: block;
+  cursor: pointer;
+}
+label.leftlabel > span {
+  width: 15em;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-block;
+}
+label.toplabel input[type=text], label.top textarea {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+label.leftlabel input[type=text], label.left textarea {
+  width: 30em;
+  margin: 0;
+  padding: 0;
+}
+label.leftlabelforManyF {
+  margin: .7em;
+  color: #666;
+  width: 13.6em;
+  display: inline-block;
+}
+.ExtendIt {
+  margin: .7em;
+}
+.ExtendIt label {
+  cursor: pointer;
+  color: #666666;
+}
+fieldset.inputFieldset {
+  margin-top: 1em;
+  display: inline-block;
+  padding: 0.3em;
+  width: 52.7em;
+}
+span.inputRight, div.inputRight {
+  float: left;
+  margin: 1em;
+  display: inline-block;
+  padding: 0.3em;
+}
+input.inputTip, textarea.inputTip {
+  color: #666666;
+  font-style: italic;
+}
+input.date, input.number {
+  width: 6em !important;
+}
+textarea {
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+  /* Opera/IE 8+ */
+
+  -ms-box-sizing: border-box;
+}
+/*--------------------------------------Validity start-----------------------------------------------------------------------
+/* Styles used by the modal output mode.
+ * '.validity-modal-msg' is applied to the modal boxes
+ * and '.validity-modal-msg:hover' is applied to suggest
+ * to the user that the boxes are clickable.
+ modal
+.validity-modal-msg { position: absolute; z-index: 2000; background-color: #999; border: solid 1px #000; padding: 4px; cursor: pointer; }
+.validity-modal-msg:hover { background-color: #aaa; }
+*/
+.validity-modal-msg {
+  position: absolute;
+  z-index: 2000;
+  cursor: pointer;
+  color: #fff;
+  margin-left: 2px;
+  margin-top: .8em;
+  font-size: 12pt;
+  background-image: url('images/arrow.gif');
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding: 2px;
+  padding-left: 18px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+/*
+ * Styles used by the summary output mode.
+ * '.validity-summary-container' is a container on the page that should contain a UL
+ * which is the actual summary. The container can hold
+ * an extra bit of text (or anything really) that explains what the summary is.
+ * '.validity-erroneous' is applied to every input that fails.
+ */
+.validity-summary-container {
+  display: none;
+}
+.validity-erroneous {
+  border: solid 2px #f56600 !important;
+}
+/*--------------------------------------Validity end-----------------------------------------------------------------------
+
+/* ##### Common Styles ##### */
+body {
+  color: black;
+  background-color: #f0f0f0;
+  font-family: verdana, helvetica, arial, sans-serif;
+  font-size: 71%;
+  margin: 0;
+  padding: 0;
+}
+html > body {
+  font-size: 8.5pt;
+}
+acronym, .titleTip {
+  border-bottom: 1px dotted #999999;
+  cursor: help;
+  margin: 0;
+  padding: 0 0 0.4px 0;
+}
+.doNotDisplay {
+  display: none;
+}
+.smallCaps {
+  font-size: 110%;
+  font-variant: small-caps;
+}
+/* ##### Header ##### */
+#AbsoluteHeader > div.superHeader {
+  position: absolute;
+}
+.superHeader {
+  color: white;
+  background-color: #6487dc;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 0;
+  height: 2em;
+  line-height: 2em;
+}
+.superHeader .left {
+  float: left;
+}
+.superHeader .right {
+  float: right;
+}
+.superHeader span {
+  padding: 0 10px;
+}
+.midHeader {
+  color: #335199;
+  background-color: #b3c1e6;
+  width: 100%;
+  padding: 0;
+  height: 2em;
+  line-height: 2em;
+}
+.midHeader div.left {
+  float: left;
+  margin-left: 10px;
+}
+.midHeader div.right {
+  float: right;
+  margin-right: 10px;
+}
+.headerTitle {
+  font-size: 250%;
+  font-weight: normal;
+  margin: 0 10px;
+  padding: 0.25ex 0;
+}
+.subHeader {
+  color: white;
+  background-color: #1f397a;
+  width: 100%;
+  padding: 0;
+  height: 2em;
+  line-height: 2em;
+  font-size: 10pt;
+}
+.subHeader span {
+  padding: 0 10px;
+}
+.subHeader a {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 10px;
+}
+.subHeader a:hover {
+  text-decoration: underline;
+}
+.highlight {
+  font-weight: bold;
+  color: #FDA05B !important;
+  background-color: transparent;
+}
+/* ##### Side Bar ##### */
+#side-bar {
+  width: 15em;
+  float: left;
+  clear: left;
+  border-right: 1px solid #999999;
+}
+#side-bar div {
+  border-bottom: 1px solid #999999;
+}
+#side-bar ul {
+  list-style-type: none;
+  list-style-position: outside;
+  margin: 0;
+  padding: 0 0 1.1em 0;
+}
+#side-bar li {
+  margin: 0;
+  padding: 0.1ex 0;
+  /* Circumvents a rendering bug (?) in MSIE 6.0 */
+}
+#side-bar a {
+  color: #0066cc;
+  background-color: transparent;
+  text-decoration: none;
+  margin: 0;
+  padding: 0.75em 1ex 0.75em 5mm;
+  display: block;
+}
+#side-bar a:hover {
+  color: white;
+  background-color: #6487dc;
+  text-decoration: none;
+}
+.sideBarTitle {
+  font-weight: bold;
+  margin: 0 0 0.5em 2.5mm;
+  padding: 1em 0 0 0;
+  color: #335199;
+}
+/* ##### Main Copy ##### background-color: white; */
+#main-copy {
+  color: black;
+  text-align: justify;
+  line-height: 1.5em;
+  margin: 0 0 0 15em;
+  padding: 0.5mm 5mm 5mm 5mm;
+  border-left: 1px solid #999;
+}
+#main-copy p {
+  margin: 1em 1ex 2em 1ex;
+  padding: 0;
+}
+#main-copy a {
+  color: #0066cc;
+  background-color: transparent;
+  text-decoration: underline;
+}
+#main-copy a:hover {
+  text-decoration: none;
+}
+#main-copy h1 {
+  color: white;
+  background-color: #6487dc;
+  font-size: 100%;
+  font-weight: bold;
+  margin: 3em 0 0 0;
+  padding: 0.5ex 0 0.5ex 1ex;
+}
+#main-copy .topOfPage {
+  color: white;
+  background-color: transparent;
+  text-decoration: underline;
+  font-size: 91%;
+  font-weight: bold;
+  margin: 2.5ex 1ex 0 0;
+  /* For MSIE */
+  padding: 0;
+  float: right;
+}
+#main-copy > .topOfPage {
+  margin: 2.75ex 1ex 0 0;
+  /* For fully standards-compliant user agents */
+}
+dl {
+  margin: 1em 1ex 2em 1ex;
+  padding: 0;
+}
+dt {
+  font-weight: bold;
+  margin: 0 0 0 0;
+  padding: 0;
+}
+dd {
+  margin: 0 0 2em 2em;
+  padding: 0;
+}
+/* ##### Footer ##### */
+#footer {
+  color: white;
+  background-color: #6487dc;
+  font-size: 91%;
+  margin: 0;
+  padding: 1em 2.5mm 2.5ex 2.5mm;
+  clear: both;
+}
+#footer .left {
+  line-height: 1.45em;
+  float: left;
+  clear: left;
+}
+#footer .right {
+  text-align: right;
+  line-height: 1.45em;
+}
+#footer a {
+  color: white;
+  background-color: transparent;
+  text-decoration: underline;
+}
+#footer a:hover {
+  text-decoration: none;
+}
+/*#### Logon ETC ####*/
+/*----------------------------------------------------------*/
+/* Basic attributes */
+.CenterBoxInBody {
+  padding: 0 10%;
+  margin: 150px auto;
+  font-size: 8pt;
+  font-family: Verdana, Helvetica, Sans-Serif;
+  color: #000;
+}
+h2 {
+  text-align: left;
+  color: #65809D;
+  font-weight: bold;
+  font-size: 2em;
+  padding-bottom: 10px;
+  font-family: Arial, Helvetica, Sans-Serif;
+}
+.content {
+  margin: 0 40px;
+  padding: 30px 0;
+  background-color: #FFFFFF;
+}
+.komentaras {
+  color: #8A8A8A;
+}
+.tekstas {
+  font-size: 8pt;
+  font-family: Verdana, Helvetica, Sans-Serif;
+  color: #000;
+}
+/*----------------------------------------------------------*/
+/* Validation */
+.field-validation-error {
+  color: #990000;
+}
+.field-validation-valid {
+  display: none;
+}
+.input-validation-error {
+  border: 1px solid #990000;
+  background-color: #990000;
+}
+.validation-summary-errors {
+  font-weight: bold;
+  color: #990000;
+}
+.validation-summary-valid {
+  display: none;
+}
+/*----------------------------------------------------------*/
+/* Input design */
+input[type=text].UpdateField, input[type=password].UpdateField, textarea.UpdateField {
+  width: 30em;
+  background: #ffc;
+  border: 1px inset;
+  font-size: 10pt;
+  height: 1.5em;
+  padding-left: 5px;
+}
+.input_Long {
+  width: 30em;
+  background: #ffc;
+  border: 1px inset;
+  font-size: 10pt;
+  height: 1.5em;
+  padding-left: 5px;
+  width: 27em;
+}
+.input_Long_Disabled {
+  width: 30em;
+  background: #ffc;
+  border: 1px inset;
+  font-size: 10pt;
+  height: 1.5em;
+  padding-left: 5px;
+  background-color: #EBEBE4 !important;
+}
+.button {
+  width: 90px;
+  font-size: 8pt;
+  height: 2.5em;
+}
+/*----------------------------------------------------------*/
+/* Effects */
+.shadow {
+  -moz-box-shadow: 3px 3px 4px #C0C0C0;
+  -webkit-box-shadow: 3px 3px 4px #C0C0C0;
+  box-shadow: 3px 3px 4px #C0C0C0;
+  /*
+	-moz-box-shadow: 2px 2px 3px #e8e8e4; -webkit-box-shadow: 2px 2px 3px #e8e8e4; box-shadow: 2px 2px 3px #e8e8e4;
+	*/
+
+  /* For IE 8 */
+
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#C0C0C0')";
+  /* For IE 5.5 - 7
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#C0C0C0');*/
+
+}
+.innershadow {
+  -moz-box-shadow: inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow: inset 0 0 10px #000000;
+}
+/*-----------Progresas swf uploadui------------------------*/
+DIV.ProgressBar {
+  width: 100px;
+  padding: 0;
+  border: 1px solid black;
+  margin-right: 1em;
+  height: .75em;
+  margin-left: 1em;
+  display: -moz-inline-stack;
+  display: inline-block;
+  zoom: 1;
+  display: inline;
+}
+DIV.ProgressBar DIV {
+  background-color: Green;
+  font-size: 1pt;
+  height: 100%;
+  float: left;
+}
+SPAN.asyncUploader OBJECT {
+  position: relative;
+  top: 5px;
+  left: 10px;
+}
+#swfupload-control p {
+  margin: 10px 5px;
+  font-size: 0.9em;
+}
+#log {
+  margin: 0;
+  padding: 0;
+  width: 500px;
+}
+#log li {
+  list-style-position: inside;
+  margin: 2px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  background: #fff;
+  position: relative;
+}
+#log li .progressbar {
+  border: 1px solid #333;
+  height: 5px;
+  background: #fff;
+}
+#log li .progress {
+  background: #999;
+  width: 0%;
+  height: 5px;
+}
+#log li p {
+  margin: 0;
+  line-height: 18px;
+}
+#log li.success {
+  border: 1px solid #339933;
+  background: #ccf9b9;
+}
+#log li.error {
+  border: 1px solid #339933;
+  background: #FF9966;
+}
+/*#log li span.cancel { position: absolute; top: 5px; right: 5px; width: 20px; height: 20px; background: url('/Content/Images/cancel.png') no-repeat; cursor: pointer; }*/
+#log li span.cancel {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: url('images_ui/Sprite16.png') -36px -18px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+/*--------------------------------------------*/

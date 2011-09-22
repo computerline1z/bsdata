@@ -1,0 +1,40 @@
+﻿@model BSData.Models.LogOnModel
+@{
+   ViewBag.Title = "Prisijungimas prie sistemos";
+   Layout = "LogOn_Layout.cshtml";
+}
+@{ Html.RenderAction("Header", "Account"); }
+<div>
+   @using (Html.BeginForm()) {
+      <div class="shadow" style="border: 2px solid #e8e8e4; background-color: #FFFFFF;">
+         <div class="content" style="padding: 30px 0 0 0;"><h2>Naudotojų prisijungimas</h2>
+            <div id="divLogOn">
+               <div class="editor-label" style="padding-bottom: 5px;">
+                  @Html.LabelFor(m => m.Email)
+               </div>
+               <div class="editor-field">
+                  @Html.TextBoxFor(m => m.Email, new { @class = "input" }) @Html.ValidationMessageFor(m => m.Email)
+               </div>
+               &nbsp;&nbsp;
+               <div class="editor-label" style="padding-bottom: 5px;">
+                  @Html.LabelFor(m => m.Password)
+               </div>
+               <div class="editor-field">
+                  @Html.PasswordFor(m => m.Password, new { @class = "input" }) @Html.ValidationMessageFor(m => m.Password)
+               </div>
+               &nbsp;&nbsp;
+               <div>
+                  @Html.ActionLink("Pamiršote slaptažodį?", "RecoverPassword", null, new { @style = "color: #2b7bcb;" })
+                  <div class="editor-label" style="padding: 5px 0 0px 0;">
+                     @Html.CheckBoxFor(m => m.RememberMe) @Html.LabelFor(m => m.RememberMe)
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div style="height: 50px; margin: 10px 10px;">@Html.ValidationSummary(true, "Nepavyko prisijungti.")</div>
+         <div class="content" style="padding: 0;"><input type="submit" name="submitButton" value="Prisijungti" class="button" style="margin-bottom: 20px;" />&nbsp;&nbsp; </div>
+         <p>
+            @Html.ActionLink("Sukurti naują vartotoją...", "Register", null, new { @style = "color: #2b7bcb;margin:3px;" })
+         </p>
+      </div>
+   }</div>

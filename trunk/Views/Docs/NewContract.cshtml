@@ -1,0 +1,53 @@
+﻿<h1 id="introduction">@ViewBag.Title</h1>
+<div id="NewContract" data-ctrl='{"NewRec":1,"Source":"tblContracts1","tblUpdate":"tblContracts"}'>
+   <div id="NewContractRightCol" style="float: left;">
+      <div>
+         <fieldset class="inputFieldset"><legend>Sutartis</legend>
+            <div class='ExtendIt' data-ctrl='{"Field":"FormID", "labelType":"Left", "attr":"title=\"Sutarties tipinė forma\""}'>
+            </div>
+            <label class="leftlabelforManyF">Data:</label>
+            <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"Date", "labelType":"Top", "attr":"title=\"Sutarties data\"","Plugin":{"datepicker":{"minDate":"-5y","maxDate":"0"}}}'></span>
+            <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"DeliveryDate", "labelType":"Top", "attr":"title=\"Gavimo data (kada gauta su kitos šalies parašu)\"","Plugin":{"datepicker":{"minDate":"-5y","maxDate":"0"}}}'></span>
+            <div>
+               <label class="leftlabelforManyF">Galiojimas:</label>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"ValidityDate", "labelType":"Top" , "attr":"title=\"Sutarties galiojimo data\"","Plugin":{"datepicker":{"minDate":"+1d","maxDate":"+5y","changeYear": true}}}'></span>
+               <span style="display: inline-block; width: 22.6em;" class='ExtendIt' data-ctrl='{"Field":"ValidityNote", "labelType":"Top", "attr":"title=\"Jeigu sutarties galiojimas apibrėžiamas ne pagal datą (iki įvygdomi įsipareigojimai ir pan.)\""}'></span>
+            </div>
+            <div>
+               <label class="leftlabelforManyF">Samata(kaina, Lt):</label>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"PriceAtOnce", "labelType":"Top", "attr":"title=\"Vienkartinė suma mokama pagal sutartį\""}'></span>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"PricePerMonth", "labelType":"Top", "attr":"title=\"Abonentinis mėnesio mokestis (jei yra)\""}'></span>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Description", "labelType":"Left" , "attr":"title=\"Trumpas sutarties apibūdinimas\" style=\"vertical-align:top; height:5em;\""}'>
+            </div>
+            <span class='ExtendIt' data-ctrl='{"Field":"PagesNo", "labelType":"Left" }'></span>
+            <div class='ExtendIt' data-ctrl='{"Value":"false","Field":"IsSigned", "labelType":"Left", "attr":"title=\"Ar sutartis yra su abiejų šalių parašais?\""}'>
+            </div>
+         </fieldset>
+      </div>
+      <div>
+         <fieldset class="inputFieldset"><legend>Kita šalis (klientas)</legend>
+            <div class='ExtendIt' data-ctrl='{"Field":"ClientID", "labelType":"Left", "attr":"title=\"Įmonė su kuria pasirašoma sutartis\"", "List":{"ListType":"None","Editable":{"Add":true,"Edit":false},"Source":"tblClients","iVal":0,"iText":[2,6]}}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"ClientNo", "labelType":"Left", "attr":"title=\"Jeigu kita šalis suteikė savo Nr.\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Notes", "labelType":"Left", "attr":"title=\"Kitos pastabos apie sutartį, antrą pusę ir pan.\"  style=\"vertical-align:top; height:5em;\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"IsOurCustomer", "labelType":"Left", "attr":"title=\"Ar pagal sutartį atliekamos paslaugos kitai šaliai, tai yra kita šalis yra klientas?\""}'>
+            </div>
+         </fieldset>
+      </div>
+      <div>
+         <fieldset class="inputFieldset"><legend>Atsakingi už sutarties vykdymą</legend>
+            <div class='ExtendIt' data-ctrl='{"Field":"RespUserID", "labelType":"Left" , "attr":"title=\"Darbuotojas inicijuojantis sutartį\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"SubDepID", "labelType":"Left", "attr":"title=\"Skyrius teikiantis arba gaunantis paslaugas pagal sutartį\""}'>
+            </div>
+         </fieldset>
+      </div>
+   </div>
+   <span class='ExtendIt inputRight Control' data-ctrl='{"Control":"swfUpload","UserId":@BSData.Classes.UserData.UserID,"tblUpdate":"tblContracts","Legend":"Prie sutarties prisegtos bylos","Title":"Pridėti bylas prie sutarties","DialogTitle":"Bylų prisegimas prie dokumento"}'>
+   </span>
+   <div style="clear: both;">
+   </div>
+</div>

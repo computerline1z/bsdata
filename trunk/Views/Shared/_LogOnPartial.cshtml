@@ -1,0 +1,6 @@
+﻿@if (Request.IsAuthenticated) {
+   <text>Sveiki <b>@BSData.Classes.UserData.UserName</b>! [ @Html.ActionLink("Atsijungti", "LogOff", "Account") ]</text>
+}
+else {
+   @:[ @Html.ActionLink("Prisijungti", "LogOn", "Account") ]
+}

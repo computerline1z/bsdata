@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9ABE661D-D89C-49DF-B4C7-4AAA9D34B8E5}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BSData</RootNamespace>
+    <AssemblyName>BSData</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Conversion.v4.0" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages" />
+    <Reference Include="System.Web.Helpers" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\clsObjects.cs" />
+    <Compile Include="Classes\Converters.cs" />
+    <Compile Include="Classes\General.cs" />
+    <Compile Include="Classes\Generics.cs" />
+    <Compile Include="Classes\htmlHelpers.cs" />
+    <Compile Include="Classes\MailHelper.cs" />
+    <Compile Include="Classes\MyEventLog.cs" />
+    <Compile Include="Classes\SQLHelper.cs" />
+    <Compile Include="Classes\UserData.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
+    <Compile Include="Controllers\TitleController.cs" />
+    <Compile Include="Controllers\DocsController.cs" />
+    <Compile Include="Controllers\ControlController.cs" />
+    <Compile Include="Controllers\AssetsController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\UpdateController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Repositories_Files.cs" />
+    <Compile Include="Models\Repository_Docs.cs" />
+    <Compile Include="Models\Repositories_Update.cs" />
+    <Compile Include="Models\Repository_Actions.cs" />
+    <Compile Include="Models\BSMemProvider.cs" />
+    <Compile Include="Models\cls_db_partial.cs" />
+    <Compile Include="Models\AccountMOdels.cs" />
+    <Compile Include="Models\db.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>db.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Repository_Users.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Content\images_dataTables\Sorting icons.psd" />
+    <Content Include="Content\images\cancel.png" />
+    <Content Include="Content\images\wdp_buttons_upload_114x29.png" />
+    <Content Include="Content\jquery-ui-custom2.css" />
+    <Content Include="Content\images_ui\Sprite16.png" />
+    <Content Include="Content\images_ui\Sprite24.png" />
+    <Content Include="Content\images_ui\Sprite32.png" />
+    <Content Include="Content\qTip.css" />
+    <Content Include="Scripts\Final\js.chirp.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Scripts\Form\Docs_NewContract.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>Docs_NewContract.js</LastGenOutput>
+    </None>
+    <None Include="Scripts\General\Start.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>Start.js</LastGenOutput>
+    </None>
+    <None Include="Scripts\General\clsEditableForm.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>clsEditableForm.js</LastGenOutput>
+    </None>
+    <None Include="Scripts\General\clsGrid.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>clsGrid.js</LastGenOutput>
+    </None>
+    <None Include="Scripts\General\PrepareForm.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>PrepareForm.js</LastGenOutput>
+    </None>
+    <Content Include="Scripts\Form\Docs_Contracts_Grid.js" />
+    <Content Include="Scripts\Form\Docs_NewContract.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Docs_NewContract.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\General\Start.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Start.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Plugins\jquery.swfupload.js" />
+    <Content Include="Views\Docs\NewContract.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Mail.ConfirmRegistration.lt.htm" />
+    <Content Include="Content\dataTables.css" />
+    <Content Include="Content\css-print.css">
+      <DependentUpon>css-print.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css-print.min.css">
+      <DependentUpon>css-print.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css-screen.css">
+      <DependentUpon>css-screen.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css-screen.min.css">
+      <DependentUpon>css-screen.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Content\images\ajax-loader-bar.gif" />
+    <Content Include="Content\images\ajax-loader-circle-blue.gif" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\arrow.gif" />
+    <Content Include="Content\images\check48.png" />
+    <Content Include="Content\images\DeleteCross.png" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\grapke.png" />
+    <Content Include="Content\images\Logo.png" />
+    <Content Include="Content\images\mono_delete.png" />
+    <Content Include="Content\images\mono_edit.png" />
+    <Content Include="Content\images\pencil.png" />
+    <Content Include="Content\images\Program.ico" />
+    <Content Include="Content\images\Question.png" />
+    <Content Include="Content\images\UnderConstruction.gif" />
+    <Content Include="Content\images\WaitBar.gif" />
+    <Content Include="Content\images\Zvaigzde.png" />
+    <Content Include="Content\images_dataTables\back_disabled.jpg" />
+    <Content Include="Content\images_dataTables\back_enabled.jpg" />
+    <Content Include="Content\images_dataTables\favicon.ico" />
+    <Content Include="Content\images_dataTables\forward_disabled.jpg" />
+    <Content Include="Content\images_dataTables\forward_enabled.jpg" />
+    <Content Include="Content\images_dataTables\sort_asc.png" />
+    <Content Include="Content\images_dataTables\sort_asc_disabled.png" />
+    <Content Include="Content\images_dataTables\sort_both.png" />
+    <Content Include="Content\images_dataTables\sort_desc.png" />
+    <Content Include="Content\images_dataTables\sort_desc_disabled.png" />
+    <Content Include="Content\images_ui\5dca34-green.txt" />
+    <Content Include="Content\images_ui\bg_fallback.png" />
+    <Content Include="Content\images_ui\icon_sprite.png" />
+    <Content Include="Content\images_ui\progress_bar.gif" />
+    <Content Include="Content\images_ui\slider_handles.png" />
+    <Content Include="Content\images_ui\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images_ui\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images_ui\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images_ui\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images_ui\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images_ui\ui-bg_glass_75_eaeaea_1x400.png" />
+    <Content Include="Content\images_ui\ui-bg_highlight-soft_75_798ea3_1x100.png" />
+    <Content Include="Content\images_ui\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+    <Content Include="Content\images_ui\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images_ui\ui-icons_344e93_256x240.png" />
+    <Content Include="Content\images_ui\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images_ui\ui-icons_798ea3_256x240.png" />
+    <Content Include="Content\images_ui\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images_ui\ui-icons_9dadbe_256x240.png" />
+    <Content Include="Content\images_ui\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\images_ui\ui-icons_green_256x240.png" />
+    <Content Include="Content\jquery-ui-custom.css" />
+    <Content Include="Content\Kopijos_css\sinorca-print.css" />
+    <Content Include="Content\Kopijos_css\sinorca-screen.css" />
+    <Content Include="Content\Kopijos_css\Styles.css" />
+    <None Include="Content\css-print.chirp.less" />
+    <None Include="Content\css-screen.chirp.less" />
+    <Content Include="Content\CSS.chirp.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\merged.min.css">
+      <DependentUpon>CSS.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\Final\merged.min.js">
+      <DependentUpon>js.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Form\Users_All_Grid.js" />
+    <Content Include="Scripts\General\clsDialogUi.js" />
+    <Content Include="Scripts\Plugins\fauxconsole.js" />
+    <Content Include="Scripts\General\General.js" />
+    <Content Include="Scripts\General\MyPlugins.js" />
+    <Content Include="Scripts\Plugins\jquery-ui-1.8.15.min.js" />
+    <Content Include="Scripts\Plugins\jquery.dataTables.min.js" />
+    <Content Include="Scripts\Plugins\json2.js" />
+    <Content Include="Scripts\Plugins\Plugins.js" />
+    <Content Include="Scripts\General\MyPlugins_ComboBox.js" />
+    <Content Include="Scripts\General\objFunc.js" />
+    <Content Include="Scripts\General\Server.js" />
+    <Content Include="Scripts\Plugins\jquery-1.6.2-vsdoc.js" />
+    <Content Include="Scripts\Plugins\jquery-1.6.2.min.js" />
+    <Content Include="Scripts\General\clsEditableForm.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>clsEditableForm.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\General\clsGrid.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>clsGrid.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Plugins\jquery.jEditable.js" />
+    <Content Include="Scripts\Plugins\jquery.jEditable.min.js" />
+    <Content Include="Scripts\Plugins scripts\jquery.rich-array.js" />
+    <Content Include="Scripts\Plugins\jquery.validity.js" />
+    <Content Include="Scripts\Plugins\jquery.validity.min.js" />
+    <Content Include="Scripts\General\PrepareForm.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrepareForm.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Plugins\swfupload.js" />
+    <Content Include="Scripts\Plugins\swfupload.swf" />
+    <Content Include="Scripts\Plugins scripts\dateFormat.js" />
+    <Content Include="Scripts\Plugins scripts\jquery.metadata.js" />
+    <Content Include="Scripts\Plugins scripts\JScript1.js" />
+    <Content Include="Scripts\Plugins scripts\jsonUpdate.js" />
+    <Content Include="Scripts\Plugins scripts\MegaSelectList.js" />
+    <Content Include="Scripts\Plugins scripts\TimePicker.js" />
+    <Content Include="Scripts\Final\Proba.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Title\NewEvents.cshtml" />
+    <Content Include="Views\Title\Rekvizits.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\Start.cshtml" />
+    <Content Include="Views\Shared\Copy of Start.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\Uploads\" />
+    <Folder Include="Views\Users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Grid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Assets\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Clients\ClientsList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Control\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangeEmail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangeEmail_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\LogOn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\LogOn_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\NewPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\RecoverPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\RecoverPassword_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Register_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\RegisterOK.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\db.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>db.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Account\Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\db.dbml.layout">
+      <DependentUpon>db.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4410</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:4410/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
