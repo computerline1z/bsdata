@@ -1,7 +1,7 @@
 ﻿/// <reference path="../Plugins/jquery-1.6.2-vsdoc.js" />
 //var Users_All_Grid=
 var Contracts_Grid=(function() {
-   var HeadOK=0; DocCol=(window.oGLOBAL.Action==="Contracts_Unsigned")?6:5;
+   var HeadOK=0; DocCol=(window.oGLOBAL.Action==="Contracts_Unsigned")?6:5, IsBindToGrid=0;
    var fnDrawCallback=function(oSettings) {
       //--------------------------------------
       if(!HeadOK) {
@@ -53,6 +53,7 @@ var Contracts_Grid=(function() {
          }
       }
       LastCell.innerHTML+=" ("+(No+1)+"vnt.)"; //Pridedamas suskaičiavimas paskutiniam
+      if(IsBindToGrid) { BindToGrid(); }
    }
    function fnHeaderCallback(nHead, aasData, iStart, iEnd, aiDisplay) {
       //$(nHead).append('<th class="ui-state-default">Kas atsitiko22</th>');
@@ -72,24 +73,43 @@ var Contracts_Grid=(function() {
 
    var fnRowCallback=function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
       //href='javascript:void(0)'
-      if(aData[9]===0) { $('td:eq('+DocCol+')', nRow).html("<a style='color:red' href='#' data-ctrl='{\"ID\":"+aData[0]+"}'>"+aData[9]+"</a>"); }
-      else { $('td:eq('+DocCol+')', nRow).html("<a  href='#' data-ctrl='{\"ID\":"+aData[0]+"}'>"+aData[9]+"</a>"); }
+      //      if(aData[9]===0) { $('td:eq('+DocCol+')', nRow).html("<a style='color:red' href='#' data-ctrl='{\"ID\":"+aData[0]+"}'>"+aData[9]+"</a>"); }
+      //      else { $('td:eq('+DocCol+')', nRow).html("<a  href='#' data-ctrl='{\"ID\":"+aData[0]+"}'>"+aData[9]+"</a>"); }
+      if(aData[9]===0) { $('td:eq('+DocCol+')', nRow).html("<button style='color:red' data-ctrl='{\"ID\":"+aData[0]+"}'>"+aData[9]+"</button>"); }
+      else { $('td:eq('+DocCol+')', nRow).html("<button data-ctrl='{\"ID\":"+aData[0]+"}'>"+aData[9]+"</button>"); }
       return nRow;
    }
    //sDom: "rt", fnRowCallback: _fnRowCallback, fnHeaderCallback: _fnHeaderCallback,
    //   fnInitComplete: function() { t=this; setTimeout(function() { t.fnAdjustColumnSizing(); }, 5); }
    var tblSource=window.oGLOBAL.Action;
    var oTable=$('#tblGrid').clsGrid({ "aaSortingFixed": [[1, 'asc']],           //Del grupavimo
-      fnDrawCallback: fnDrawCallback, fnHeaderCallback: fnHeaderCallback, //fnEditRowOnClick: window.oSCRIPT.Editable, 
+      fnDrawCallback: fnDrawCallback, fnHeaderCallback: fnHeaderCallback, //fnEditRowOnClick: window.oSCRIPT.Editable,
       fnRowCallback: fnRowCallback
    }, tblSource);
    //turi eit po grido sukurimo
-   $("#tblGrid tbody tr td").css("cursor", "pointer").click(function(e) {
-      var t=e.target, tag=t.tagName.substring(), ID=0;
-      if(tag==="A") { ID=$(t).data("ctrl").ID; }
-      else { ID=($(t).find("a").length?$(t).find("a").data("ctrl").ID:0); }
-      alert(ID);
-   });
+   var BindToGrid=function() {
+      $("#tblGrid tbody tr td button")
+      .click(function(e) {
+         var t=$(e.target).parent().closest("button"), ID=$(t).data("ctrl").ID; ;
+         oCONTROLS.UploadDialog({ RecId: ID, UserId: $("#tblGrid").data("ctrl").uid, tblUpdate: "tblContracts", AttachedFiles: "tblDocs_UploadedFiles",
+            fnCallBack: function(files) {
+               $(e.target).html(files.length).parent().closest("button").css("color","");
+               oDATA.UpdateCell(tblSource, ID, 9, files.length); //UpdateCell:(obj,id,ColNo,NewVal)
+            }
+         })
+      })
+      .button({ icons: { primary: "img16-attach"} });
+      IsBindToGrid=1;
+   };
+   setTimeout(BindToGrid, 200);
+   //      $("#tblGrid tbody tr td").css("cursor", "pointer").click(function(e) {
+   //         var t=e.target, tag=t.tagName.substring(), ID=0;
+   //         if(tag==="A") { ID=$(t).data("ctrl").ID; }
+   //         else { ID=($(t).find("a").length?$(t).find("a").data("ctrl").ID:0); }
+   //         //oCONTROLS.UploadDialog({ RecId: ID, UserId: $("#tblGrid").data("ctrl").uid, tblUpdate: "tblContracts", AttachedFiles: "tblDocs_UploadedFiles" })
+   //         alert(ID);
+   //      });
+
    function GetNameByID(ID) {
       ID=parseInt(ID, 10), tblContracts_Form=oDATA.Get("tblContracts_Form");
       return tblContracts_Form.Data.findColsByID(ID, [1, 2]);

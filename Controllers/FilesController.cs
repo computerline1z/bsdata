@@ -12,9 +12,9 @@ namespace BSData.Classes {
          return Json(FilesRep.SaveUploadedFile(Pars));
       }
 
-      public ActionResult Download(int FileId) {
+      public ActionResult Download(int id) {//FileId
          Repositories_Files FilesRep = new Repositories_Files();
-         return FilesRep.GetUploadedFile(FileId);
+         return FilesRep.GetUploadedFile(id);
       }
    }
 }

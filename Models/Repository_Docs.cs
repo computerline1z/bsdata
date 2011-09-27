@@ -10,43 +10,43 @@ namespace BSData.Models {
 
       public Repository_Docs(string ConStr) { dc = new dbDataContext(ConStr); }
 
-      public jsonArrays GetJSON_tblDocs_UploadedFiles() {
-         jsonArrays JSON = new jsonArrays();
-         JSON.Data = from d in dc.tblDocs_UploadedFiles
-                     select new object[] {
-d.ID,//0
-d.FileName,//1
-d.UserID,//2
-d.SaveTime,//3
-d.ObjectID,//4
-d.RecordID,//5
-d.Description//6
-};
-         object[] Cols ={
-new { FName = "ID"},//0
-new { FName = "FileName"},//1
-new { FName = "UserID"},//2
-new { FName = "DateTime"},//3
-new { FName = "ObjectID"},//4
-new { FName = "RecordID"},//5
-new { FName = "Description",Type="String",Validity="require().nonHtml().maxLength(50)"}//6
-}; JSON.Cols = Cols;
-         //JSON.Config = new {
-         //   Controler = "Docs_UploadedFiles", tblUpdate = "tblDocs_UploadedFiles", Msg = new { AddNew = "Naujo automobilio sukūrimas", Edit = "Autmobilio redagavimas", Delete = "Ištrinti automobilį", GenName = "Automobilis" }
-         //};
-         JSON.Grid = new {
-            aoColumns = new object[]{
-new {bVisible=false,bSearchable=false},//0//ID////DefaultUpdate=0
-new {sTitle="FileName"},//1//FileName//
-new {bVisible=false,bSearchable=false},//2//UserID////DefaultUpdate=0
-new {sTitle="DateTime"},//3//DateTime//
-new {bVisible=false,bSearchable=false},//4//ObjectID////DefaultUpdate=0
-new {bVisible=false,bSearchable=false},//5//RecordID////DefaultUpdate=0
-new {sTitle="Description",sClass="smallFont"}//6//Description//
-}
-         };
-         return JSON;
-      }
+      //      public jsonArrays GetJSON_tblDocs_UploadedFiles() {
+      //         jsonArrays JSON = new jsonArrays();
+      //         JSON.Data = from d in dc.tblDocs_UploadedFiles
+      //                     select new object[] {
+      //d.ID,//0
+      //d.FileName,//1
+      //d.UserID,//2
+      //d.SaveTime,//3
+      //d.ObjectID,//4
+      //d.RecordID,//5
+      //d.Description//6
+      //};
+      //         object[] Cols ={
+      //new { FName = "ID"},//0
+      //new { FName = "FileName"},//1
+      //new { FName = "UserID"},//2
+      //new { FName = "DateTime"},//3
+      //new { FName = "ObjectID"},//4
+      //new { FName = "RecordID"},//5
+      //new { FName = "Description",Type="String",Validity="require().nonHtml().maxLength(50)"}//6
+      //}; JSON.Cols = Cols;
+      //         //JSON.Config = new {
+      //         //   Controler = "Docs_UploadedFiles", tblUpdate = "tblDocs_UploadedFiles", Msg = new { AddNew = "Naujo automobilio sukūrimas", Edit = "Autmobilio redagavimas", Delete = "Ištrinti automobilį", GenName = "Automobilis" }
+      //         //};
+      //         JSON.Grid = new {
+      //            aoColumns = new object[]{
+      //new {bVisible=false,bSearchable=false},//0//ID////DefaultUpdate=0
+      //new {sTitle="FileName"},//1//FileName//
+      //new {bVisible=false,bSearchable=false},//2//UserID////DefaultUpdate=0
+      //new {sTitle="DateTime"},//3//DateTime//
+      //new {bVisible=false,bSearchable=false},//4//ObjectID////DefaultUpdate=0
+      //new {bVisible=false,bSearchable=false},//5//RecordID////DefaultUpdate=0
+      //new {sTitle="Description",sClass="smallFont"}//6//Description//
+      //}
+      //         };
+      //         return JSON;
+      //      }
 
       public jsonArrays GetJSON_tblTowns() {
          jsonArrays JSON = new jsonArrays();
@@ -92,7 +92,7 @@ d.Rec_VATCode,//12
 };
          object[] Cols ={
 new { FName = "ID"},//0
-new { FName = "Code",Type="Integer", Validity="require().match(/\\d{9}/,\"Įmonės kodas turi būt sudarytas iš 9 skaičių.\")"},//1
+new { FName = "Code",Type="Integer", Validity="require().match(/^\\d{9}$/, \"Įmonės kodas turi būt sudarytas iš 9 skaičių.\")"},//1
 new { FName = "Name",Type="String", Validity="require().nonHtml().maxLength(60)"},//2
 new { FName = "Description",Type="String", Validity="require().nonHtml().maxLength(250)"},//3
 new { FName = "Address",Type="String", Validity="require().nonHtml().maxLength(200)"},//4
@@ -136,7 +136,7 @@ new {bVisible=false,sTitle="PVM kodas"},//12//Rec_VATCode//
 new { FName = "ID"},//0
 new { FName = "FormID",Tip="Pasirinkite sutarties tipinę formą..", List=new{Source="tblContracts_Form", iVal=0,iText=new object[]{1,2}}},//1
 new { FName = "Date",Type="DateLess", Default="Today",Validity="require().match('date').lessThanOrEqualTo(new Date())"},//2
-new { FName = "DeliveryDate",Type="DateLess", Default="Today",Validity="require().match('date').lessThanOrEqualTo(new Date())"},//3
+new { FName = "DeliveryDate",Type="DateLess", Default="Today",Validity="match('date').lessThanOrEqualTo(new Date())"},//3
 new { FName = "ClientID",Tip="Pradėkite rinkti įmonės pavadinimo arba miesto raides..",List=new{ListType="None",Source="tblClients",iVal=0,iText=new object[]{2,6}}},//4
 new { FName = "ClientNo",Type="String", Validity="nonHtml().maxLength(20)"},//5
 new { FName = "Description",LenMax=200, Type="String", Validity="require().nonHtml().maxLength(100)"},//6
@@ -297,34 +297,34 @@ new {bVisible=false,bSearchable=false}//2//DepID////DefaultUpdate=0
          JSON.Data = from d in dc.tblUsers orderby d.SubDepID, d.OrderNo, d.LastName
                      select new object[] {
 d.ID,//0
-//d.Position,//1
-d.LastName+' '+d.Name//2
-//d.LastName,//3
-//d.SubDepID,//4
-//d.Email,//5
+d.Position,//1
+d.Name,//2
+d.LastName,//3
+d.SubDepID,//4
+d.Email//5
 };
          object[] Cols ={
 new { FName = "ID"},//0
-//new { FName = "Position",Type="String", LenMax=50,Validity="require().nonHtml().maxLength(50)"},//2
-new { FName = "User",Type="String", LenMax=35,Validity="require().nonHtml().maxLength(35)"}//3
-//new { FName = "LastName",Type="String", LenMax=35,Validity="require().nonHtml().maxLength(35)"},//4
-//new { FName = "SubDepID",Tip="Pasirinkite skyrių..",List=new{Source="tblUsers_SubDep",iVal=0,iText=new int[]{1}}},//5
-//new { FName = "Email",Type="Email", LenMax=50,Validity="require().match(\"email\").maxLength(50)"},//8
+new { FName = "Position",Type="String", LenMax=50,Validity="require().nonHtml().maxLength(50)"},//2
+new { FName = "User",Type="String", LenMax=35,Validity="require().nonHtml().maxLength(35)"},//3
+new { FName = "LastName",Type="String", LenMax=35,Validity="require().nonHtml().maxLength(35)"},//4
+new { FName = "SubDepID",Tip="Pasirinkite skyrių..",List=new{Source="tblUsers_SubDep",iVal=0,iText=new int[]{1}}},//5
+new { FName = "Email",Type="Email", LenMax=50,Validity="require().match(\"email\").maxLength(50)"}//8
 }; JSON.Cols = Cols;
          JSON.Grid = new {
             aoColumns = new object[]{
 new {bVisible=false,bSearchable=false},//0//ID////DefaultUpdate=0
-//new {sTitle="Pareigybė",sClass="smallFont"},//2//Position//
-new {sTitle="Pavardė_Vardas"}//3//Name//
-//new {sTitle="Pavardė"},//4//LastName//
-//new {sTitle="Skyrius", bVisible=false, bSearchable=false},//5//SubDepID////DefaultUpdate=0
-//new {sTitle="E-paštas",sClass="smallFont"}//8//Email//
+new {sTitle="Pareigybė",sClass="smallFont"},//2//Position//
+new {sTitle="Pavardė_Vardas"},//3//Name//
+new {sTitle="Pavardė"},//4//LastName//
+new {sTitle="Skyrius", bVisible=false, bSearchable=false},//5//SubDepID////DefaultUpdate=0
+new {sTitle="E-paštas",sClass="smallFont"}//8//Email//
 }
          };
          return JSON;
       }
 
-      public jsonArrays GetJSON_tblDocs(string FileName) {
+      public jsonArrays GetJSON_tblDocs_UploadedFiles(string FileName) {
          jsonArrays JSON = new jsonArrays();
          JSON.Data = from c in dc.proc_GetTblDocs(FileName)
                      select new object[] {
@@ -333,7 +333,8 @@ c.UserID,//1
 c.Date,//2
 c.SizeKB,//3
 c.FileName,//4
-c.Description//5
+c.RecordID,//5
+c.Description//6
 };
          object[] Cols ={
 new { FName = "ID"},//0
@@ -341,7 +342,8 @@ new { FName = "UserID"},//1
 new { FName = "Date"},//2
 new { FName = "SizeKB"},//3
 new { FName = "FileName"},//4
-new { FName = "Description"}//5
+new { FName = "RecordId1"},//5
+new { FName = "Description"}//6
 }; JSON.Cols = Cols;
          return JSON;
       }

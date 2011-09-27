@@ -35,7 +35,7 @@ d.OrderNo//10
 };
          object[] Cols ={
 new { FName = "ID"},//0
-new { FName = "StatusID",Tip="Pasirinkite iš sąrašo..",List=new{Source="tblUsers_Status",Default=0,iVal=0,iText=new int[]{12}}},//1
+new { FName = "StatusID",Tip="Pasirinkite iš sąrašo..",List=new{Source="tblUsers_Status",Default=0,iVal=0,iText=new int[]{1}}},//1
 new { FName = "Position",Type="String", LenMax=50,Validity="require().nonHtml().maxLength(50)"},//2
 new { FName = "Name",Type="String", LenMax=35,Validity="require().nonHtml().maxLength(35)"},//3
 new { FName = "LastName",Type="String", LenMax=35,Validity="require().nonHtml().maxLength(35)"},//4
