@@ -53,16 +53,19 @@ namespace BSData.Models {
    public class Repositories_Files {
       private string _uploadsFolder = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["Uploads"]);
 
-      private string GetDiskLocation(int FileId) {
-         return Path.Combine(_uploadsFolder, FileId.ToString());
+      private string GetDiskLocation(int FileId, string FileExtension) {
+         return Path.Combine(_uploadsFolder, FileId.ToString() + FileExtension);
       }
 
       public object SaveUploadedFile(UploadedFilePars Pars) {
          //var identifier = Guid.NewGuid();
          Repositories_Update UpdateRep = new Repositories_Update();
          UploadResult ur = (UpdateRep.InsertFilePars(Pars));
-         if (ur._FileId > 0) { Pars.fileBase.SaveAs(GetDiskLocation(ur._FileId)); }
+         if (ur._FileId > 0) {
+            Pars.fileBase.SaveAs(GetDiskLocation(ur._FileId, Path.GetExtension(Pars.FileName)));
+         }
          //fileBase.SaveAs(GetDiskLocation(identifier));
+         if (ur._Msg.Length > 0) { return new { Msg = ur._Msg }; }
          return ur.GetVal();//kad padarytu normalu json
       }
 
@@ -78,7 +81,7 @@ namespace BSData.Models {
          public DownloadResult(int FileId) {
             dbDataContext dc = new dbDataContext();
             tblDocs_UploadedFile df = (from f in dc.tblDocs_UploadedFiles where f.ID == FileId select f).SingleOrDefault() ?? null;
-            this.VirtualPath = Path.Combine(ConfigurationManager.AppSettings["Uploads"], FileId.ToString());
+            this.VirtualPath = Path.Combine(ConfigurationManager.AppSettings["Uploads"], FileId.ToString() + Path.GetExtension(df.FileName));
             this.FileDownloadName = df.FileName;
          }
 
@@ -94,6 +97,9 @@ namespace BSData.Models {
                context.HttpContext.Response.AddHeader("content-disposition",
                  "attachment; filename=" + this.FileDownloadName);
             }
+            //Response.AddHeader(“content-type”, “application/octet-stream”)
+            //This will force the “Save As/Open With” Dialog box to show up.
+
             string filePath = context.HttpContext.Server.MapPath(this.VirtualPath);
             context.HttpContext.Response.TransmitFile(filePath);
          }

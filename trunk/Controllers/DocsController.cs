@@ -24,7 +24,7 @@ namespace BSData.Controllers {
             //   File = "../Scripts/Form/Users_All_Grid.js",
             //   oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }
             //},
-            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles(),
+            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
             tblTowns = Rep.GetJSON_tblTowns(),
             tblClients = Rep.GetJSON_tblClients(),
             tblContracts1 = Rep.GetJSON_tblContracts1(),
@@ -41,7 +41,9 @@ namespace BSData.Controllers {
          string View = RenderPartialViewToString("../Shared/Grid");
          Repository_Docs Rep = new Repository_Docs();
          var obj = new {
-            Render = View, Contracts_Unsigned = Rep.GetJSON_tblContracts(true, false),//Galiojancios(arba be datos) ir nepasirasytos
+            Render = View,
+            Contracts_Unsigned = Rep.GetJSON_tblContracts(true, false),//Galiojancios(arba be datos) ir nepasirasytos
+            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan
@@ -56,7 +58,9 @@ namespace BSData.Controllers {
          string View = RenderPartialViewToString("../Shared/Grid");
          Repository_Docs Rep = new Repository_Docs();
          var obj = new {
-            Render = View, Contracts_Valid = Rep.GetJSON_tblContracts(true, true),//Tik galiojancios ir pasirasytos
+            Render = View,
+            Contracts_Valid = Rep.GetJSON_tblContracts(true, true),//Tik galiojancios ir pasirasytos
+            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan
@@ -71,7 +75,9 @@ namespace BSData.Controllers {
          string View = RenderPartialViewToString("../Shared/Grid");
          Repository_Docs Rep = new Repository_Docs();
          var obj = new {
-            Render = View, Contracts_Expired = Rep.GetJSON_tblContracts(false, true),//Negaliojancios bet pasirasytos
+            Render = View,
+            Contracts_Expired = Rep.GetJSON_tblContracts(false, true),//Negaliojancios bet pasirasytos
+            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan

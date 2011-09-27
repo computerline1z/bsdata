@@ -22,8 +22,9 @@
               NewId = resp.ResponseMsg.ID ? resp.ResponseMsg.ID : 0;
               oCONTROLS.UpdatableForm_toSaved(NewId, form);
               if (updData.Action === "Add") {
-                return $('#introduction').html("Sutartis Nr.:" + NewId);
+                $('#introduction').html("Sutartis Nr.:" + NewId);
               }
+              return $("#side-bar ul li a").filter("[data-action='Contracts_Valid'],[data-action='Contracts_Unsigned'],[data-action='Contracts_Expired']").data("opt", "refresh");
             }
           },
           Msg: {

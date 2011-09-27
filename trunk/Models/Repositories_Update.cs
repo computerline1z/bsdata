@@ -122,12 +122,24 @@ namespace CC.Models {
          cmd.Parameters.AddWithValue("@SizeKB", Pars.SizeKB);
          cmd.Parameters.AddWithValue("@UserID", Pars.UserId);
 
-         SqlParameter FileId = cmd.Parameters.Add("@FileId", SqlDbType.Int);
+         SqlParameter FileId = cmd.Parameters.AddWithValue("@FileId", 0);
+         FileId.SqlDbType = System.Data.SqlDbType.Int;
          FileId.Direction = ParameterDirection.Output;
-         SqlParameter User = cmd.Parameters.Add("@User", SqlDbType.NVarChar);
-         FileId.Direction = ParameterDirection.Output;
-         SqlParameter SaveDate = cmd.Parameters.Add("@SaveDate", SqlDbType.Char);
-         FileId.Direction = ParameterDirection.Output;
+         SqlParameter User = cmd.Parameters.AddWithValue("@User", 0);
+         User.SqlDbType = System.Data.SqlDbType.NVarChar;
+         User.Size = 75;
+         User.Direction = ParameterDirection.Output;
+         SqlParameter SaveDate = cmd.Parameters.AddWithValue("@SaveDate", 0);
+         SaveDate.SqlDbType = System.Data.SqlDbType.Char;
+         SaveDate.Size = 10;
+         SaveDate.Direction = ParameterDirection.Output;
+
+         //SqlParameter FileId = cmd.Parameters.Add("@FileId", SqlDbType.Int);
+         //FileId.Direction = ParameterDirection.Output;
+         //SqlParameter User = cmd.Parameters.Add("@User", SqlDbType.NVarChar);
+         //FileId.Direction = ParameterDirection.Output;
+         //SqlParameter SaveDate = cmd.Parameters.Add("@SaveDate", SqlDbType.Char);
+         //FileId.Direction = ParameterDirection.Output;
 
          try { con.Open(); cmd.ExecuteNonQuery(); ur.SetVal((int)FileId.Value, User.Value.ToString(), SaveDate.Value.ToString()); }
          catch (Exception ex) { ur._Msg = ex.Message; }

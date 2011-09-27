@@ -154,20 +154,21 @@
 .img24-tools { background: url(images_ui/Sprite24.png) 0px -156px; width: 26px; height: 26px; }
 .img24-warning { background: url(images_ui/Sprite24.png) -26px -156px; width: 26px; height: 26px; }
 .img32-Add { background: url(images_ui/Sprite32.png) 0px 0px; width: 34px; height: 34px; }
+/* url(images_ui/Sprite32.png) -102px (-68px; -1)  */
 .img32-Attach { background: url(images_ui/Sprite32.png) -34px 0px; width: 34px; height: 34px; }
 .img32-bin { background: url(images_ui/Sprite32.png) -68px 0px; width: 34px; height: 34px; }
 .img32-Delete { background: url(images_ui/Sprite32.png) -102px 0px; width: 34px; height: 34px; }
-.img32-Excel { background: url(images_ui/Sprite32.png) 0px -34px; width: 34px; height: 34px; }
-.img32-go_back { background: url(images_ui/Sprite32.png) -34px -34px; width: 34px; height: 34px; }
-.img32-go_forward { background: url(images_ui/Sprite32.png) -68px -34px; width: 34px; height: 34px; }
-.img32-Help { background: url(images_ui/Sprite32.png) -102px -34px; width: 34px; height: 34px; }
-.img32-Img { background: url(images_ui/Sprite32.png) 0px -68px; width: 34px; height: 34px; }
-.img32-Pdf { background: url(images_ui/Sprite32.png) -34px -68px; width: 34px; height: 34px; }
-.img32-ppt { background: url(images_ui/Sprite32.png) -68px -68px; width: 34px; height: 34px; }
-.img32-print { background: url(images_ui/Sprite32.png) -102px -68px; width: 34px; height: 34px; }
-.img32-search { background: url(images_ui/Sprite32.png) 0px -102px; width: 34px; height: 34px; }
-.img32-tools { background: url(images_ui/Sprite32.png) -34px -102px; width: 34px; height: 34px; }
-.img32-Word { background: url(images_ui/Sprite32.png) -68px -102px; width: 34px; height: 34px; }
+.img32-Excel { background: url(images_ui/Sprite32.png) 0px -35px; width: 34px; height: 34px; }
+.img32-go_back { background: url(images_ui/Sprite32.png) -34px -35px; width: 34px; height: 34px; }
+.img32-go_forward { background: url(images_ui/Sprite32.png) -68px -35px; width: 34px; height: 34px; }
+.img32-Help { background: url(images_ui/Sprite32.png) -102px -35px; width: 34px; height: 34px; }
+.img32-Img { background: url(images_ui/Sprite32.png) 0px -69px; width: 34px; height: 34px; }
+.img32-Pdf { background: url(images_ui/Sprite32.png) -34px -69px; width: 34px; height: 34px; }
+.img32-ppt { background: url(images_ui/Sprite32.png) -68px -69px; width: 34px; height: 34px; }
+.img32-print { background: url(images_ui/Sprite32.png) -102px -69px; width: 34px; height: 34px; }
+.img32-search { background: url(images_ui/Sprite32.png) 0px -103px; width: 34px; height: 34px; }
+.img32-tools { background: url(images_ui/Sprite32.png) -34px -103px; width: 34px; height: 34px; }
+.img32-Word { background: url(images_ui/Sprite32.png) -68px -103px; width: 34px; height: 34px; }
 /* Misc visuals
 ----------------------------------*/
 /* Corner radius */
@@ -255,14 +256,15 @@
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
- *
+ *ismeciau, nes negrazu
+text-shadow: 0px 1px 1px #234386; border-color: #466086; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
  * http://docs.jquery.com/UI/Menu#theming
  */
 .ui-menu { list-style: none; padding: 2px; margin: 0; display: block; float: left; }
 .ui-menu .ui-menu { margin-top: -3px; }
 .ui-menu .ui-menu-item { margin: 0; padding: 0; zoom: 1; float: left; clear: left; width: 100%; }
 .ui-menu .ui-menu-item a { text-decoration: none; display: block; padding: .2em .4em; line-height: 1.5; zoom: 1; }
-.ui-menu .ui-menu-item a.ui-state-hover, .ui-menu .ui-menu-item a.ui-state-active { font-weight: normal; margin: -1px; background: #5f83b9; color: #FFFFFF; text-shadow: 0px 1px 1px #234386; border-color: #466086; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
+.ui-menu .ui-menu-item a.ui-state-hover, .ui-menu .ui-menu-item a.ui-state-active { font-weight: normal; margin: -1px; background: #5f83b9; color: #FFFFFF; }
 /*
  * jQuery UI Button 1.8.7
  *

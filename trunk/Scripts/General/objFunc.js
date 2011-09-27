@@ -375,7 +375,7 @@ var oGLOBAL={
                }
             }
          }
-         if(OldVal!=val) {
+         if(OldVal!=val||(val===0&&OldVal==="")) {
             DataToSave.Data.push(val); DataToSave.Fields.push(FName);  //Add to DataToSave
             log("Save element: val-"+val+", OldVal-"+OldVal+", Type-"+Type);
          }
