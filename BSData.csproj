@@ -110,6 +110,10 @@
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Docs_NewContract.js</LastGenOutput>
     </None>
+    <None Include="Scripts\General\MyPlugins2.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>MyPlugins2.js</LastGenOutput>
+    </None>
     <None Include="Scripts\General\Start.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Start.js</LastGenOutput>
@@ -122,15 +126,16 @@
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>clsGrid.js</LastGenOutput>
     </None>
-    <None Include="Scripts\General\PrepareForm.coffee">
-      <Generator>CoffeeScriptGenerator</Generator>
-      <LastGenOutput>PrepareForm.js</LastGenOutput>
-    </None>
     <Content Include="Scripts\Form\Docs_Contracts_Grid.js" />
     <Content Include="Scripts\Form\Docs_NewContract.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Docs_NewContract.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\General\MyPlugins2.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyPlugins2.coffee</DependentUpon>
     </Content>
     <Content Include="Scripts\General\Start.js">
       <AutoGen>True</AutoGen>
@@ -243,16 +248,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>clsGrid.coffee</DependentUpon>
     </Content>
-    <Content Include="Scripts\Plugins\jquery.jEditable.js" />
-    <Content Include="Scripts\Plugins\jquery.jEditable.min.js" />
     <Content Include="Scripts\Plugins scripts\jquery.rich-array.js" />
     <Content Include="Scripts\Plugins\jquery.validity.js" />
     <Content Include="Scripts\Plugins\jquery.validity.min.js" />
-    <Content Include="Scripts\General\PrepareForm.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PrepareForm.coffee</DependentUpon>
-    </Content>
     <Content Include="Scripts\Plugins\swfupload.js" />
     <Content Include="Scripts\Plugins\swfupload.swf" />
     <Content Include="Scripts\Plugins scripts\dateFormat.js" />

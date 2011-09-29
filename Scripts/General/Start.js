@@ -38,8 +38,6 @@
       type: 'POST',
       data: Par,
       dataType: 'json',
-      global: false,
-      cache: false,
       error: function(jqXHR, textStatus, errorThrown) {
         el.html("<center><h2>Ši dalis dar nebaigta(" + Action + ")</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>");
         return el.parent().unblock();
@@ -139,10 +137,17 @@
       Row = this.GetRow(id, obj);
       return Row.MapArrToString(Indexes);
     },
-    UpdateCell: function(obj, id, ColNo, NewVal) {
-      var Row;
+    UpdateCell: function(obj, tblToUpdate, id, field, NewVal) {
+      var ColNo, Row;
+      ColNo = oDATA.Get(obj).Cols.FNameIndex(field);
       Row = this.GetRow(id, obj);
-      return Row[ColNo] = NewVal;
+      Row[ColNo] = NewVal;
+      return $.post("/Update/editInPlace", {
+        id: id,
+        tbl: tblToUpdate,
+        update_value: NewVal,
+        field: field
+      });
     }
   };
 }).call(this);
