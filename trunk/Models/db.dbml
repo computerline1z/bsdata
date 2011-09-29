@@ -80,8 +80,8 @@
       <Column Name="Telefonai" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
       <Column Name="OrderNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="tblUser_tblUsers_InRole" Member="tblUsers_InRoles" ThisKey="ID" OtherKey="UserID" Type="tblUsers_InRole" />
-      <Association Name="tblUser_tblContract" Member="tblContracts" ThisKey="ID" OtherKey="RespUserID" Type="tblContract" />
       <Association Name="tblUser_tblDocs_UploadedFile" Member="tblDocs_UploadedFiles" ThisKey="ID" OtherKey="UserID" Type="tblDocs_UploadedFile" />
+      <Association Name="tblUser_tblContract" Member="tblContracts" ThisKey="ID" OtherKey="RespUserID" Type="tblContract" />
       <Association Name="tblUsers_Status_tblUser" Member="tblUsers_Status" ThisKey="StatusID" OtherKey="ID" Type="tblUsers_Status" IsForeignKey="true" />
       <Association Name="tblUsers_SubDep_tblUser" Member="tblUsers_SubDep" ThisKey="SubDepID" OtherKey="ID" Type="tblUsers_SubDep" IsForeignKey="true" />
     </Type>
@@ -169,31 +169,6 @@
       <Association Name="tblContracts_Form_tblContract" Member="tblContracts" ThisKey="ID" OtherKey="FormID" Type="tblContract" />
     </Type>
   </Table>
-  <Table Name="dbo.tblContracts" Member="tblContracts">
-    <Type Name="tblContract">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="DeliveryDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="ClientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ClientNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="ValidityDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="ValidityNote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PriceAtOnce" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="PricePerMonth" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="RespUserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Notes" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="PagesNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SubDepID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IsOurCustomer" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="IsSigned" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="tblClient_tblContract" Member="tblClient" ThisKey="ClientID" OtherKey="ID" Type="tblClient" IsForeignKey="true" />
-      <Association Name="tblContracts_Form_tblContract" Member="tblContracts_Form" ThisKey="FormID" OtherKey="ID" Type="tblContracts_Form" IsForeignKey="true" />
-      <Association Name="tblUser_tblContract" Member="tblUser" ThisKey="RespUserID" OtherKey="ID" Type="tblUser" IsForeignKey="true" />
-      <Association Name="tblUsers_SubDep_tblContract" Member="tblUsers_SubDep" ThisKey="SubDepID" OtherKey="ID" Type="tblUsers_SubDep" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tblDocs_UploadedFiles" Member="tblDocs_UploadedFiles">
     <Type Name="tblDocs_UploadedFile">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -206,6 +181,39 @@
       <Column Name="Description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="tblObjects_ID_tblDocs_UploadedFile" Member="tblObjects_ID" ThisKey="ObjectID" OtherKey="ID" Type="tblObjects_ID" IsForeignKey="true" />
       <Association Name="tblUser_tblDocs_UploadedFile" Member="tblUser" ThisKey="UserID" OtherKey="ID" Type="tblUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblContracts_Status" Member="tblContracts_Status">
+    <Type Name="tblContracts_Status">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="tblContracts_Status_tblContract" Member="tblContracts" ThisKey="ID" OtherKey="StatusID" Type="tblContract" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblContracts" Member="tblContracts">
+    <Type Name="tblContract">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ClientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClientNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ValidityDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ValidityNote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PriceAtOnce" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PricePerMonth" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="RespUserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="PagesNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SubDepID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsOurCustomer" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Association Name="tblClient_tblContract" Member="tblClient" ThisKey="ClientID" OtherKey="ID" Type="tblClient" IsForeignKey="true" />
+      <Association Name="tblContracts_Form_tblContract" Member="tblContracts_Form" ThisKey="FormID" OtherKey="ID" Type="tblContracts_Form" IsForeignKey="true" />
+      <Association Name="tblContracts_Status_tblContract" Member="tblContracts_Status" ThisKey="StatusID" OtherKey="ID" Type="tblContracts_Status" IsForeignKey="true" />
+      <Association Name="tblUser_tblContract" Member="tblUser" ThisKey="RespUserID" OtherKey="ID" Type="tblUser" IsForeignKey="true" />
+      <Association Name="tblUsers_SubDep_tblContract" Member="tblUsers_SubDep" ThisKey="SubDepID" OtherKey="ID" Type="tblUsers_SubDep" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.proc_tblUsers_InsertNew" Method="proc_tblUsers_InsertNew">
@@ -222,22 +230,6 @@
     <Parameter Name="Address" Parameter="address" Type="System.String" DbType="NVarChar(250)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.proc_GetContracts" Method="proc_GetContracts">
-    <Parameter Name="IsValid" Parameter="isValid" Type="System.Boolean" DbType="Bit" />
-    <Parameter Name="IsSigned" Parameter="isSigned" Type="System.Boolean" DbType="Bit" />
-    <ElementType Name="proc_GetContractsResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="DeliveryDate" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="ClientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ClientName" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="ValidityDate" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
-      <Column Name="ValidityNote" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.proc_GetTblDocs" Method="proc_GetTblDocs">
     <Parameter Name="TableName" Parameter="tableName" Type="System.String" DbType="VarChar(50)" />
     <ElementType Name="proc_GetTblDocsResult">
@@ -248,6 +240,37 @@
       <Column Name="FileName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="RecordID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetContracts_Approved" Method="proc_GetContracts_Approved">
+    <Parameter Name="valid" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="proc_GetContracts_ApprovedResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="ClientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClientName" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ValidityDate" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ValidityNote" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetContracts_NotApproved" Method="proc_GetContracts_NotApproved">
+    <ElementType Name="proc_GetContracts_NotApprovedResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="ClientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClientName" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(71) NOT NULL" CanBeNull="false" />
+      <Column Name="DateSigned" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

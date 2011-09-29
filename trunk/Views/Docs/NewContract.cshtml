@@ -7,7 +7,8 @@
             </div>
             <label class="leftlabelforManyF">Data:</label>
             <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"Date", "labelType":"Top", "attr":"title=\"Sutarties data\"","Plugin":{"datepicker":{"minDate":"-5y","maxDate":"0"}}}'></span>
-            <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"DeliveryDate", "labelType":"Top", "attr":"title=\"Gavimo data (kada gauta su kitos šalies parašu)\"","Plugin":{"datepicker":{"minDate":"-5y","maxDate":"0"}}}'></span>
+            @*            <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"DeliveryDate", "labelType":"Top", "attr":"title=\"Gavimo data (kada gauta su kitos šalies parašu)\"","Plugin":{"datepicker":{"minDate":"-5y","maxDate":"0"}}}'></span>
+*@
             <div>
                <label class="leftlabelforManyF">Galiojimas:</label>
                <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"ValidityDate", "labelType":"Top" , "attr":"title=\"Sutarties galiojimo data\"","Plugin":{"datepicker":{"minDate":"+1d","maxDate":"+5y","changeYear": true}}}'></span>
@@ -21,9 +22,8 @@
             <div class='ExtendIt' data-ctrl='{"Field":"Description", "labelType":"Left" , "attr":"title=\"Trumpas sutarties apibūdinimas\" style=\"vertical-align:top; height:5em;\""}'>
             </div>
             <span class='ExtendIt' data-ctrl='{"Field":"PagesNo", "labelType":"Left" }'></span>
-            <div class='ExtendIt' data-ctrl='{"Value":"false","Field":"IsSigned", "labelType":"Left", "attr":"title=\"Ar sutartis yra su abiejų šalių parašais?\""}'>
-            </div>
-         </fieldset>
+            @*            <div class='ExtendIt' data-ctrl='{"Value":"false","Field":"IsSigned", "labelType":"Left", "attr":"title=\"Ar sutartis yra su abiejų šalių parašais?\""}'>
+            </div>*@ </fieldset>
       </div>
       <div>
          <fieldset class="inputFieldset"><legend>Kita šalis (klientas)</legend>

@@ -104,8 +104,8 @@ namespace ClaimsControl.Controllers {
          var x = this.HttpContext.Request;// UserData.UserName
          RegisterModel model = new RegisterModel();
          string url = x.Url.Scheme + @"://" + x.Url.Authority + "/Account/NewPassword/" + UserId.ToString();
-         string messageBody = MailHelper.BuildMailMessage(this.HttpContext, "lt", "ConfirmRegistration", url, UserData.UserName, email); MailHelper.SendMailMessage(model.Email, String.Empty, String.Empty, "Registracija 'BSData' sistemoje", messageBody);
-
+         string messageBody = MailHelper.BuildMailMessage(this.HttpContext, "lt", "ConfirmRegistration", url, userName, email);
+         //MailHelper.SendMailMessage(email, String.Empty, String.Empty, "Registracija 'BSData' sistemoje", messageBody);
          MailHelper.SendMailMessage(email, String.Empty, String.Empty, "Slaptažodio keitimas informacijos valdymo sistemoje", messageBody);
       }
 

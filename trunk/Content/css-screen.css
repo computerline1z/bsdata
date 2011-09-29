@@ -135,6 +135,11 @@ body {
 html > body {
   font-size: 8.5pt;
 }
+.editInPlace {
+  cursor: pointer;
+  background: #ffc;
+  border: 1px inset;
+}
 acronym, .titleTip {
   border-bottom: 1px dotted #999999;
   cursor: help;

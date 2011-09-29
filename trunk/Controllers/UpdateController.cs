@@ -24,5 +24,18 @@ namespace CC.Controllers {
          Repositories_Update UpdateRep = new Repositories_Update();
          return Json(UpdateRep.Delete(id, DataTable, Ext));
       }
+
+      [HttpPost]
+      public string EditInPlace(string id, string tbl, string update_value, string field) {
+         Repositories_Update UpdateRep = new Repositories_Update();
+         try {
+            UpdateRep.Edit(Convert.ToInt32(id), new string[] { update_value }, new string[] { field }, tbl, "");
+         }
+         catch (Exception e) {
+            // MyEvents.log();
+            update_value = "Klaida:" + e.Message;
+         }
+         return update_value;
+      }
    }
 }

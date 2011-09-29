@@ -24,7 +24,7 @@ Start = () ->
 			CallServer(url,'')##durnam ie turi but butinai stringas
 CallServer=(url,Par,el=$('#main-copy')) -> ##ServerPath,Ar renderint i ta pati diva,Parametrai
 	el.parent().block()
-	$.ajax(url:url, type: 'POST', data:Par, dataType:'json', global:false, cache:false,
+	$.ajax(url:url, type: 'POST', data:Par, dataType:'json',## global:false, cache:false,
 	error: (jqXHR, textStatus, errorThrown) ->	
 		el.html("<center><h2>Ði dalis dar nebaigta(#{Action})</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>")
 		el.parent().unblock()
@@ -84,6 +84,8 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 	GetStringFromIndexes:(id,obj,Indexes) ->
 		Row=@GetRow(id,obj)
 		Row.MapArrToString(Indexes)
-	UpdateCell:(obj,id,ColNo,NewVal) ->
+	UpdateCell:(obj,tblToUpdate,id,field,NewVal) ->
+		ColNo=oDATA.Get(obj).Cols.FNameIndex(field)
 		Row=@GetRow(id,obj)
 		Row[ColNo]=NewVal
+		$.post("/Update/editInPlace", {id:id,tbl:tblToUpdate,update_value:NewVal,field:field})
