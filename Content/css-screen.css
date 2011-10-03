@@ -139,6 +139,7 @@ html > body {
   cursor: pointer;
   background: #ffc;
   border: 1px inset;
+  color: #666666;
 }
 acronym, .titleTip {
   border-bottom: 1px dotted #999999;
