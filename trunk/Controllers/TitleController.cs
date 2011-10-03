@@ -14,35 +14,30 @@ namespace BSData.Controllers {
          return View("../Shared/Start", ViewModel);
       }
 
-      //[HttpPost]
-      //public JsonResult MyEvents(int? Par)//GetAccidentLists()//Naudoja AccidentsCard
-      //{
-      //   //Repository_Users AccRep = new Repository_Users();
-      //   //string View = ""; int AccNo = (AccidentNo.HasValue) ? AccidentNo.Value : 0;
-      //   //clsAccident a = new clsAccident(AccNo);
-      //   //View = RenderPartialViewToString("Card", a);
-      //   //return Json(new {
-      //   //   //Render - pirmas, ExecFn - paskutinis
-      //   //   Render = new { tabAccidents = View },
-      //   //   tblAccidentsTypes = AccRep.GetJSON_tblAccidentTypes(),
-      //   //   proc_Drivers = AccRep.GetJSON_proc_Drivers(false),
-      //   //   ExecFn = new { tabAccidents = "tabs" }
-      //   //});
-      //   return Json("MyEvents");
-      //}
+      [HttpPost]
+      public JsonResult MyEvents() {
+         ViewBag.Title = "Įvykiai";
+         string View = RenderPartialViewToString("../Shared/Grid");
+         Repository_Docs Rep = new Repository_Docs();
+         var obj = new {
+            Render = View,
+            Contracts_Unsigned = Rep.GetJSON_tblContracts_NotApproved(),
+            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
+            tblContracts_Form = Rep.GetJSON_tblContracts_Form(),
+            tblUsers = Rep.GetJSON_tblUsers(),
+            //tblUsers_Status = Rep.GetJSON_tblUsers_Status(),
+            Script = new {
+               //File = "../Scripts/Form/Title_MyEvents.js",
+               //oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan
+            }
+         };
+         return Json(obj);
+      }
 
       [HttpPost]
       public JsonResult Rekvizits(int? Par) {
          string View = RenderPartialViewToString("Rekvizits");
          return Json(new { Render = View, Script = new { File = "../Scripts/Final/Proba.js", Pars = "" } });//}
       }
-
-      //[HttpPost]
-      //public JsonResult AccidentsList() {
-      //   Repositories_Accidents acc = new Repositories_Accidents();
-      //   return Json(new {
-      //      proc_Accidents = acc.GetJSON_proc_Accidents(),
-      //   });
-      //}
    }
 }

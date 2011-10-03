@@ -81,6 +81,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Repository_Title.cs" />
     <Compile Include="Models\Repositories_Files.cs" />
     <Compile Include="Models\Repository_Docs.cs" />
     <Compile Include="Models\Repositories_Update.cs" />
@@ -110,6 +111,10 @@
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Docs_NewContract.js</LastGenOutput>
     </None>
+    <None Include="Scripts\General\Copy of MyPlugins2.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>Copy of MyPlugins2.js</LastGenOutput>
+    </None>
     <None Include="Scripts\General\MyPlugins2.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>MyPlugins2.js</LastGenOutput>
@@ -126,11 +131,17 @@
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>clsGrid.js</LastGenOutput>
     </None>
+    <Content Include="Scripts\Form\Title_MyEvents.js" />
     <Content Include="Scripts\Form\Docs_Contracts_Grid.js" />
     <Content Include="Scripts\Form\Docs_NewContract.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Docs_NewContract.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\General\Copy of MyPlugins2.js">
+      <DependentUpon>Copy of MyPlugins2.coffee</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Content>
     <Content Include="Scripts\General\MyPlugins2.js">
       <AutoGen>True</AutoGen>

@@ -48,6 +48,8 @@ fnSetNewData = (jsRes,el=$('#main-copy')) ->
 	else if Action=="Contracts_Unsigned" or Action=="Contracts_Valid" or Action=="Contracts_Expired"
 		@oSCRIPT=jsRes.Script.oSCRIPT if jsRes.Script.oSCRIPT
 		Contracts_Grid()
+	if  Action=="MyEvents"
+		Title_MyEvents()
 	else if jsRes.Script
 		$.getScript(jsRes.Script.File) if jsRes.Script.File
 		@oSCRIPT=jsRes.Script.oSCRIPT if jsRes.Script.oSCRIPT
@@ -85,7 +87,8 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 		Row=@GetRow(id,obj)
 		Row.MapArrToString(Indexes)
 	UpdateCell:(obj,tblToUpdate,id,field,NewVal) ->
-		ColNo=oDATA.Get(obj).Cols.FNameIndex(field)
+		ColNo=if (typeof(field)=="number") then field else oDATA.Get(obj).Cols.FNameIndex(field)
+		alert("Updatinimui reikalingas lauko pavadinimas") if (typeof(field)=="number" and tblToUpdate)
 		Row=@GetRow(id,obj)
 		Row[ColNo]=NewVal
-		$.post("/Update/editInPlace", {id:id,tbl:tblToUpdate,update_value:NewVal,field:field})
+		$.post("/Update/editInPlace", {id:id,tbl:tblToUpdate,update_value:NewVal,field:field}) if tblToUpdate

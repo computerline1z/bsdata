@@ -19,7 +19,7 @@ textarea{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:bor
 .validity-erroneous{border:solid 2px #f56600!important}
 body{color:black;background-color:#f0f0f0;font-family:verdana,helvetica,arial,sans-serif;font-size:71%;margin:0;padding:0}
 html>body{font-size:8.5pt}
-.editInPlace{cursor:pointer;background:#ffc;border:1px inset}
+.editInPlace{cursor:pointer;background:#ffc;border:1px inset;color:#666}
 acronym,.titleTip{border-bottom:1px dotted #999;cursor:help;margin:0;padding:0 0 .4px 0}
 .doNotDisplay{display:none}
 .smallCaps{font-size:110%;font-variant:small-caps}

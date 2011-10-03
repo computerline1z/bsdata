@@ -69,12 +69,15 @@
       }
     }
     if (Action === "Contracts_New") {
-      return NewContract();
+      NewContract();
     } else if (Action === "Contracts_Unsigned" || Action === "Contracts_Valid" || Action === "Contracts_Expired") {
       if (jsRes.Script.oSCRIPT) {
         this.oSCRIPT = jsRes.Script.oSCRIPT;
       }
-      return Contracts_Grid();
+      Contracts_Grid();
+    }
+    if (Action === "MyEvents") {
+      return Title_MyEvents();
     } else if (jsRes.Script) {
       if (jsRes.Script.File) {
         $.getScript(jsRes.Script.File);
@@ -139,15 +142,20 @@
     },
     UpdateCell: function(obj, tblToUpdate, id, field, NewVal) {
       var ColNo, Row;
-      ColNo = oDATA.Get(obj).Cols.FNameIndex(field);
+      ColNo = typeof field === "number" ? field : oDATA.Get(obj).Cols.FNameIndex(field);
+      if (typeof field === "number" && tblToUpdate) {
+        alert("Updatinimui reikalingas lauko pavadinimas");
+      }
       Row = this.GetRow(id, obj);
       Row[ColNo] = NewVal;
-      return $.post("/Update/editInPlace", {
-        id: id,
-        tbl: tblToUpdate,
-        update_value: NewVal,
-        field: field
-      });
+      if (tblToUpdate) {
+        return $.post("/Update/editInPlace", {
+          id: id,
+          tbl: tblToUpdate,
+          update_value: NewVal,
+          field: field
+        });
+      }
     }
   };
 }).call(this);
