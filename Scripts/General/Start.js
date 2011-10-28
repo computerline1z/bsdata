@@ -39,7 +39,7 @@
       data: Par,
       dataType: 'json',
       error: function(jqXHR, textStatus, errorThrown) {
-        el.html("<center><h2>Ši dalis dar nebaigta(" + Action + ")</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>");
+        el.html("<center><h2>ši dalis dar nebaigta(" + Action + ")</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>");
         return el.parent().unblock();
       },
       success: function(jsRes, textStatus, jqXHR) {
@@ -69,15 +69,16 @@
       }
     }
     if (Action === "Contracts_New") {
-      NewContract();
+      return NewContract();
     } else if (Action === "Contracts_Unsigned" || Action === "Contracts_Valid" || Action === "Contracts_Expired") {
       if (jsRes.Script.oSCRIPT) {
         this.oSCRIPT = jsRes.Script.oSCRIPT;
       }
-      Contracts_Grid();
-    }
-    if (Action === "MyEvents") {
+      return Contracts_Grid();
+    } else if (Action === "MyEvents") {
       return Title_MyEvents();
+    } else if (Action === "ClientsList") {
+      return Clients_ClientsList_Grid();
     } else if (jsRes.Script) {
       if (jsRes.Script.File) {
         $.getScript(jsRes.Script.File);
@@ -96,9 +97,7 @@
   this.oDATA = {
     Obj: {},
     Set: function(objData, oINST) {
-      if (!this.Obj[objData]) {
-        return this.Obj[objData] = oINST;
-      }
+      return this.Obj[objData] = oINST;
     },
     Get: function(objData) {
       return this.Obj[objData];
@@ -128,10 +127,19 @@
       }
       return _results;
     },
-    GetData: function(obj) {
+    GetData: function(obj, Cols) {
       if (typeof obj === "string") {
-        return this.Obj[obj].Data;
+        if (Cols) {
+          return this.Obj[obj].Cols;
+        } else {
+          return this.Obj[obj].Data;
+        }
       } else {
+        if (Cols) {
+          obj.Cols;
+        } else {
+          obj.Data;
+        }
         return obj.Data;
       }
     },
@@ -156,6 +164,22 @@
           field: field
         });
       }
+    },
+    GetNewData: function(DataToSave, oTable, obj, ClickedRow) {
+      var Cols, Row, RowI, aPos, i, len;
+      Cols = this.GetData(obj, true);
+      aPos = oTable.fnGetPosition(ClickedRow[0]);
+      Row = oTable.fnGetData(aPos);
+      i = 0;
+      len = DataToSave.Fields.length;
+      while (i < len) {
+        RowI = Cols.FNameIndex(DataToSave.Fields[i]);
+        if (RowI) {
+          Row[RowI] = DataToSave.Data[i];
+        }
+        i++;
+      }
+      return Row;
     }
   };
 }).call(this);

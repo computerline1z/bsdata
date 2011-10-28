@@ -81,6 +81,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Repository_Clients.cs" />
     <Compile Include="Models\Repository_Title.cs" />
     <Compile Include="Models\Repositories_Files.cs" />
     <Compile Include="Models\Repository_Docs.cs" />
@@ -131,12 +132,18 @@
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>clsGrid.js</LastGenOutput>
     </None>
+    <Content Include="Scripts\Form\Clients_ClientsList_Grid.js" />
     <Content Include="Scripts\Form\Title_MyEvents.js" />
     <Content Include="Scripts\Form\Docs_Contracts_Grid.js" />
     <Content Include="Scripts\Form\Docs_NewContract.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Docs_NewContract.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\General\clsEditableForm.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>clsEditableForm.coffee</DependentUpon>
     </Content>
     <Content Include="Scripts\General\Copy of MyPlugins2.js">
       <DependentUpon>Copy of MyPlugins2.coffee</DependentUpon>
@@ -154,7 +161,10 @@
       <DependentUpon>Start.coffee</DependentUpon>
     </Content>
     <Content Include="Scripts\Plugins\jquery.swfupload.js" />
+    <Content Include="Scripts\Plugins\Temp.js" />
     <Content Include="Views\Docs\NewContract.cshtml" />
+    <Content Include="Views\Clients\ClientEvents.cshtml" />
+    <Content Include="Views\Clients\NewEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Mail.ConfirmRegistration.lt.htm" />
@@ -249,11 +259,6 @@
     <Content Include="Scripts\General\Server.js" />
     <Content Include="Scripts\Plugins\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\Plugins\jquery-1.6.2.min.js" />
-    <Content Include="Scripts\General\clsEditableForm.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>clsEditableForm.coffee</DependentUpon>
-    </Content>
     <Content Include="Scripts\General\clsGrid.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

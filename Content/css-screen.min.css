@@ -2,6 +2,7 @@
 table thead tr th{cursor:pointer;font-size:1.5em;padding:.5em}
 html{overflow-y:scrool;min-height:101%}
 label input[type=checkbox]{padding-left:0;margin-left:0;cursor:pointer}
+body.wait *{cursor:wait!important}
 label.toplabel>span{display:block;cursor:pointer}
 label.leftlabel>span{width:15em;margin:0;padding:0;cursor:pointer;display:inline-block}
 label.toplabel input[type=text],label.top textarea{width:100%;margin:0;padding:0}
@@ -19,7 +20,7 @@ textarea{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:bor
 .validity-erroneous{border:solid 2px #f56600!important}
 body{color:black;background-color:#f0f0f0;font-family:verdana,helvetica,arial,sans-serif;font-size:71%;margin:0;padding:0}
 html>body{font-size:8.5pt}
-.editInPlace{cursor:pointer;background:#ffc;border:1px inset;color:#666}
+.editInPlace{cursor:pointer;background:#ffc;color:#666}
 acronym,.titleTip{border-bottom:1px dotted #999;cursor:help;margin:0;padding:0 0 .4px 0}
 .doNotDisplay{display:none}
 .smallCaps{font-size:110%;font-variant:small-caps}

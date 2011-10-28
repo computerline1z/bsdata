@@ -1,10 +1,12 @@
-class @clsEditableForm
-	##opt={objData:??, Action:Edit/Add/Delete, aRowData:[??], oTable:[optcija ], ClickedRow[opcija kai klikinta is grido], RenderHTML:[opcija], CallBackAfterSave}
-	id=0; oData={}; Config={}; GenNameWhat=""; Row={}; oData={}; Action={}; RenderHTML=0; ClickedRow=0;oTable=if oTable then oTable else 0
+ï»¿class @clsEditableForm
+	##opt={objData:??, Action:Edit/Add/Delete, aRowData:[??], oTable:[optcija ], Title:??, DialogFormId(divDialogForm) ClickedRow[opcija kai klikinta is grido], RenderHTML:[opcija], CallBackAfterSave}
+	id=0; oData={}; Config={}; GenNameWhat=""; Row={}; oData={}; Action={}; RenderHTML=0; op={}; ClickedRow=0;oTable=if oTable then oTable else 0
 	CallBackAfterSave=0
 	constructor: (opt) ->
-		$("body").css("cursor","wait");
+		$("body").css("cursor","wait")
 		id=if opt.aRowData? then opt.aRowData[0] else 0 ##jei 0 reiskia naujas irasas
+		op=opt
+		if (!op.DialogFormId) then op.DialogFormId="divDialogForm" 
 		oTable=if opt.oTable? then opt.oTable else 0
 		oData=oDATA.Get(opt.objData)
 		Action=opt.Action
@@ -20,11 +22,15 @@ class @clsEditableForm
 				if rows[0]==id 
 					Row.Data = rows
 					break
-		Title=if Action=="Add" then Config.Msg.AddNew else Config.Msg.Edit
-		if Config.Msg.AddToTitle
-			AddToTitle = for ix in Config.Msg.AddToTitle
-				Row.Data[ix]
-			Title+=" "+AddToTitle.join(' ')
+		if (opt.Title)
+			Title=opt.Title
+		else
+			Title=if Action=="Add" then Config.Msg.AddNew else Config.Msg.Edit
+			if Config.Msg.AddToTitle
+				AddToTitle = for ix in Config.Msg.AddToTitle
+					Row.Data[ix]
+				Title+=" "+AddToTitle.join(' ')
+
 		@fnLoadEditableForm(Title)
 		$("body").css("cursor","default");
 
@@ -33,7 +39,7 @@ class @clsEditableForm
 		dlgEditableOpt =	
 			autoOpen: false, minWidth: '45em', minHeight: '40em', width: '60em', modal: true, title: Title, draggable: true
 			buttons:
-				"Iðsaugoti pakeitimus": () ->
+				"IÅ¡saugoti pakeitimus": () ->
 
 							DataToSave=oGLOBAL.ValidateForm($('#divEditableForm'))
 							if DataToSave
@@ -45,7 +51,7 @@ class @clsEditableForm
 										if Action=="Add"
 											Row.Data=new Array(RowLength) ##inicializuojam nauja Arr jei "Add"
 											Row.Data[0]=resp.ResponseMsg.ID;
-										##Prabegam ið eilës per visus  per visus Row.Cols[RowI].FName ir suraðom kà keitëm arba ástatom default values (Add keisis visi, Edit tik dalis)
+										##Prabegam iÅ¡ eilÄ—s per visus  per visus Row.Cols[RowI].FName ir suraÅ¡om kÄ… keitÄ—m arba Ä¯statom default values (Add keisis visi, Edit tik dalis)
 										while RowI<RowLength-1 
 											updI=0;Found=0;RowI++##Pradedam ne nuo 0, nes ten ID ir jis neupdatinamas
 											while updI<updLength
@@ -56,12 +62,22 @@ class @clsEditableForm
 											## jei nera tokio lauko ir pridedam nauja irasa idedam defaultine arba tuscia reiksme ir iskertam null, nes meta errorus kisant i grida
 											if (not Found and Action=="Add") 
 												if Row.Cols[RowI].Default?
-													Row.Data[RowI]=if Row.Cols[RowI].Default=="Today" then fnGetTodayDateString() else Row.Cols[RowI].Default
+													if Row.Cols[RowI].Default=="Today"
+														Row.Data[RowI]=fnGetTodayDateString()
+													else if Row.Cols[RowI].Default=="UserName"
+														Row.Data[RowI]=UserData.Name()
+													else if Row.Cols[RowI].Default=="UserId"
+														Row.Data[RowI]=UserData.Id()
+													else	
+														Row.Data[RowI]=Row.Cols[RowI].Default
+												else if Row.Cols[RowI].UpdateField ##pvz Date
+													f=Row.Cols[RowI].UpdateField
+													Row.Data[RowI]=updData.DataToSave[f]
 												else
 													Row.Data[RowI]=""
 											if Row.Data[RowI]==null
 												Row.Data[RowI]=""
-										##Prabegam per visus jau suraðytus Row.Data ir jei ten stovi IdInMe, tada áraðom teksta is kitos lenteles (kad nepalikt tuscio lauko)
+										##Prabegam per visus jau suraÅ¡ytus Row.Data ir jei ten stovi IdInMe, tada Ä¯raÅ¡om teksta is kitos lenteles (kad nepalikt tuscio lauko)
 										RowI=0
 										while RowI<RowLength-1
 											RowI++
@@ -74,30 +90,30 @@ class @clsEditableForm
 										oDATA.UpdateRow(Row.Data,oData,Action)##Updatinam duomenis masyve
 										if CallBackAfterSave
 											CallBackAfterSave(Row.Data)
-										$("#divDialogForm").dialog("close")
+										$("#"+op.DialogFormId).dialog("close")
 								Msg: "", BlockCtrl:$('#divEditableForm')
 								)
 							else if DataToSave==0##reiskia, kad niekas nepakeista
-								$("#divDialogForm").dialog("close")
-				"Iðtrinti": () -> 
+								$("#"+op.DialogFormId).dialog("close")
+				"IÅ¡trinti": () -> 
 							$(this).dialog("close")
-				"Atðaukti": () -> 
+				"AtÅ¡aukti": () -> 
 							$(this).dialog("close")
 			close: () ->
 				$(this).remove()
 			dragStart: () ->
 				$("div.validity-modal-msg").remove()
-		_html=if (RenderHTML) then RenderHTML else @fnGenerateHTML(Row,id)
+		_html=if (op.RenderHTML) then op.RenderHTML else @fnGenerateHTML(Row,id)
 		$( "#dialog:ui-dialog" ).dialog("destroy")
-		$("<div id='divDialogForm'></div>").html(_html).dialog(dlgEditableOpt).dialog('open')
+		$("<div id='"+op.DialogFormId+"'></div>").html(_html).dialog(dlgEditableOpt).dialog('open')
 		oCONTROLS.UpdatableForm($("#divEditableForm"))	##I pusiau sugeneruota forma (Extend) sudedam likusius dalykus 
-		form=$("#divDialogForm").parent()
-		form.find("button:contains('Iðsaugoti')").attr("disabled","disabled").addClass("ui-state-disabled")
-		form.find("input").bind('click keyup', -> 
-			form.find("button:contains('Iðsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled"))
+		form=$("#"+op.DialogFormId).parent()
+		form.find("button:contains('IÅ¡saugoti')").attr("disabled","disabled").addClass("ui-state-disabled")
+		form.find("input, textarea").bind('click keyup', -> 
+			form.find("button:contains('IÅ¡saugoti')").removeAttr("disabled").removeClass("ui-state-disabled"))
 		form.find("div.ExtendIt button").click -> 
-			form.find("button:contains('Iðsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled")
-		form.find("button:contains('Iðtrinti')").css("display","none");
+			form.find("button:contains('IÅ¡saugoti')").removeAttr("disabled").removeClass("ui-state-disabled")
+		form.find("button:contains('IÅ¡trinti')").css("display","none");
 
 	fnGenerateHTML: (Row, id) ->
 		Length=Row.Cols.length; i=0;html="";Head=""
@@ -121,6 +137,125 @@ class @clsEditableForm
 		"<div id='divEditableForm' class='inputform' style='margin:0 2em;' data-ctrl='{#{Head}}'>#{html}</div>"
 
 		##Pakeitimu oTable ir oData issaugojimo funkcijos
+
+class @clsEditInPlaceForm
+	##{url:??,postPars:??, tblProp(kur yra Editable properciai),formTitle:??,EditableFormId:??(cia rasomi - id,Source,tblUpdate),Grid:{DoomId:??,Opt:??,Source:??}(nebutina)}
+	##postPars:{ ClientID: e.data.ID, onlyData: false }
+	opt={};DataToSave={Fields:[],Data:[],id:0,DataTable:""};oTablel=null##i ji kisim issaugotus duomenis
+	constructor: (options) ->
+		$("body").addClass("wait")
+		opt=options
+		$.post(opt.url,opt.postPars,(jsRes)->
+			for Name, obj of jsRes when Name not in["Render","Script"]
+				oDATA.Set(Name, jsRes[Name])
+			if jsRes.Script
+				$.getScript(jsRes.Script.File) if jsRes.Script.File
+				oSCRIPT=jsRes.Script.oSCRIPT if jsRes.Script.oSCRIPT
+
+			if jsRes.Render
+				fnLoadForm(opt.formTitle,jsRes.Render,opt.tblProp,opt.EditableFormId,opt.Buttons)
+				##opt.fnReturnRender(jsRes.Render)##grazinam saukianciam atsiusta html
+			else
+				alert("clsEditInPlaceForm nera Render objekto!")
+			$("body").removeClass("wait")
+		)
+
+	fnLoadForm = (formTitle,htmlToRender,tblProp,EditableFormId,Buttons)->
+		oTable=null
+		Buttons=if Buttons? then Buttons else {}
+		$.extend(Buttons, "UÅ¾daryti": () ->
+				opt.fnFieldsUpdatedCallBack(DataToSave) if opt.fnFieldsUpdatedCallBack and DataToSave.Data
+				$(this).remove()
+				)
+		dlgFormOpt=autoOpen:false, position: ['center', 50]
+		resize:'auto',
+		##height:'auto',nifiga neveikia - uz keturiu eiluciu ikisu ranka
+		minWidth:'45em',width:'65em'
+		modal:true,title:formTitle,draggable:true##minHeight:'20em'
+		buttons: Buttons
+		close: () -> 
+			opt.fnFieldsUpdatedCallBack(DataToSave) if opt.fnFieldsUpdatedCallBack and DataToSave.Data
+			$(this).remove()
+		dragStart: () -> $("div.validity-modal-msg").remove()
+		$("<div id='divDialogForm' style='overflow:auto'></div>").html(htmlToRender).ModifyDoom(tblProp:tblProp,EditableFormId:EditableFormId,DataToSave).dialog(dlgFormOpt).dialog('open').css("height","auto")
+		##oCONTROLS.UpdatableForm($("#"+opt.EditableFormId)) if opt.EditableFormId
+		oTable=$('#'+opt.Grid.DoomId).clsGrid(opt.Grid.Opt, opt.Grid.Source) if opt.Grid
 	
-						
-	
+$.fn.ModifyDoom = (opt,DataToSave) ->
+	t=@.find("#"+opt.EditableFormId)##ieskom ne doome, o perduotam htmoriginalHTMLl
+	frmOpt=eval("("+(t.attr("data-ctrl"))+")")## kadangi gali but stringas negalim naudot t.data('ctrl')//id,Source,tblUpdate
+	DataToSave.id=frmOpt.id;DataToSave.DataTable=frmOpt.tblUpdate;
+	objProp=oDATA.Get(opt.tblProp)
+	t.find('div.EditInPlace, span.EditInPlace').each(()->
+		##@.editInPlace({ field_type: @.data("ctrl").field_type, params: "id="+id+"&tbl="+tblUpdate+"&field="+@.data("ctrl").Field }
+		el=$(@); OldVal=el.html()
+		eOpt=eval("("+(el.attr("data-ctrl"))+")")
+		ix=objProp.Cols.FNameIndex(eOpt.Field)
+		fnFinishedEdit=(NewVal,NewText)->
+			el.html('<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>')
+			$.post("/Update/editInPlace",{id:frmOpt.id,tbl:frmOpt.tblUpdate,update_value:NewVal,field:eOpt.Field,show_value:NewText}
+			(resp,a,b)->
+				if (resp.ErrorMsg)
+					Alert(resp.ErrorMsg, "Klaida iÅ¡saugant duomenis")
+					el.html(OldVal)
+				else
+				el.html(resp.ResponseMsg);OldVal=resp.ResponseMsg
+				DataToSave.Data.push(resp.ResponseMsg)##Jei reiks updatinti lentele ir oDATA
+				DataToSave.Fields.push(eOpt.Field)
+			)
+		del=didOpenEditInPlace:($Node, aSettings) ->
+			$Node.attr("width",$Node.width())
+			w=if ($Node.width()<200) then 200 else $Node.width()
+			$Node.find('textarea').width(w)
+			$Node.find('input').width(w)
+		if objProp.Cols[ix].List##List
+			del.shouldOpenEditInPlace=($Node, aSettings, trigEvent) -> 
+				return false if $Node.find("input").length>0
+				eHTML=oCONTROLS.txt(
+					"data_ctrl": JSON.stringify($.extend({},objProp.Cols[ix].List,{FName:objProp.Cols[ix].FName}))
+					"classes": "ui-widget-content ui-corner-all", "text": $Node.html()
+				)
+				$Node.html(eHTML).find('input').ComboBox(fnValueChanged:(NewVal, NewText)->fnFinishedEdit(NewVal,NewText)).focus()
+					.bind("blur",(e)->
+						interval=setInterval( ()->
+							atr=$("ul.ui-autocomplete").css("display")
+							if (atr=="none" or atr==undefined)
+								el.html(OldVal)
+								clearInterval(interval)
+						3000)
+					)
+					##t=$(e.target)
+					##if (objProp.Cols[ix].List.ListType=="List")
+				false
+		else if eOpt.Plugin##setMask, datapicker
+			del.shouldOpenEditInPlace=($Node, aSettings, trigEvent) -> 
+				return false if $Node.find("input").length>0 
+				$Node.html("<input type='text'></input>")
+				input=$Node.find("input"); input.val(OldVal)
+				for Name, Prop of eOpt.Plugin
+					if (Name=="datepicker")
+						$.extend(Prop, onClose: (dateText, inst) -> fnFinishedEdit(dateText,null))
+						input.attr("readonly","readonly")[Name](Prop).focus()
+					else if (Name=="mask")
+						input[Name](Prop).focus().bind("blur", (e)->
+							t=$(e.target);v=t.mask('value')
+							if v and v!=OldVal then fnFinishedEdit(v,null)
+							else $Node.empty().html(OldVal)
+						)
+				false
+		##$.extend(del,{shouldOpenEditInPlace:shouldOpenEditInPlace}) if shouldOpenEditInPlace
+		editOpt=
+			field_type: if (eOpt.field_type) then eOpt.field_type else objProp.Cols[ix].field_type
+			delegate:del
+			callback:(idOfEditor, NewVal,OldVal,settingsPar,callbacks) -> 
+				##$.post("/Update/editInPlace", {id:frmOpt.id,tbl:frmOpt.tblUpdate,update_value:NewVal,field:eOpt.Field},(newContent,a,b)->el.html(newContent)) if NewVal!=OldVal
+				fnFinishedEdit(NewVal,null)
+				'<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>'
+			delegate:del
+			##show_buttons:true
+		$(@).editInPlace(editOpt).qtip(
+			position: {at: 'top center', my: 'bottom center'}
+			content: objProp.Grid.aoColumns[ix].sTitle
+		)		
+	)
+	@##Grazinam objekto toliau procesint

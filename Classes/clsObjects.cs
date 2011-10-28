@@ -17,6 +17,8 @@
 
    public class jsonResponse {
 
+      public jsonResponse() { ErrorMsg = ""; ResponseMsg = ""; }
+
       public string ErrorMsg { get; set; }
 
       public object ResponseMsg { get; set; }

@@ -133,7 +133,7 @@
            modalErrorsClickable: true,
 
            // If a field name cannot be otherwise inferred, this will be used:
-           defaultFieldName: "This field",
+           defaultFieldName: "Šį lauką",
 
            // jQuery selector to filter down to validation-supported elements:
            elementSupport: ":text, :password, textarea, select, :radio, :checkbox",
@@ -1140,9 +1140,10 @@
             ret=$.validity.settings.defaultFieldName;
 
       // Check for title.
-      if($f.attr("title").length) {
+      if($f.attr("title")) { //.length
          ret=$f.attr("title");
       }
+      if (ret.length) {return ret;}
 
       // Check for UpperCamelCase.
       else if(/^([A-Z0-9][a-z]*)+$/.test(field.id)) {
