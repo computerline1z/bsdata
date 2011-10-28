@@ -19,15 +19,15 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
    },
    //prideda lbl prie txt, txtarea, chk. p.label={txt:"labelio tekstas", classes:"lblclass", type:"Top/Left"}
    appendLabel: function(p, t) {
-      if(typeof p.label==='undefined') { return t; } else { return (p.label.type==="Top")?"<label class='toplabel'><span>"+p.label.txt+"</span>"+t+"</label>":"<label class='leftlabel'><span>"+p.label.txt+":</span>"+t+"</label>"; }
+      if(!p.label.txt) return t;
+      if(typeof p.label==='undefined'||p.label==='None') { return t; } else { return (p.label.type==="Top")?"<label class='toplabel'><span>"+p.label.txt+"</span>"+t+"</label>":"<label class='leftlabel'><span>"+p.label.txt+":</span>"+t+"</label>"; }
    },
    //appendLabel: function(p, t) { if(typeof p.label==='undefined') { return t; } else { return (p.label.type==="Top")?"<label><div"+((p.label.classes)?" class='"+p.label.classes+"'":"")+">"+p.label.txt+"</div>"+t+"</label>":"<label"+((p.label.classes)?" class='"+p.label.classes+"'":"")+">"+p.label.txt+t+"</label>"; } },
    //kaip basic + p.text
-   txt: function(p) { return this.appendLabel(p, "<input type='text' "+this.basic(p)+((p.text)?'value="'+p.text+'" ':'')+"/>"); },
-   //kaip basic + p.label
-   //kaip basic + p.text
-   a: function(p) { return "<a "+this.basic(p)+" href='javascript:void(0);return false;'>"+p.value+"</a>"; },
-   txtarea: function(p) { return this.appendLabel(p, "<textarea cols='100' rows='4' "+this.basic(p)+">"+((p.text)?p.text:"")+"</textarea>"); },
+   txt: function(p) { return this.appendLabel(p, "<input type='text' "+this.basic(p)+((p.Value)?'value="'+p.Value+'" ':'')+"/>"); },
+   hidden: function(p) { return this.appendLabel(p, "<input type='hidden' "+this.basic(p)+((p.Value)?'value="'+p.Value+'" ':'')+"/>"); },
+   a: function(p) { return "<a "+this.basic(p)+" href='javascript:void(0);return false;'>"+p.Value+"</a>"; },
+   txtarea: function(p) { return this.appendLabel(p, "<textarea cols='100' rows='4' "+this.basic(p)+">"+((p.Value)?p.Value:"")+"</textarea>"); },
    chk: function(p) {
       if(typeof p.Value==="string") { p.Value=((p.Value.search(/false/i)> -1)?0:1); } return "<label"+((p.label.classes)?" class='"+p.label.classes+"'":"")+((p.attr)?p.attr+" ":"")+"><input type='checkbox' "+this.basic(p)+((p.Value)?"checked='checked'":"")+"/>"+((p.label.txt)?p.label.txt:"")+"</label>";
    },
@@ -107,82 +107,87 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
    },
    UpdatableForm: function(frm) {
       //frm data-ctrl:: labelType:Top/Left/undefined,
-      var eName, frmOpt=$(frm).data('ctrl');
-      var data=oDATA.Get(frmOpt.Source),
+      var sTitle, frmOpt=$(frm).data('ctrl');
+      var data=(frmOpt.Source==='NoData')?"NoData":oDATA.Get(frmOpt.Source),
        eCols=data.Cols; if(typeof data==='undefined') { alert('Source undefined in UpdatableForm(objFunc:79)!'); }
       log('<div>==========UpdatableForm========</div>');
       $(frm).find('div.ExtendIt, span.ExtendIt').each(function() {
-         var e=$(this), eOpt=e.data('ctrl'), eHTML='', ix=0, classes='ui-widget-content ui-corner-all', id='', Value='', attr='', data_ctrl={};
+         var e=$(this), eOpt=e.data('ctrl'), eHTML='', ix=0, data_ctrl={};
          log("-------------------------------");
          log("Elementas:"+e[0].tagName+"; id:"+e.attr("id")+"; klase:"+e.attr("class")+"; e.data('ctrl'):"+typeof e.data("ctrl"));
          if(typeof eOpt.Control!=="undefined") { if(eOpt.Control==="swfUpload"&&typeof frmOpt.id==="undefined") { return true; } else { e[eOpt.Control](eOpt); return true; } } //swfUpload nerenderinam jei naujas dokumentas
-         //Surandam lauko indeksa
-         for(var i=0; i<eCols.length; i++) { if(eCols[i].FName===eOpt.Field) { ix=i; eName=data.Grid.aoColumns[i].sTitle; break; } }
-         if(ix===0) { alert('Wrong Field indicated '+eOpt.Field+' in UpdatableForm(objFunc:84)!'); }
-         log("Surastas laukas:'"+eOpt.Field+"'");
-
+         if(data!=="NoData") {
+            //Surandam lauko indeksa
+            for(var i=0; i<eCols.length; i++) { if(eCols[i].FName===eOpt.Field) { ix=i; sTitle=data.Grid.aoColumns[i].sTitle; break; } }
+            if(ix===0) { alert('Wrong Field indicated '+eOpt.Field+' in UpdatableForm(objFunc:84)!'); }
+            log("Surastas laukas:'"+eOpt.Field+"'");
+         } else { sTitle=(eOpt.sTitle)?eOpt.sTitle:""; }
          //#region duomenu is data.Cols[ix] ir eOpt(elemento data('ctrl')) surasymas i data_ctrl arba i propercius
-         var col=data.Cols[ix], input;
+         var col=(data==="NoData")?{}:data.Cols[ix], input;
          col=$.extend(col, eOpt); //overridinu data.Cols<----e.data('ctrl')
+
+         var Type=(col.List)?"List":col.Type;
+         if(!Type) { alert("Nesusiparsino ctrl elemento objFunc.js-UpdatableForm"); return true; }
+
+         var AddToClasses="ui-widget-content ui-corner-all UpdateField";
+         if(Type==='Integer'||Type==='Decimal') { AddToClasses+=" number"; }
+         else if(Type==="List") { col.Type="List"; }
+         else if(Type) { if(Type.search("Date")!== -1) { AddToClasses+=" date"; } }    //classes+' text', textarea,
+
+         col.classes=(col.classes)?col.classes+" "+AddToClasses:AddToClasses;
+         col.Value=(col.Value)?col.Value:"";
+
          for(var prop in col) {
-            //if(prop==='Validity'||prop==='Tip'||prop==='Field'||prop==='Type'||prop==='labelType') { data_ctrl[prop]=col[prop]; } // if(prop==='Tip') { classes+=' defaultText'; }
             if(prop==='List') { $.extend(data_ctrl, col[prop]); data_ctrl.Type="List"; } //Listo propercius dedu vienam lygyje su kitais
-            else if(prop==='classes') { classes+=' '+col[prop]; }
-            else if(prop==='id') { id=col[prop]; }
-            else if(prop==='attr') { attr=col[prop]; }
-            else if(prop==='Value') { Value=(col[prop])?(col[prop]):""; data_ctrl[prop]=Value; }
-            else { data_ctrl[prop]=col[prop]; }
+            else if(prop==='Value'||prop==='Validity'||prop==='AgrValidity'||prop==='Tip'||prop==='Field'||prop==='Type'||prop==='Ext'||prop==='UpdateField') { data_ctrl[prop]=col[prop]; }
          }
-         classes=(classes)?"UpdateField "+classes:"UpdateField"; //Pagal nutylejima ikisu UpdateField i classes, panaikint galim tik su spec parametru
+
          data_ctrl=JSON.stringify(data_ctrl);
          log("data_ctrl stringas:"+data_ctrl);
+         if(Type==='Integer'||Type==='Decimal') { data_ctrl=data_ctrl.replace("match('integer')", "match(integer)").replace("match('number')", "match(number)"); }
+         else if(Type.search("Date")!== -1) { data_ctrl=data_ctrl.replace("match('date')", "match(date)"); }
+         $.extend(col, { data_ctrl: data_ctrl }, { label: { "txt": sTitle, "type": col.labelType} });
          //#endregion
 
-         //elemento html kurimas ir irasymas - Listas arba paprastas
-         if(typeof col.List!=='undefined') {
-            eHTML+=oCONTROLS.txt({ "data_ctrl": data_ctrl, "title": eName, "classes": classes+' text', "id": id, "attr": attr, "label": { "txt": eName, "type": col.labelType} });
-            input=$(eHTML).prependTo(e).find('input').ComboBox();
+         //var CtrlOpt={ "Value": Value, "data_ctrl": data_ctrl, "title": sTitle, "classes": classes, "id": id, "attr": attr, "label": { "txt": sTitle, "type": col.labelType} }
+         if(Type==='List') {
+            eHTML+=oCONTROLS.txt(col);
+            input=$(eHTML).prependTo(e).parent().find('input').ComboBox();
          }
-         else if(typeof col.Type!=='undefined') {
-            var Type=col.Type;
-            if(Type==='Boolean') { eHTML=oCONTROLS.chk({ "Value": Value, "data_ctrl": data_ctrl, "label": { "txt": eName }, "classes": classes, "id": id, "attr": attr }); $(eHTML).prependTo(e); } //.find('input:checkbox');
-            if(Type==='String'||Type==='Email') {
-               var len=(typeof col.LenMax==='undefined')?0:col.LenMax;
-               if(len<101) {
-                  eHTML+=oCONTROLS.txt({ "data_ctrl": data_ctrl, "text": Value, "title": eName, "classes": classes+' text', "id": id, "attr": attr, "label": { "txt": eName, "type": col.labelType} });
-                  input=$(eHTML).prependTo(e).find('input:first');
-               } else {
-                  eHTML+=oCONTROLS.txtarea({ "data_ctrl": data_ctrl, "text": Value, "title": eName, "classes": classes+' textarea', "id": id, "attr": attr, "label": { "txt": eName, "type": col.labelType} });
-                  input=$(eHTML).prependTo(e).find('textarea:first');
-               }
-            }
-            if(Type==='Integer'||Type==='Decimal') {
-               data_ctrl=data_ctrl.replace("match('integer')", "match(integer)").replace("match('number')", "match(number)");
-               eHTML+=oCONTROLS.txt({ "data_ctrl": data_ctrl, "text": Value, "title": eName, "classes": classes+" number", "id": id, "attr": attr, "label": { "txt": eName, "type": col.labelType} });
-               input=$(eHTML).prependTo(e).find('input').ValidateOnBlur({ Allow: Type });
-            }
-            if(Type.search("Date")!== -1) {// Date DateNotMore DateNotLess DateNotMoreCtrl DateNotLessCtrl
-               //classes+=classes+' date';
-               var isTime=0;
-               data_ctrl=data_ctrl.replace("match('date')", "match(date)");
-
-               //if(Type.search("Ctrl")!== -1) { var ctrl=1; classes+=classes+' '+Type; } //Dadeda DateNotLessCtrl ar pan. ko gero nereikia
-               if((typeof Value==='undefined'||Value==="")&&typeof col.Default!=='undefined') { Value=fnGetTodayDateString(); }  //Jei col.Default.Today
-               if(Type.search("Time")!== -1) { var TimeValue=(Value.length>=16)?Value.substring(11, 16):"00:00"; isTime=1; }
-               Value=Value.substring(0, 11);
-
-               eHTML+=oCONTROLS.txt({ "data_ctrl": data_ctrl, "text": Value, "title": "Dienos data", "classes": classes+" date", "id": id, "attr": attr, "label": { "txt": eName, "type": eOpt.labelType} });
-               if(isTime) { eHTML+=oCONTROLS.txt({ "text": TimeValue, "style": "margin-left:20px;", "title": "Laikas", "classes": "time ui-widget-content ui-corner-all" }); } // UpdateField nereikia, nes..
-               input=$(eHTML).prependTo(e).find('input:first');
-               input.ValidateOnBlur({ Allow: 'date' });
-            }
-            if(col.Plugin) {
-               $.each(col.Plugin, function(name, value) {
-                  input[name](value);
-               });
+         else if(Type==='Boolean'||Type==='checkbox') { eHTML=oCONTROLS.chk(col); $(eHTML).prependTo(e); } //.find('input:checkbox');
+         else if(Type==='String'||Type==='Email'||Type==="text"||Type==="textarea"||Type==="hidden") {
+            var len=(typeof col.LenMax==='undefined')?0:col.LenMax;
+            if(Type==="hidden") {
+               eHTML+=oCONTROLS.hidden(col);
+               input=$(eHTML).prependTo(e).parent().find('input:first');
+            } else if(len<101&&Type!=="textarea") {
+               eHTML+=oCONTROLS.txt(col);
+               input=$(eHTML).prependTo(e).parent().find('input:first');
+            } else {
+               eHTML+=oCONTROLS.txtarea(col);
+               input=$(eHTML).prependTo(e).parent().find('textarea:first');
             }
          }
-         else { log('<p style="color:red;">objFunc.js, UpdatableForm, elementas ne Listas ir neturi Type - neaišku ką pildyti</p>'); }
+         else if(Type==='Integer'||Type==='Decimal') {
+            eHTML+=oCONTROLS.txt(col);
+            input=$(eHTML).prependTo(e).parent().find('input').ValidateOnBlur({ Allow: Type });
+         }
+         else if(Type.search("Date")!== -1) {// Date DateNotMore DateNotLess DateNotMoreCtrl DateNotLessCtrl
+            var isTime=0;
+            if(!col.Value&&col.Default==="Today") { col.Value=fnGetTodayDateString(); }  //Jei col.Default.Today
+            if(Type.search("Time")!== -1) { var TimeValue=(col.Value.length>=16)?col.Value.substring(11, 16):"00:00"; isTime=1; }
+            col.Value=col.Value.substring(0, 11);
+
+            eHTML+=oCONTROLS.txt(col);
+            if(isTime) {
+               eHTML+=oCONTROLS.txt({ "text": TimeValue, "style": "margin-left:20px;", "title": "Laikas", "classes": "time ui-widget-content ui-corner-all" });
+            } // UpdateField nereikia, nes..
+            input=$(eHTML).prependTo(e).parent().find('input:first');
+            input.ValidateOnBlur({ Allow: 'date' });
+         }
+         if(col.Plugin) {
+            $.each(col.Plugin, function(name, value) { input[name](value); });
+         }
          if(typeof input!=='undefined') {
             input.val($.trim(input.val()));
             if(typeof col.Tip!=='undefined') { input.labelify({ labelledClass: " inputTip ", text: function(input) { return $(input).data('ctrl').Tip; } }); }       //, labelledClass: "inputTip"
@@ -284,7 +289,6 @@ var oGLOBAL={
       if(p.BlockCtrl) { p.BlockCtrl.block({ message: "Siunčiami duomenys.." }); }
       //UpdateServer: function(Action, DataToSave, tblToUpdate, callBack, Ext) {
       //Wait.Show(); //Action-Delete,Add,Edit
-      //window.setTimeout("Wait.Hide()", 10)
       ////////////if(typeof p.DataToSave.Ext=='undefined') { DataToSave["Ext"]=(Ext)?Ext:''; } //Ext pagal nutylejima ateina is DataToSave.Ext
 
       var url="/Update/"+p.Action, updData=p; //{ "Action": p.Action, "DataToSave": p.DataToSave, "CallBack": p.CallBack, "Msg": p.Msg };
@@ -328,7 +332,7 @@ var oGLOBAL={
       log("<div>====ValidaeForm, id:"+(id)?id:"-"+", NewRec:"+NewRec+"====</div>");
       $.each(frm.find(".UpdateField"), function(i, v) {
          log("---------------------------");
-         var e=$(v); var elDesc=e[0].tagName+", id-"+e.attr("id"), Value, cTip=(e.data("ctrl").Tip)?e.data("ctrl").Tip:"";
+         var e=$(v); var elDesc=e[0].tagName+", id-"+e.attr("id"), Value, UpdateField=(e.data("ctrl").UpdateField)?e.data("ctrl").UpdateField:false;
 
          if(e.data("ctrl")===undefined) { alert("Nerasta data(ctrl),el: "+elDesc); return true; }
          log("OK,el: "+elDesc);
@@ -342,27 +346,33 @@ var oGLOBAL={
             } else {
                Type=e.data("ctrl").Type;
                var Validity=(e.data("ctrl").Validity)?e.data("ctrl").Validity:"";
-               if(Type.substring(0, 4)=="Date") {
+               if(Type==="hidden") {
+                  val=e.val();
+               } else if(Type.substring(0, 4)=="Date") {
                   Validity=(Validity.replace(/match\(date\)/g, "match('date')"));
+                  val=e.val(); eval("e."+Validity);
                   if(Type.search(/time/i)> -1) {
                      var TimeCtrl=e.parent().next()
                      TimeCtrl.match(/^\d{2}[:]\d{2}$/, "Laikas turi būt sekančio formato - valandos:minutės");
                      val=val+" "+TimeCtrl.val()+":00"; //Prie laiko pridedam valandas
                   }
-               }
-               if(cTip&cTip===val&&Type.substring(0, 4)!=="Date") e.val(""); //Isvalom tipus jei yra (isskyrus datos)
-               if(Type==="Decimal"||Type==="Integer") { e.val(e.val().replace(/,/g, ".")); Validity=Validity.replace(/match\(number\)/g, "match('number')").replace(/match\(integer\)/g, "match('integer')"); }
-               if(Type==="List") {
+               } else if(Type==="List") {
                   if(e.data("newval")) { val=e.data("newval"); } //log("ui, val:"+(val)?"":val);
                   else { e.val(""); e.require("Reikalinga parinkti reikšmę iš sarašo.."); }
                } else {
+                  var cTip=(e.data("ctrl").Tip)?e.data("ctrl").Tip:"", IsTip=false;
+                  if(cTip&&cTip===e.val()) { e.val(""); IsTip=true; } //Isvalom tipus jei yra (isskyrus datos)
+
+                  if(Type==="Decimal"||Type==="Integer") { e.val(e.val().replace(/,/g, ".")); Validity=Validity.replace(/match\(number\)/g, "match('number')").replace(/match\(integer\)/g, "match('integer')"); }
                   val=e.val();
                   var CheckIt=(id)?(OldVal!=val?true:false):true; //Jei naujas tikrinam, jei senas tikrinam tik jei pasikeite
                   var Require=Validity.search(/require/i)> -1;
                   var NotEmpty=(val==="")?false:true;
+
                   if(CheckIt&&(Require||NotEmpty)) {//Pasikeite reiksme && (Require arba Netuscias)
                      if(Validity) eval("e."+Validity); //Validuojam tik jei skirtingos reiksmes
                   }
+                  if(IsTip) { e.val(cTip); } //Grazinam tipus
                }
             }
             if(typeof e.data("ctrl").AgrValidity!=='undefined') {//Jeigu reikia uzpildyti viena is privalomu lauku
@@ -376,7 +386,8 @@ var oGLOBAL={
             }
          }
          if(OldVal!=val||(val===0&&OldVal==="")) {
-            DataToSave.Data.push(val); DataToSave.Fields.push(FName);  //Add to DataToSave
+            if(UpdateField) { DataToSave[UpdateField]=val; }
+            else { DataToSave.Data.push(val); DataToSave.Fields.push(FName); } //Add to DataToSave
             log("Save element: val-"+val+", OldVal-"+OldVal+", Type-"+Type);
          }
       });
@@ -393,26 +404,6 @@ var oGLOBAL={
       if(ValRes.valid&&DataToSave.Data.length) { if(!NewRec) { DataToSave["id"]=id; }; return DataToSave; }
       else if(ValRes.valid) return 0//reiskia, kad niekas nepakeista
       else return false;
-   }, SetTips: function() {//Priminimu sudejimas i laukus
-      //Pirmiausiai reikia sudet klases ir data-ctrl
-      $('.ui-autocomplete-input, select').each(function(index) {
-         var ui=$(this), lbl; if(ui.is("select")) lbl=ui.prev(); else lbl=ui.prev().prev();
-         ui.addClass("defaultText"); if(oGLOBAL.FormData.NewRec) { ui.addClass("defaultTextActive"); }
-         if(lbl.attr("data-ctrl")) { ui.attr("data-ctrl", lbl.attr('data-ctrl')); }
-      });
-      $(".defaultText").focus(function(srcc) {
-         var t=$(this); if(t.data("ctrl")===undefined) return;
-         if(t.val()==t.data("ctrl").Tip) { t.val(""); } t.removeClass("defaultTextActive");
-      });
-      $(".defaultText").blur(function() {
-         log(".defaultText blur id:"+$(this).attr("id"));
-         var t=$(this); if(t.data("ctrl")===undefined) return;
-         if(t.hasClass("date")) { if($("#ui-datepicker-div").is(':visible')) t.val(t.data("ctrl").Tip); return; }
-         if(t.val()=="") { t.addClass("defaultTextActive"); t.val(t.data("ctrl").Tip); log("add tip:"+t.data("ctrl").Tip); }
-      });
-      $("select").focus(function() { if($(this).hasClass("defaultTextActive")) { $(this).removeClass("defaultTextActive"); } });
-      $("select").blur(function() { if($(this).val()==0) { $(this).addClass("defaultTextActive"); } });
-      $(".defaultText").blur(); //Priminimu sudejimas
    }, Validate: {
       IsNumeric: function(val) {
          var re=/(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)/;
@@ -425,7 +416,13 @@ var oVALIDATE={
       var re=/(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)/;
       if(re.test(val)) return true; return false;
    },
-   IsYear: function(val) { }
+   IsYear: function(val) { },
+   Element: function(Element, ValidationRule) {
+      $.validity.start();
+      if(!ValidationRule) return true;
+      eval("$(Element)."+ValidationRule);
+      return $.validity.end();
+   }
 };
 
 function exec_GetTableHTML(DataObject) {

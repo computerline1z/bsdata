@@ -1,0 +1,11 @@
+﻿@using BSData.Classes;
+<div id="divEditableForm" data-ctrl='{"NewRec":1,"Source":"NoData", "tblUpdate":"tblClients_Events"}'>
+   <div class='ExtendIt' data-ctrl='{"Field":"ClientID", "Type":"hidden", "Value":"ClientID_Value"}'>
+   </div>
+   <div class='ExtendIt' data-ctrl='{"Field":"UserID", "Type":"hidden", "Value":@UserData.UserID}'>
+   </div>
+   <div class='ExtendIt' style="float: right;" data-ctrl='{"Field":"Date", "UpdateField":"Date", "Validity":"require().nonHtml().maxLength(10)", "Type":"Date", "style":"float:right;", "labelType":"Left", "sTitle":"Įvykio data", "Default":"Today","Plugin":{"datepicker":{"minDate":"-1y","maxDate":"0"}}}'>
+   </div>
+   <div class='ExtendIt' style="height: 5em; clear: both;" data-ctrl='{"Field":"Msg", "Validity":"require().nonHtml().maxLength(1000)", "style":"height:5em;width:100%", "Type":"textarea", "Tip":"Parašykite su kuo kalbėta ir esmę apie ką.."}'>
+   </div>
+</div>

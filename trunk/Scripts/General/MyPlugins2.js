@@ -19,9 +19,9 @@
         btn: btn
       }, fnSetNewStatus = function(e) {
         if (opts.StatusID > 3) {
-          Alert("Sutartis jau sutvarkyta", "Jeigu yra klausimų kreipkitės pas administraciją");
+          Alert("Sutartis jau sutvarkyta", "Jeigu yra klausimø kreipkitës pas administracijà");
         } else {
-          return Confirm(opts.question[opts.StatusID], "Spauskite 'Gerai' jei sutinkate, 'Atšaukti' jei ne", function(taip) {
+          return Confirm(opts.question[opts.StatusID], "Spauskite 'Gerai' jei sutinkate, 'Atðaukti' jei ne", function(taip) {
             if (taip) {
               opts.StatusID++;
               e.data.btn.qtip({
@@ -54,9 +54,33 @@
           secondary: "img16-check"
         }
       ],
-      tip: ["", "Nauja sutartis.<br /> Patvirtiniti sutartį?", "Patvirtinta sutartis.<br /> Įjungti paslaugas?", "Paslaugos įjungtos.<br /> Perkelti prie sutvarkytų?", "Suartis sutvarkyta. Jokių kitų veiksmų<br /> su šia sutartimi nereikia."],
-      question: ["", "Ar patvirtinate sutarties įsigaliojimą?", "Ar įjungtos paslaugos pagal sutartį?", "Ar gauti visi dokumentai ir sutartis sutvarkyta?"],
+      tip: ["", "Nauja sutartis.<br /> Patvirtiniti sutartá?", "Patvirtinta sutartis.<br /> Ájungti paslaugas?", "Paslaugos ájungtos.<br /> Perkelti prie sutvarkytø?", "Suartis sutvarkyta. Jokiø kitø veiksmø<br /> su ðia sutartimi nereikia."],
+      question: ["", "Ar patvirtinate sutarties ásigaliojimà?", "Ar ájungtos paslaugos pagal sutartá?", "Ar gauti visi dokumentai ir sutartis sutvarkyta?"],
       enableEvents: false
     }
+  });
+  this.clsUserData = (function() {
+    var u;
+    u = "";
+    function clsUserData() {
+      u = $("#header").data("user");
+      $("#header").attr("data-user", "");
+      if (typeof u !== "object") {
+        alert("No user object");
+      }
+    }
+    clsUserData.prototype.Id = function() {
+      return u.Id;
+    };
+    clsUserData.prototype.Name = function() {
+      return u.Name;
+    };
+    clsUserData.prototype.Email = function() {
+      return u.Email;
+    };
+    return clsUserData;
+  })();
+  $(function() {
+    return window.UserData = new clsUserData;
   });
 }).call(this);

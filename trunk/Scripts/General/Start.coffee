@@ -48,8 +48,10 @@ fnSetNewData = (jsRes,el=$('#main-copy')) ->
 	else if Action=="Contracts_Unsigned" or Action=="Contracts_Valid" or Action=="Contracts_Expired"
 		@oSCRIPT=jsRes.Script.oSCRIPT if jsRes.Script.oSCRIPT
 		Contracts_Grid()
-	if  Action=="MyEvents"
+	else if  Action=="MyEvents"
 		Title_MyEvents()
+	else if Action=="ClientsList"
+		Clients_ClientsList_Grid()
 	else if jsRes.Script
 		$.getScript(jsRes.Script.File) if jsRes.Script.File
 		@oSCRIPT=jsRes.Script.oSCRIPT if jsRes.Script.oSCRIPT
@@ -59,8 +61,8 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 @oDATA=
 	Obj: {}
 	Set: (objData, oINST) ->
-		if not @Obj[objData]
-			@Obj[objData]=oINST
+		##if not @Obj[objData]
+		@Obj[objData]=oINST
 	Get: (objData) ->
 		@Obj[objData]
 	UpdateRow:(Row,obj,Action) ->
@@ -78,10 +80,11 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 			i++
 			if Data[i][0]==id
 				return Data[i]
-	GetData:(obj) ->
+	GetData:(obj,Cols) ->
 		if typeof obj=="string"
-			@Obj[obj].Data
+			if Cols then @Obj[obj].Cols else @Obj[obj].Data
 		else
+			if Cols then obj.Cols else obj.Data
 			obj.Data
 	GetStringFromIndexes:(id,obj,Indexes) ->
 		Row=@GetRow(id,obj)
@@ -92,3 +95,27 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 		Row=@GetRow(id,obj)
 		Row[ColNo]=NewVal
 		$.post("/Update/editInPlace", {id:id,tbl:tblToUpdate,update_value:NewVal,field:field}) if tblToUpdate
+	##Updatina laukus oTable
+	##UpdateFields:(DataToSave,oTable,obj,ClickedRow) ->##DataToSave:{Data:[],Fields:[],id:0,DataTable:"dsf"}
+	##	Cols=@GetData(obj,true)
+	##	##Row=@GetRow(DataToSave.id,obj)
+	##	aPos=oTable.fnGetPosition(ClickedRow[0])
+	##	Row=oTable.fnGetData(aPos)
+	##	i=0;len=DataToSave.Fields.length
+	##	while (i<len)
+	##		RowI=Cols.FNameIndex(DataToSave.Fields[i])
+	##		Row[RowI]=DataToSave.Data[i] if RowI	
+	##		i++
+	##	oTable.fnUpdate(Row, aPos, 0)
+	GetNewData:(DataToSave,oTable,obj,ClickedRow) ->##DataToSave:{Data:[],Fields:[],id:0,DataTable:"dsf"}
+		Cols=@GetData(obj,true)
+		##Row=@GetRow(DataToSave.id,obj)
+		aPos=oTable.fnGetPosition(ClickedRow[0])
+		Row=oTable.fnGetData(aPos)
+		i=0;len=DataToSave.Fields.length
+		while (i<len)
+			RowI=Cols.FNameIndex(DataToSave.Fields[i])
+			Row[RowI]=DataToSave.Data[i] if RowI	
+			i++
+		Row
+		##oTable.fnUpdate(Row, aPos, 0)

@@ -34,7 +34,7 @@
             },
             Error: {
               Add: "Nepavyko išsaugoti naujos sutarties",
-              Edit: "Nepavyko išsaugoti pakeitimų sutartyje"
+              Edit: "Nepavyko išsaugoti pakeitimø sutartyje"
             }
           },
           BlockCtrl: form

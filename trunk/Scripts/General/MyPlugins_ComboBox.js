@@ -105,6 +105,7 @@
             else if(t.hasClass('alink')&&!newVal) { t.removeClass('alink').unbind('dblclick'); }
          }
          if(opt.ListType!=="List") { input.removeClass("activeField"); }
+         if(opt.fnValueChanged&&input.data("newval")) { opt.fnValueChanged(input.data("newval"), input.val()); } //NewVal,NewText
       }, open: function() {
          if(opt.ListType!=="List") { if(!input.hasClass("activeField")) { input.addClass("activeField"); } }
          if(opt.ListType=="None") {

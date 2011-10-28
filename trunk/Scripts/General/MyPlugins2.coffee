@@ -29,3 +29,16 @@ $.extend $.fn.ButtonStatuses,
 		question: ["","Ar patvirtinate sutarties ásigaliojimà?","Ar ájungtos paslaugos pagal sutartá?","Ar gauti visi dokumentai ir sutartis sutvarkyta?"]
 		enableEvents: false
 		##taip pat reikia tblSource, tblUpdate, FieldName (jei updatinam)
+class @clsUserData
+	u=""
+	constructor: () ->
+		u=$("#header").data("user")
+		##$("#header").data("user","")
+		$("#header").attr("data-user","")
+		alert("No user object") if typeof(u)!="object"
+	Id: () -> u.Id
+	Name: () -> u.Name
+	Email: () -> u.Email
+$ ->
+	window.UserData = new clsUserData
+	

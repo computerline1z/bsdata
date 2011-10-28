@@ -9,7 +9,7 @@ using BSData.Models;
 namespace CC.Models {
    public interface IUpdate {
 
-      jsonResponse AddNew(string[] Data, string[] Fields, string DataTable, string Ext);
+      jsonResponse AddNew(string[] Data, string[] Fields, string DataTable, string Ext, DateTime? Date);
 
       jsonResponse Edit(Int32 id, string Data, string Field, string DataTable, string Ext);
 
@@ -30,7 +30,7 @@ namespace CC.Models {
 
       private string GetStringFromArrComma(string[] Arr) { return string.Join(",", Arr); }
 
-      public jsonResponse AddNew(string[] Data, string[] Fields, string DataObject, string Ext) {
+      public jsonResponse AddNew(string[] Data, string[] Fields, string DataObject, string Ext, DateTime? Date) {
          jsonResponse JsonResp = new jsonResponse { ErrorMsg = "", ResponseMsg = "" };
          SqlConnection con = new SqlConnection(conStr);
          SqlCommand cmd = new SqlCommand("proc_Update_AddNew", con);
@@ -49,6 +49,7 @@ namespace CC.Models {
 
          cmd.Parameters.AddWithValue("@UserID", UserData.UserID);
 
+         if (Date.HasValue) { cmd.Parameters.AddWithValue("@Date", Date.Value); }
          try {
             con.Open(); cmd.ExecuteNonQuery(); Int32 ID = Convert.ToInt32(IDout.Value);
             JsonResp.ResponseMsg = new { ID = ID, Ext = ((Extout.Value != null) ? Convert.ToString(Extout.Value) : "") };
@@ -59,7 +60,7 @@ namespace CC.Models {
       }
 
       public jsonResponse Edit(Int32 id, string[] Data, string[] Fields, string DataObject, string Ext) {
-         jsonResponse JsonResp = new jsonResponse { ErrorMsg = "", ResponseMsg = "" };
+         jsonResponse JsonResp = new jsonResponse();
          SqlConnection con = new SqlConnection(conStr);
          SqlCommand cmd = new SqlCommand("proc_Update_Edit", con);
          cmd.CommandType = System.Data.CommandType.StoredProcedure;

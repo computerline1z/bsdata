@@ -1,4 +1,4 @@
-$ = jQuery
+ï»¿$ = jQuery
 $.fn.clsGrid = (GridOpt,objData) ->
 		self = $.fn.clsGrid
 		HeadOk=0; JSON=oDATA.Get(objData); Gopts=GridOpt
@@ -55,13 +55,33 @@ $.fn.clsGrid = (GridOpt,objData) ->
 							LastCell.innerHTML+=" ("+(No)+"vnt.)";No=0;
 						sLastGroup=sGroup; LastCell=nCell;
 					i++
-				LastCell.innerHTML+=" ("+(No+1)+"vnt.)"; ##Pridedamas suskaièiavimas paskutiniam
+				LastCell.innerHTML+=" ("+(No+1)+"vnt.)"; ##Pridedamas suskaiÄiavimas paskutiniam
 
 			)
 		##--------------------------------------------------------------------------------
-		$.extend(true, NewData, self.GridOpt, GridOpt)
+		$.extend(true, NewData, 
+		fnInitComplete:(GridOpt)->
+			GridOpt.fnRowCallback=null
+		oLanguage: ##GridOpt.sScrollY=Height
+			"sLengthMenu": "Rodyti _MENU_ Ä¯r. psl."
+			"sZeroRecords": "Nerasta Ä¯raÅ¡Å³.."
+			"sInfo": "Viso: _TOTAL_" ##"sInfo": "Rodomi _START_-_END_ Ä¯raÅ¡ai iÅ¡ _TOTAL_ "
+			"sInfoEmpty": "Rodoma: 0 - 0 iÅ¡ 0 Ä¯raÅ¡Å³"
+			"sInfoFiltered": "(Filtruota iÅ¡ _MAX_ Ä¯raÅ¡Å³)"
+			"sSearch": "IeÅ¡koti:"
+		"sProcessing": "Laukite.."
+		"bJQueryUI": true
+		"bSortClasses": false
+		"bPaginate": false
+		"sScrollX": "100%"
+		"bScrollCollapse": false     ##???????
+		"clickEvtIsLive": 1 ##Listams 1, accidentui 0
+		"colorAfterNewInsert": 1
+		, GridOpt)
 		##$.extend(true, self.GridOpt, GridOpt, { aaData: JSON.Data }, JSON.Grid)
 		oTable=$(@).dataTable(NewData)
+		##--------------------------------------------------------------------------------
+
 		setTimeout( ()=>
 			$(oTable).css("width","100%") ##Tam, kad islygint lentele(pasigaidina su jqueryUI dizainu)
 			oTable.fnDraw()
@@ -81,7 +101,7 @@ $.fn.clsGrid = (GridOpt,objData) ->
 					##oDATA.UpdateRow(RowData,oData)##Updatinami clsEditableForm
 				eForm = new clsEditableForm(opt)
 			$(@).find('tbody tr').bind('click', fnRowClickEvent)
-			$('<button class="AddNew" title="Pridëti naujà">Pridëti naujà</button>').button({icons:{primary:"img16-add_new"}}).click(->
+			$('<button class="AddNew" title="PridÄ—ti naujÄ…">PridÄ—ti naujÄ…</button>').button({icons:{primary:"img16-add_new"}}).click(->
 				opt.ClickedRow=0
 				opt.aRowData=0
 				opt.Action="Add"
@@ -92,22 +112,3 @@ $.fn.clsGrid = (GridOpt,objData) ->
 			##.bind('click', ->alert("opa1"))
 			##$(@).find('tbody tr').live('click', fnRowClickEvent); live neveikia po grido perpiesimo
 		oTable ##grazinam oTable	
-
-	## JSON = {Data:"", Cols:"", Grid:""} standartinis objektas
-	$.extend $.fn.clsGrid,
-	GridOpt :
-		oLanguage: ##GridOpt.sScrollY=Height
-			"sLengthMenu": "Rodyti _MENU_ ár. psl."
-			"sZeroRecords": "Nerasta áraðø.."
-			"sInfo": "Viso: _TOTAL_" ##"sInfo": "Rodomi _START_-_END_ áraðai ið _TOTAL_ "
-			"sInfoEmpty": "Rodoma: 0 - 0 ið 0 áraðø"
-			"sInfoFiltered": "(Filtruota ið _MAX_ áraðø)"
-			"sSearch": "Ieðkoti:"
-		"sProcessing": "Laukite.."
-		"bJQueryUI": true
-		"bSortClasses": false
-		"bPaginate": false
-		"sScrollX": "100%"
-		"bScrollCollapse": false     ##???????
-		"clickEvtIsLive": 1 ##Listams 1, accidentui 0
-		"colorAfterNewInsert": 1
