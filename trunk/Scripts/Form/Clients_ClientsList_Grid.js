@@ -56,7 +56,8 @@ var Clients_ClientsList_Grid=(function() {
       var fnLoadForm=function() {
          var NewEventHTML=oDATA.Get("NewEventHTML").replace('"ClientID_Value"', p.ClientID);
          opt={ objData: "tblClientEvents", DialogFormId: "divEventsDialog", Action: "Add", RenderHTML: NewEventHTML,
-            Title: ("Naujo įvykio įvedimas klientui - "+p.ClientName), CallBackAfterSave: function(RowData) {
+            Title: ("Naujo įvykio įvedimas klientui - "+p.ClientName), form: p.form, target: p.target,
+            CallBackAfter: function(RowData) {
                var oTable=$("#tblEvents").dataTable();
                var oSettings=oTable.fnSettings();
                var aiNew=oTable.fnAddData(RowData);
@@ -86,19 +87,32 @@ var Clients_ClientsList_Grid=(function() {
       var tr=$(e.target).closest('tr');
       new clsEditInPlaceForm({ url: '/Clients/ClientEvents', postPars: { ClientID: e.data.ID, onlyData: ((oDATA.Get("tblClient_prop"))?true:false) },
          formTitle: "Kliento - "+$(e.target).html()+" - įvykiai",
-         Buttons: { "Naujas įvykis": function() { fnAddNewEvent({ ClientID: e.data.ID, ClientName: $(e.target).html() }) } }, //, uid: "??"
+         //Buttons: { "Naujas įvykis": function() { fnAddNewEvent({ ClientID: e.data.ID, ClientName: $(e.target).html() }) } }, Dialogo apačioje
          EditableFormId: "divClientData",
-         Grid: { DoomId: "tblEvents", Opt: { "bDestroy": true, fnRowCallback: fnRowCallBack_ClientEvents },
-            Source: "tblClientEvents"
-         },          // ,  "bDestroy": true   "bRetrieve": true
+         Grid: { DoomId: "tblEvents", Opt: { "bDestroy": true, fnRowCallback: fnRowCallBack_ClientEvents,
+            GridButtons: { "Pridėti naują įvykį": { Action: function(opt) { fnAddNewEvent({ ClientID: e.data.ID, ClientName: $(e.target).html(), target: opt.target, form: opt.form }) },
+               form: "Head", icon: "img16-add_new"
+            }
+            }
+         }, Source: "tblClientEvents"
+         }, fnUpdateSuccess: function(par) {
+            if(par.eOpt.Field==="NextContactDate") {
+               var Uid=UserData.Id();
+               if(par.ctrl.next().data("ctrl").UserId!==Uid) {
+                  par.ctrl.next().html(oDATA.Get("tblUsers").Data.findColsByID(Uid, [2, 3])); //Jeigu pakeite data, irašom nauja useri jei ne tas pats
+                  $.post("/Update/editInPlace", { id: par.id, tbl: "tblClients", update_value: Uid, field: "NextContactUserID" });
+               }
+            }
+         },         // ,  "bDestroy": true   "bRetrieve": true
          tblProp: "tblClient_prop", //nurodoma is kur imti editable propercius
          fnFieldsUpdatedCallBack: function(DataToSave) {//DataToSave: Data,Fields,id,DataTable
-            for(var i=0; i<DataToSave.Fields.length; i++) {//Pakeiciam tokiais vardais, kurie yra šitam gride - proc_Clients
-               if(DataToSave.Fields[i]==="TownID") { DataToSave.Fields[i]="Town" }
-            }
-            tr.children().unbind(); //Atkabinam visus eventus (nes jie pasilieka keiciant html)
-            var RowData=oDATA.GetNewData(DataToSave, oTable, "proc_Clients", tr); //Updatinam laukus kurie bus pakeisti
-            fnRowCallback(tr[0], RowData);
+            $.post('/Clients/ClientsList1', { RecID: DataToSave.id }, function(jsonResp) {
+               tr.children().unbind(); //Atkabinam visus eventus (nes jie pasilieka keiciant html);
+               var RowData=jsonResp.proc_Clients.Data[0];
+               tr.find("'td:eq(0)'").html(RowData[1]); //Pakeiciam ranka, nes fnRowCallback kisa i cia ta ka turi
+               oDATA.UpdateRow(RowData, "proc_Clients", "Edit")
+               fnRowCallback(tr[0], RowData);
+            });
          }
       });
       return false;
@@ -112,7 +126,7 @@ var Clients_ClientsList_Grid=(function() {
       //.parent().next()//islipam is buttono
       //.editInPlace({ field_type: "textarea", default_text: "", show_buttons: false, params: "id="+aData[0]+"&tbl=tblContracts&field=Status_Description" });
       $(nRow).data("ID", aData[0]);
-      console.log("Init");
+      //console.log("Init");
       return nRow;
    }
    //sDom: "rt", fnRowCallback: _fnRowCallback, fnHeaderCallback: _fnHeaderCallback,

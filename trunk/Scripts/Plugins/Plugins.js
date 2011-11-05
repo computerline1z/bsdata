@@ -1024,8 +1024,8 @@ learn to use a search engine.
       // one of these needs to be non falsy
       if(options.url||options.callback)
          return;
-
-      throw new Error("Need to set either url: or callback: option for the inline editor to work.");
+      options.url="/Update/EditInPlace";
+      //throw new Error("Need to set either url: or callback: option for the inline editor to work.");
    }
 
    /* preload the loading icon if it is configured */

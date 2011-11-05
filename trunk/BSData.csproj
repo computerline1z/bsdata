@@ -160,6 +160,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Start.coffee</DependentUpon>
     </Content>
+    <Content Include="Scripts\Plugins\Copy of jquery-1.6.2.min.js" />
     <Content Include="Scripts\Plugins\jquery.swfupload.js" />
     <Content Include="Scripts\Plugins\Temp.js" />
     <Content Include="Views\Docs\NewContract.cshtml" />
@@ -258,7 +259,7 @@
     <Content Include="Scripts\General\objFunc.js" />
     <Content Include="Scripts\General\Server.js" />
     <Content Include="Scripts\Plugins\jquery-1.6.2-vsdoc.js" />
-    <Content Include="Scripts\Plugins\jquery-1.6.2.min.js" />
+    <Content Include="Scripts\Plugins\jquery-1.7.min.js" />
     <Content Include="Scripts\General\clsGrid.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

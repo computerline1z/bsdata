@@ -3,7 +3,7 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   $ = jQuery;
   $.fn.clsGrid = function(GridOpt, objData) {
-    var Gopts, HeadOk, JSON, NewData, fnRowClickEvent, oTable, opt, self;
+    var AppendToCtrl, Gopts, HeadOk, JSON, NewData, fnRowClickEvent, oTable, self;
     self = $.fn.clsGrid;
     HeadOk = 0;
     JSON = oDATA.Get(objData);
@@ -107,11 +107,11 @@
         return GridOpt.fnRowCallback = null;
       },
       oLanguage: {
-        "sLengthMenu": "Rodyti _MENU_ įr. psl.",
-        "sZeroRecords": "Nerasta įrašų..",
+        "sLengthMenu": "Rodyti _MENU_ ir. psl.",
+        "sZeroRecords": "Nerasta irašu..",
         "sInfo": "Viso: _TOTAL_",
-        "sInfoEmpty": "Rodoma: 0 - 0 iš 0 įrašų",
-        "sInfoFiltered": "(Filtruota iš _MAX_ įrašų)",
+        "sInfoEmpty": "Rodoma: 0 - 0 iš 0 irašu",
+        "sInfoFiltered": "(Filtruota iš _MAX_ irašu)",
         "sSearch": "Ieškoti:"
       },
       "sProcessing": "Laukite..",
@@ -128,40 +128,57 @@
       $(oTable).css("width", "100%");
       return oTable.fnDraw();
     }, this), 100);
-    opt = {
-      objData: objData,
-      Action: "",
-      aRowData: 0,
-      ClickedRow: 0
-    };
     if (GridOpt.fnEditRowOnClick) {
       fnRowClickEvent = function(event) {
-        var eForm;
-        opt.ClickedRow = this;
-        opt.aRowData = oTable.fnGetData(oTable.fnGetPosition(this));
-        opt.Action = "Edit";
-        opt.CallBackAfterSave = function(RowData) {
+        var opt;
+        opt = {
+          objData: objData,
+          Action: "Edit",
+          ClickedRow: this,
+          aRowData: oTable.fnGetData(oTable.fnGetPosition(this))
+        };
+        opt.CallBackAfter = function(RowData) {
           var aPos;
           aPos = oTable.fnGetPosition(opt.ClickedRow);
           return oTable.fnUpdate(RowData, aPos, 0);
         };
-        return eForm = new clsEditableForm(opt);
+        return new clsEditableForm(opt);
       };
       $(this).find('tbody tr').bind('click', fnRowClickEvent);
-      $('<button class="AddNew" title="Pridėti naują">Pridėti naują</button>').button({
-        icons: {
-          primary: "img16-add_new"
-        }
-      }).click(function() {
-        var eForm;
-        opt.ClickedRow = 0;
-        opt.aRowData = 0;
-        opt.Action = "Add";
-        opt.CallBackAfterSave = function(RowData) {
-          return oTable.fnAddData(RowData);
-        };
-        return eForm = new clsEditableForm(opt);
-      }).appendTo('div.dataTables_wrapper>div:first');
+    }
+    if (GridOpt.GridButtons) {
+      AppendToCtrl = $(this).parent().parent().parent().find('div:first');
+      $.each(GridOpt.GridButtons, function(btnTitle, prop) {
+        var icon;
+        icon = prop.icon ? {
+          icons: {
+            primary: prop.icon
+          }
+        } : {};
+        return $('<button class="AddNew" title=' + btnTitle + '>' + btnTitle + '</button>').button(icon).click(function(e) {
+          prop.objData = objData;
+          if (e.target) {
+            if (!$(e.target).is("button")) {
+              prop.target = $(e.target).parent();
+            } else {
+              prop.target = $(e.target);
+            }
+            $(prop.target).css("display", "none");
+          }
+          if (prop.form === "Head") {
+            prop.form = $("<div></div>").insertAfter(AppendToCtrl).css("margin-bottom", "10px");
+          }
+          if (prop.Action === "Add") {
+            prop.aRowData = 0;
+            prop.CallBackAfter = function(RowData) {
+              return oTable.fnAddData(RowData);
+            };
+            return new clsEditableForm(prop);
+          } else {
+            return prop.Action(prop);
+          }
+        }).appendTo(AppendToCtrl);
+      });
     }
     return oTable;
   };

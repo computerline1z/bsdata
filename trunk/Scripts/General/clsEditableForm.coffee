@@ -1,120 +1,125 @@
 ﻿class @clsEditableForm
-	##opt={objData:??, Action:Edit/Add/Delete, aRowData:[??], oTable:[optcija ], Title:??, DialogFormId(divDialogForm) ClickedRow[opcija kai klikinta is grido], RenderHTML:[opcija], CallBackAfterSave}
-	id=0; oData={}; Config={}; GenNameWhat=""; Row={}; oData={}; Action={}; RenderHTML=0; op={}; ClickedRow=0;oTable=if oTable then oTable else 0
-	CallBackAfterSave=0
-	constructor: (opt) ->
+	##opt={objData:??, Action:Edit/Add/Delete, aRowData:[??], Title:??, DialogFormId(divDialogForm),RenderHTML:[opcija], CallBackAfter
+	##GridButtons:{form:"Dialog"/"Head"/Container(doom el),Action:"Add"/function,icon}
+	id=0; oData={}; Config={};Row={}; oData={}; Action={};
+	opt={DialogFormId:"divDialogForm",fnAddNewForm:"Dialog",CallBackAfter:0,aRowData:0}
+	constructor: (options) ->
 		$("body").css("cursor","wait")
+		opt.Title=0##Isimena ankstesni (nuresetinam)
+		$.extend(opt,options)
 		id=if opt.aRowData? then opt.aRowData[0] else 0 ##jei 0 reiskia naujas irasas
-		op=opt
-		if (!op.DialogFormId) then op.DialogFormId="divDialogForm" 
-		oTable=if opt.oTable? then opt.oTable else 0
 		oData=oDATA.Get(opt.objData)
 		Action=opt.Action
-		CallBackAfterSave=if(opt.CallBackAfterSave) then opt.CallBackAfterSave else 0
 		unless oData?
 			alert("Neradau objekto #{opt.objData} clsEditableForm klaseje")
-		Config=oData.Config
-		GenNameWhat=Config.Msg.GenNameWhat
 		Row = Cols:oData.Cols, Grid:oData.Grid, Data:opt.aRowData
-		ClickedRow=if(opt.ClickedRow) then opt.ClickedRow else 0
 		if id and not Row.Data? ##jei yra id ir nera Row.Data surasom duomenis is oData
 			for rows in oData.Data
 				if rows[0]==id 
 					Row.Data = rows
 					break
-		if (opt.Title)
-			Title=opt.Title
-		else
-			Title=if Action=="Add" then Config.Msg.AddNew else Config.Msg.Edit
-			if Config.Msg.AddToTitle
+		if (!opt.Title)
+			Config=oData.Config
+			opt.Title=if Action=="Add" then Config.Msg.AddNew else Config.Msg.Edit
+			if Config.Msg.AddToTitle and Action=="Edit"##Kuriant nauja neturim ka rodyti
 				AddToTitle = for ix in Config.Msg.AddToTitle
 					Row.Data[ix]
-				Title+=" "+AddToTitle.join(' ')
-
-		@fnLoadEditableForm(Title)
+				opt.Title+=" - "+AddToTitle.join(' ')
+		@fnLoadEditableForm()
+			##tr=opt.fnAddNewForm.grid.find("tbody tr:first");colspan=tr.find('td').length
+			##insertedRow=$("tr").attr("colspan",colspan).insertBefore(tr)
+			##Cia viska sumetam, o ant fnSave ismetam ir pan
 		$("body").css("cursor","default");
 
-	fnLoadEditableForm: (Title) ->
-		FormTitle=if id then Config.Msg.Edit else Config.Msg.AddNew
-		dlgEditableOpt =	
-			autoOpen: false, minWidth: '45em', minHeight: '40em', width: '60em', modal: true, title: Title, draggable: true
-			buttons:
-				"Išsaugoti pakeitimus": () ->
-
-							DataToSave=oGLOBAL.ValidateForm($('#divEditableForm'))
-							if DataToSave
-								oGLOBAL.UpdateServer(Action: Action, DataToSave: DataToSave,
-								CallBack:
-									Success:(resp,updData) -> ##{ "Action": p.Action, "DataToSave": p.DataToSave, "CallBack": p.CallBack, "Msg": p.Msg };
-										RowLength=Row.Cols.length; RowI=0
-										updLength=updData.DataToSave.Fields.length
-										if Action=="Add"
-											Row.Data=new Array(RowLength) ##inicializuojam nauja Arr jei "Add"
-											Row.Data[0]=resp.ResponseMsg.ID;
-										##Prabegam iš eilės per visus  per visus Row.Cols[RowI].FName ir surašom ką keitėm arba įstatom default values (Add keisis visi, Edit tik dalis)
-										while RowI<RowLength-1 
-											updI=0;Found=0;RowI++##Pradedam ne nuo 0, nes ten ID ir jis neupdatinamas
-											while updI<updLength
-												if Row.Cols[RowI].FName==updData.DataToSave.Fields[updI]
-													Row.Data[RowI]=updData.DataToSave.Data[updI]
-													Found=1; break
-												updI++
-											## jei nera tokio lauko ir pridedam nauja irasa idedam defaultine arba tuscia reiksme ir iskertam null, nes meta errorus kisant i grida
-											if (not Found and Action=="Add") 
-												if Row.Cols[RowI].Default?
-													if Row.Cols[RowI].Default=="Today"
-														Row.Data[RowI]=fnGetTodayDateString()
-													else if Row.Cols[RowI].Default=="UserName"
-														Row.Data[RowI]=UserData.Name()
-													else if Row.Cols[RowI].Default=="UserId"
-														Row.Data[RowI]=UserData.Id()
-													else	
-														Row.Data[RowI]=Row.Cols[RowI].Default
-												else if Row.Cols[RowI].UpdateField ##pvz Date
-													f=Row.Cols[RowI].UpdateField
-													Row.Data[RowI]=updData.DataToSave[f]
-												else
-													Row.Data[RowI]=""
-											if Row.Data[RowI]==null
-												Row.Data[RowI]=""
-										##Prabegam per visus jau surašytus Row.Data ir jei ten stovi IdInMe, tada įrašom teksta is kitos lenteles (kad nepalikt tuscio lauko)
-										RowI=0
-										while RowI<RowLength-1
-											RowI++
-											if Row.Cols[RowI].IdInMe
-												ix=Row.Cols[RowI].IdInMe
-												id=Row.Data[ix]
-												obj=Row.Cols[ix].List.Source
-												TextId=Row.Cols[ix].List.iText
-												Row.Data[RowI]=oDATA.GetStringFromIndexes(id,obj,TextId)
-										oDATA.UpdateRow(Row.Data,oData,Action)##Updatinam duomenis masyve
-										if CallBackAfterSave
-											CallBackAfterSave(Row.Data)
-										$("#"+op.DialogFormId).dialog("close")
-								Msg: "", BlockCtrl:$('#divEditableForm')
-								)
-							else if DataToSave==0##reiskia, kad niekas nepakeista
-								$("#"+op.DialogFormId).dialog("close")
-				"Ištrinti": () -> 
-							$(this).dialog("close")
-				"Atšaukti": () -> 
-							$(this).dialog("close")
-			close: () ->
-				$(this).remove()
-			dragStart: () ->
-				$("div.validity-modal-msg").remove()
-		_html=if (op.RenderHTML) then op.RenderHTML else @fnGenerateHTML(Row,id)
-		$( "#dialog:ui-dialog" ).dialog("destroy")
-		$("<div id='"+op.DialogFormId+"'></div>").html(_html).dialog(dlgEditableOpt).dialog('open')
+	fnLoadEditableForm: () ->
+		if !opt.form or opt.form=="Dialog"
+			dlgEditableOpt = 
+				autoOpen: false, minWidth: '45em', minHeight: '40em', width: '60em', modal: true, title: opt.Title, draggable: true
+				buttons:
+					"Išsaugoti pakeitimus": () -> fnSaveChanges()
+					"Ištrinti": () -> $(this).dialog("close")
+					"Atšaukti": () -> $(this).dialog("close")
+				close: () -> $(this).remove()
+				dragStart: () -> $("div.validity-modal-msg").remove()
+			_html=if (opt.RenderHTML) then opt.RenderHTML else @fnGenerateHTML(Row,id)
+			$( "#dialog:ui-dialog" ).dialog("destroy")
+			$("<div id='"+opt.DialogFormId+"'></div>").html(_html).dialog(dlgEditableOpt).dialog('open')
+		else
+			_html=if (opt.RenderHTML) then opt.RenderHTML else @fnGenerateHTML(Row,id)
+			$(_html)
+				.append('<button style="float:right;" title="Atšaukti">Atšaukti</button>').find('button:last').button().click( ->fnResetForm())
+				.end().append('<button style="float:right;" title="Išsaugoti">Išsaugoti</button>').find('button:last').button().click( ->fnSaveChanges())
+				.end().appendTo(opt.form)
+				.append('<div style="clear:both;"></div>').prepend("<h3>"+opt.Title+"</h3>")
 		oCONTROLS.UpdatableForm($("#divEditableForm"))	##I pusiau sugeneruota forma (Extend) sudedam likusius dalykus 
-		form=$("#"+op.DialogFormId).parent()
+		form=$("#"+opt.DialogFormId).parent()
 		form.find("button:contains('Išsaugoti')").attr("disabled","disabled").addClass("ui-state-disabled")
 		form.find("input, textarea").bind('click keyup', -> 
 			form.find("button:contains('Išsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled"))
 		form.find("div.ExtendIt button").click -> 
 			form.find("button:contains('Išsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled")
 		form.find("button:contains('Ištrinti')").css("display","none");
-
+	fnResetForm=() ->
+		opt.target.css("display","block") if opt.target
+		opt.form.empty()
+	fnSaveChanges=() ->
+		DataToSave=oGLOBAL.ValidateForm($('#divEditableForm'))
+		if DataToSave
+			oGLOBAL.UpdateServer(Action: Action, DataToSave: DataToSave,
+			CallBack:
+				Success:(resp,updData) -> ##{ "Action": p.Action, "DataToSave": p.DataToSave, "CallBack": p.CallBack, "Msg": p.Msg };
+					RowLength=Row.Cols.length; RowI=0
+					updLength=updData.DataToSave.Fields.length
+					if Action=="Add"
+						Row.Data=new Array(RowLength) ##inicializuojam nauja Arr jei "Add"
+						Row.Data[0]=resp.ResponseMsg.ID;
+					##Prabegam iš eilės per visus  per visus Row.Cols[RowI].FName ir surašom ką keitėm arba įstatom default values (Add keisis visi, Edit tik dalis)
+					while RowI<RowLength-1 
+						updI=0;Found=0;RowI++##Pradedam ne nuo 0, nes ten ID ir jis neupdatinamas
+						while updI<updLength
+							if Row.Cols[RowI].FName==updData.DataToSave.Fields[updI]
+								Row.Data[RowI]=updData.DataToSave.Data[updI]
+								Found=1; break
+							updI++
+						## jei nera tokio lauko ir pridedam nauja irasa idedam defaultine arba tuscia reiksme ir iskertam null, nes meta errorus kisant i grida
+						if (not Found and Action=="Add") 
+							if Row.Cols[RowI].Default?
+								if Row.Cols[RowI].Default=="Today"
+									Row.Data[RowI]=fnGetTodayDateString()
+								else if Row.Cols[RowI].Default=="UserName"
+									Row.Data[RowI]=UserData.Name()
+								else if Row.Cols[RowI].Default=="UserId"
+									Row.Data[RowI]=UserData.Id()
+								else	
+									Row.Data[RowI]=Row.Cols[RowI].Default
+							else if Row.Cols[RowI].UpdateField ##pvz Date
+								f=Row.Cols[RowI].UpdateField
+								Row.Data[RowI]=updData.DataToSave[f]
+							else
+								Row.Data[RowI]=""
+						if Row.Data[RowI]==null
+							Row.Data[RowI]=""
+					##Prabegam per visus jau surašytus Row.Data ir jei ten stovi IdInMe, tada įrašom teksta is kitos lenteles (kad nepalikt tuscio lauko)
+					RowI=0
+					while RowI<RowLength-1
+						RowI++
+						if Row.Cols[RowI].IdInMe
+							ix=Row.Cols[RowI].IdInMe
+							id=Row.Data[ix]
+							obj=Row.Cols[ix].List.Source
+							TextId=Row.Cols[ix].List.iText
+							Row.Data[RowI]=oDATA.GetStringFromIndexes(id,obj,TextId)
+					oDATA.UpdateRow(Row.Data,oData,Action)##Updatinam duomenis masyve
+					if opt.CallBackAfter
+						opt.CallBackAfter(Row.Data)
+					if !opt.form or opt.form=="Dialog" 
+						$("#"+opt.DialogFormId).dialog("close")
+					else
+						fnResetForm()
+			Msg: "", BlockCtrl:$('#divEditableForm')
+			)
+		else if DataToSave==0##reiskia, kad niekas nepakeista
+			$("#"+opt.DialogFormId).dialog("close")
 	fnGenerateHTML: (Row, id) ->
 		Length=Row.Cols.length; i=0;html="";Head=""
 		while i<Length
@@ -135,8 +140,6 @@
 			Head='"NewRec":1,'
 		Head+='"Source":"'+(if Config.Source then Config.Source else Config.tblUpdate)+'","tblUpdate":"'+Config.tblUpdate+'"'
 		"<div id='divEditableForm' class='inputform' style='margin:0 2em;' data-ctrl='{#{Head}}'>#{html}</div>"
-
-		##Pakeitimu oTable ir oData issaugojimo funkcijos
 
 class @clsEditInPlaceForm
 	##{url:??,postPars:??, tblProp(kur yra Editable properciai),formTitle:??,EditableFormId:??(cia rasomi - id,Source,tblUpdate),Grid:{DoomId:??,Opt:??,Source:??}(nebutina)}
@@ -177,7 +180,7 @@ class @clsEditInPlaceForm
 			opt.fnFieldsUpdatedCallBack(DataToSave) if opt.fnFieldsUpdatedCallBack and DataToSave.Data
 			$(this).remove()
 		dragStart: () -> $("div.validity-modal-msg").remove()
-		$("<div id='divDialogForm' style='overflow:auto'></div>").html(htmlToRender).ModifyDoom(tblProp:tblProp,EditableFormId:EditableFormId,DataToSave).dialog(dlgFormOpt).dialog('open').css("height","auto")
+		$("<div id='divDialogForm' style='overflow:auto'></div>").html(htmlToRender).ModifyDoom(tblProp:tblProp,EditableFormId:EditableFormId,fnUpdateSuccess:opt.fnUpdateSuccess,DataToSave).dialog(dlgFormOpt).dialog('open').css("height","auto")
 		##oCONTROLS.UpdatableForm($("#"+opt.EditableFormId)) if opt.EditableFormId
 		oTable=$('#'+opt.Grid.DoomId).clsGrid(opt.Grid.Opt, opt.Grid.Source) if opt.Grid
 	
@@ -199,9 +202,10 @@ $.fn.ModifyDoom = (opt,DataToSave) ->
 					Alert(resp.ErrorMsg, "Klaida išsaugant duomenis")
 					el.html(OldVal)
 				else
-				el.html(resp.ResponseMsg);OldVal=resp.ResponseMsg
-				DataToSave.Data.push(resp.ResponseMsg)##Jei reiks updatinti lentele ir oDATA
-				DataToSave.Fields.push(eOpt.Field)
+					el.html(resp.ResponseMsg);OldVal=resp.ResponseMsg
+					DataToSave.Data.push(resp.ResponseMsg)##Jei reiks updatinti lentele ir oDATA
+					DataToSave.Fields.push(eOpt.Field)
+					if opt.fnUpdateSuccess then opt.fnUpdateSuccess({ctrl:el,eOpt:eOpt,id:frmOpt.id})
 			)
 		del=didOpenEditInPlace:($Node, aSettings) ->
 			$Node.attr("width",$Node.width())
@@ -214,6 +218,7 @@ $.fn.ModifyDoom = (opt,DataToSave) ->
 				eHTML=oCONTROLS.txt(
 					"data_ctrl": JSON.stringify($.extend({},objProp.Cols[ix].List,{FName:objProp.Cols[ix].FName}))
 					"classes": "ui-widget-content ui-corner-all", "text": $Node.html()
+					"Value": $Node.html()
 				)
 				$Node.html(eHTML).find('input').ComboBox(fnValueChanged:(NewVal, NewText)->fnFinishedEdit(NewVal,NewText)).focus()
 					.bind("blur",(e)->

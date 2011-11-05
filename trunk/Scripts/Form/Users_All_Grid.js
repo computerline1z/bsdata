@@ -33,6 +33,7 @@
    //   fnInitComplete: function() { t=this; setTimeout(function() { t.fnAdjustColumnSizing(); }, 5); }
    var oTable=$('#tblGrid').clsGrid({ "aaSortingFixed": [[5, 'asc']]           //Del grupavimo
    , "fnDrawCallback": fnDrawCallback, "fnEditRowOnClick": window.oSCRIPT.Editable
+   , "GridButtons": (window.oSCRIPT.Editable)?{ "Pridėti naują darbuotoją": { Action: "Add", ctrl: "Dialog", icon: "img16-add_new"}}:0
    }, "tblUsers");
 
    function GetNameByID(ID) {
