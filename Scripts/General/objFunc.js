@@ -19,7 +19,7 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
    },
    //prideda lbl prie txt, txtarea, chk. p.label={txt:"labelio tekstas", classes:"lblclass", type:"Top/Left"}
    appendLabel: function(p, t) {
-      if(!p.label.txt) return t;
+      if(!p.label) return t; if(!p.label.txt||p.label.type==="None") return t;
       if(typeof p.label==='undefined'||p.label==='None') { return t; } else { return (p.label.type==="Top")?"<label class='toplabel'><span>"+p.label.txt+"</span>"+t+"</label>":"<label class='leftlabel'><span>"+p.label.txt+":</span>"+t+"</label>"; }
    },
    //appendLabel: function(p, t) { if(typeof p.label==='undefined') { return t; } else { return (p.label.type==="Top")?"<label><div"+((p.label.classes)?" class='"+p.label.classes+"'":"")+">"+p.label.txt+"</div>"+t+"</label>":"<label"+((p.label.classes)?" class='"+p.label.classes+"'":"")+">"+p.label.txt+t+"</label>"; } },
@@ -108,8 +108,8 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
    UpdatableForm: function(frm) {
       //frm data-ctrl:: labelType:Top/Left/undefined,
       var sTitle, frmOpt=$(frm).data('ctrl');
-      var data=(frmOpt.Source==='NoData')?"NoData":oDATA.Get(frmOpt.Source),
-       eCols=data.Cols; if(typeof data==='undefined') { alert('Source undefined in UpdatableForm(objFunc:79)!'); }
+      var data=(frmOpt.Source==='NoData')?"NoData":oDATA.Get(frmOpt.Source);
+      //if(typeof data==='undefined') { alert('Source undefined in UpdatableForm(objFunc:79)!'); }
       log('<div>==========UpdatableForm========</div>');
       $(frm).find('div.ExtendIt, span.ExtendIt').each(function() {
          var e=$(this), eOpt=e.data('ctrl'), eHTML='', ix=0, data_ctrl={};
@@ -117,6 +117,7 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
          log("Elementas:"+e[0].tagName+"; id:"+e.attr("id")+"; klase:"+e.attr("class")+"; e.data('ctrl'):"+typeof e.data("ctrl"));
          if(typeof eOpt.Control!=="undefined") { if(eOpt.Control==="swfUpload"&&typeof frmOpt.id==="undefined") { return true; } else { e[eOpt.Control](eOpt); return true; } } //swfUpload nerenderinam jei naujas dokumentas
          if(data!=="NoData") {
+            var eCols=data.Cols;
             //Surandam lauko indeksa
             for(var i=0; i<eCols.length; i++) { if(eCols[i].FName===eOpt.Field) { ix=i; sTitle=data.Grid.aoColumns[i].sTitle; break; } }
             if(ix===0) { alert('Wrong Field indicated '+eOpt.Field+' in UpdatableForm(objFunc:84)!'); }

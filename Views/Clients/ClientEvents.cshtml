@@ -6,7 +6,7 @@
             <span class='EditInPlace' data-ctrl='{"Field":"Name"}'>@Model.Name</span><span>, įm. kodas </span>
             <span class='EditInPlace' style="display:inline-block;width:9em;" data-ctrl='{"Field":"Code","Plugin":{"mask":{"mask":"###-###-###"}}}'>@Model.Code</span>
          </div>
-         <div class='EditInPlace' data-ctrl='{"Field":"TownID"}'>@Model.tblTown.Name</div>
+         <div class='EditInPlace' data-ctrl='{"Field":"TownID","Tip":"Rinkite miesto pav-mą.."}'>@Model.tblTown.Name</div>
          <div class='EditInPlace' data-ctrl='{"Field":"Address"}'>@Model.Address</div>
          <div class='EditInPlace' data-ctrl='{"Field":"Description"}'>@Model.Description</div>
       </fieldset>
@@ -17,7 +17,7 @@
       </fieldset>
       <fieldset style="display: inline-block; vertical-align: top; text-align: left;"><legend>Sekantis kontaktas</legend>
          <div class='EditInPlace' data-ctrl='{"Field":"NextContactDate","Plugin":{"datepicker":{"minDate":"0","maxDate":"+3y"}}}'>@((Model.NextContactDate.HasValue) ? Model.NextContactDate.Value.ToString("yyyy-MM-dd") : "-")</div>
-         <div class='EditInPlace' data-ctrl='{"Field":"NextContactUserID"}'>@(Model.NextContactUserID.HasValue ? Model.tblUser.LastName + " " + Model.tblUser.Name : "-")</div>
+         <div class='EditInPlace' data-ctrl='{"Field":"NextContactUserID","UserId":@(Model.NextContactUserID.HasValue ? Model.tblUser.ID : 0)}'>@(Model.NextContactUserID.HasValue ? Model.tblUser.LastName + " " + Model.tblUser.Name : "-")</div>
          <div class='EditInPlace' data-ctrl='{"Field":"NextContactContractFormID"}'>@(Model.NextContactContractFormID.HasValue ? Model.tblContracts_Form.Name : "-")</div>
          <div class='EditInPlace' data-ctrl='{"Field":"Notes"}'>@Model.Notes</div>
       </fieldset>
@@ -25,6 +25,7 @@
    <table id="tblEvents" data-ctrl='{"uid":@BSData.Classes.UserData.UserID}' class='display' border="0" cellpadding="0" cellspacing="0">
    </table>
 </div>
+<div id="divNewEventContainer" style="display:none;"></>
 @*data-ctrl='{"NewRec":1,"Source":"proc_Drivers","tblUpdate":"tblDrivers"@((Model.NewRec == 1) ? "" : ",\"id\":" + Model.Driver.ID)}'>
 <div class='ExtendIt' data-ctrl='{"Value":"@Model.Driver.DateExpierence", "Field":"DateExpierence","classes":"UpdateField","id":"DateExpierence","labelType":"Left", "Type":"DateLess", "Default":"Today", "Plugin":["datepicker"] }'>
 *@

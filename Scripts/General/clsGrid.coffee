@@ -1,5 +1,6 @@
 ﻿$ = jQuery
 $.fn.clsGrid = (GridOpt,objData) ->
+##GridOpt{fnEditRowOnClick:true, ctrl:"Dialog"/{Form:doom el("Head" arba kt.)}
 		self = $.fn.clsGrid
 		HeadOk=0; JSON=oDATA.Get(objData); Gopts=GridOpt
 		alert("Daugiau nei vienas objektas ant kurio dedamas gridas!") if $(@).length>1
@@ -55,7 +56,7 @@ $.fn.clsGrid = (GridOpt,objData) ->
 							LastCell.innerHTML+=" ("+(No)+"vnt.)";No=0;
 						sLastGroup=sGroup; LastCell=nCell;
 					i++
-				LastCell.innerHTML+=" ("+(No+1)+"vnt.)"; ##Pridedamas suskaičiavimas paskutiniam
+				LastCell.innerHTML+=" ("+(No+1)+"vnt.)"; ##Pridedamas suskaiciavimas paskutiniam
 
 			)
 		##--------------------------------------------------------------------------------
@@ -63,11 +64,11 @@ $.fn.clsGrid = (GridOpt,objData) ->
 		fnInitComplete:(GridOpt)->
 			GridOpt.fnRowCallback=null
 		oLanguage: ##GridOpt.sScrollY=Height
-			"sLengthMenu": "Rodyti _MENU_ įr. psl."
-			"sZeroRecords": "Nerasta įrašų.."
-			"sInfo": "Viso: _TOTAL_" ##"sInfo": "Rodomi _START_-_END_ įrašai iš _TOTAL_ "
-			"sInfoEmpty": "Rodoma: 0 - 0 iš 0 įrašų"
-			"sInfoFiltered": "(Filtruota iš _MAX_ įrašų)"
+			"sLengthMenu": "Rodyti _MENU_ ir. psl."
+			"sZeroRecords": "Nerasta irašu.."
+			"sInfo": "Viso: _TOTAL_" ##"sInfo": "Rodomi _START_-_END_ irašai iš _TOTAL_ "
+			"sInfoEmpty": "Rodoma: 0 - 0 iš 0 irašu"
+			"sInfoFiltered": "(Filtruota iš _MAX_ irašu)"
 			"sSearch": "Ieškoti:"
 		"sProcessing": "Laukite.."
 		"bJQueryUI": true
@@ -86,29 +87,40 @@ $.fn.clsGrid = (GridOpt,objData) ->
 			$(oTable).css("width","100%") ##Tam, kad islygint lentele(pasigaidina su jqueryUI dizainu)
 			oTable.fnDraw()
 		100)
-		opt=objData:objData, Action:"", aRowData:0, ClickedRow:0
-
+		##opt=objData:objData, Action:"", aRowData:0, ClickedRow:0
 		if (GridOpt.fnEditRowOnClick)
 			fnRowClickEvent = (event) ->
 				##$(@).find('tbody tr').removeClass('row_selected')
 				##log('RowClicked, aRowData:['+aRowData+']')
-				opt.ClickedRow=this
-				opt.aRowData=oTable.fnGetData(oTable.fnGetPosition(this))
-				opt.Action="Edit"
-				opt.CallBackAfterSave = (RowData) ->
+				opt={objData:objData,Action:"Edit",ClickedRow:this,aRowData:oTable.fnGetData(oTable.fnGetPosition(this))}
+				opt.CallBackAfter = (RowData) ->
 					aPos=oTable.fnGetPosition(opt.ClickedRow)
 					oTable.fnUpdate(RowData, aPos, 0)
 					##oDATA.UpdateRow(RowData,oData)##Updatinami clsEditableForm
-				eForm = new clsEditableForm(opt)
+				new clsEditableForm(opt)
 			$(@).find('tbody tr').bind('click', fnRowClickEvent)
-			$('<button class="AddNew" title="Pridėti naują">Pridėti naują</button>').button({icons:{primary:"img16-add_new"}}).click(->
-				opt.ClickedRow=0
-				opt.aRowData=0
-				opt.Action="Add"
-				opt.CallBackAfterSave = (RowData) ->
-					oTable.fnAddData(RowData);
-				eForm = new clsEditableForm(opt)
-			).appendTo('div.dataTables_wrapper>div:first')
-			##.bind('click', ->alert("opa1"))
+		if (GridOpt.GridButtons)
+			AppendToCtrl=$(@).parent().parent().parent().find('div:first')
+
+			##for btnTitle, prop of GridOpt.GridButtons
+			##	do (btnTitle, prop) - >
+			$.each(GridOpt.GridButtons, (btnTitle,prop) ->
+				icon=if (prop.icon) then {icons:{primary:prop.icon}} else {}
+				$('<button class="AddNew" title='+btnTitle+'>'+btnTitle+'</button>').button(icon).click((e)->
+					prop.objData=objData
+					if e.target
+						if !$(e.target).is("button") then prop.target=$(e.target).parent() else prop.target=$(e.target)
+						$(prop.target).css("display","none")
+						##console.log(prop.target[0].tagName)
+					if prop.form=="Head"##Pakeiciam i tikra doom el
+						prop.form=$("<div></div>").insertAfter(AppendToCtrl).css("margin-bottom","10px")
+					if prop.Action=="Add"
+						prop.aRowData=0
+						prop.CallBackAfter = (RowData) ->
+							oTable.fnAddData(RowData);
+						new clsEditableForm(prop)
+					else
+						prop.Action(prop)
+				).appendTo(AppendToCtrl))
 			##$(@).find('tbody tr').live('click', fnRowClickEvent); live neveikia po grido perpiesimo
 		oTable ##grazinam oTable	

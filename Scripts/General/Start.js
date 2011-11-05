@@ -39,7 +39,7 @@
       data: Par,
       dataType: 'json',
       error: function(jqXHR, textStatus, errorThrown) {
-        el.html("<center><h2>ši dalis dar nebaigta(" + Action + ")</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>");
+        el.html("<center><h2>Ði dalis dar nebaigta(" + Action + ")</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>");
         return el.parent().unblock();
       },
       success: function(jsRes, textStatus, jqXHR) {
@@ -64,7 +64,7 @@
     }
     for (Name in jsRes) {
       obj = jsRes[Name];
-      if (Name !== "Render" && Name !== "Script") {
+      if ((Name !== "Render" && Name !== "Script") && !oDATA.Get[Name]) {
         this.oDATA.Set(Name, jsRes[Name]);
       }
     }
@@ -164,22 +164,6 @@
           field: field
         });
       }
-    },
-    GetNewData: function(DataToSave, oTable, obj, ClickedRow) {
-      var Cols, Row, RowI, aPos, i, len;
-      Cols = this.GetData(obj, true);
-      aPos = oTable.fnGetPosition(ClickedRow[0]);
-      Row = oTable.fnGetData(aPos);
-      i = 0;
-      len = DataToSave.Fields.length;
-      while (i < len) {
-        RowI = Cols.FNameIndex(DataToSave.Fields[i]);
-        if (RowI) {
-          Row[RowI] = DataToSave.Data[i];
-        }
-        i++;
-      }
-      return Row;
     }
   };
 }).call(this);

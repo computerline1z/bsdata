@@ -41,7 +41,7 @@ fnSetNewData = (jsRes,el=$('#main-copy')) ->
 	##obj = for objData, objVal of jsRes.Render
 	el.empty().html(jsRes.Render) if jsRes.Render
 	##el.PrepareForm(jsRes)
-	for Name, obj of jsRes when Name not in["Render","Script"]
+	for Name, obj of jsRes when Name not in["Render","Script"] and not oDATA.Get[Name]
 		@oDATA.Set(Name, jsRes[Name])
 	if  Action=="Contracts_New"
 		NewContract()
@@ -95,8 +95,8 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 		Row=@GetRow(id,obj)
 		Row[ColNo]=NewVal
 		$.post("/Update/editInPlace", {id:id,tbl:tblToUpdate,update_value:NewVal,field:field}) if tblToUpdate
-	##Updatina laukus oTable
-	##UpdateFields:(DataToSave,oTable,obj,ClickedRow) ->##DataToSave:{Data:[],Fields:[],id:0,DataTable:"dsf"}
+	## Updatina eilute pagal DataToSave (suranda id ir t.t.)
+	##GetNewData:(DataToSave,oTable,obj,ClickedRow) ->##DataToSave:{Data:[],Fields:[],id:0,DataTable:"dsf"}
 	##	Cols=@GetData(obj,true)
 	##	##Row=@GetRow(DataToSave.id,obj)
 	##	aPos=oTable.fnGetPosition(ClickedRow[0])
@@ -106,16 +106,4 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 	##		RowI=Cols.FNameIndex(DataToSave.Fields[i])
 	##		Row[RowI]=DataToSave.Data[i] if RowI	
 	##		i++
-	##	oTable.fnUpdate(Row, aPos, 0)
-	GetNewData:(DataToSave,oTable,obj,ClickedRow) ->##DataToSave:{Data:[],Fields:[],id:0,DataTable:"dsf"}
-		Cols=@GetData(obj,true)
-		##Row=@GetRow(DataToSave.id,obj)
-		aPos=oTable.fnGetPosition(ClickedRow[0])
-		Row=oTable.fnGetData(aPos)
-		i=0;len=DataToSave.Fields.length
-		while (i<len)
-			RowI=Cols.FNameIndex(DataToSave.Fields[i])
-			Row[RowI]=DataToSave.Data[i] if RowI	
-			i++
-		Row
-		##oTable.fnUpdate(Row, aPos, 0)
+	##	Row

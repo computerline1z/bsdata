@@ -322,13 +322,6 @@ namespace BSData.Models
 			return ((ISingleResult<proc_GetContracts_NotApprovedResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_Clients")]
-		public ISingleResult<proc_ClientsResult> proc_Clients([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID);
-			return ((ISingleResult<proc_ClientsResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetClientEvents")]
 		public ISingleResult<proc_GetClientEventsResult> proc_GetClientEvents([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientID", DbType="Int")] System.Nullable<int> clientID)
 		{
@@ -337,10 +330,10 @@ namespace BSData.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_Clients")]
-		public ISingleResult<proc_ClientsResult1> proc_Clients1([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID)
+		public ISingleResult<proc_ClientsResult> proc_Clients([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RecID", DbType="Int")] System.Nullable<int> recID)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID);
-			return ((ISingleResult<proc_ClientsResult1>)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, recID);
+			return ((ISingleResult<proc_ClientsResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -6235,122 +6228,6 @@ namespace BSData.Models
 		}
 	}
 	
-	public partial class proc_ClientsResult
-	{
-		
-		private System.Nullable<int> _ID;
-		
-		private string _Town;
-		
-		private string _Name;
-		
-		private string _Contracts;
-		
-		private string _Events;
-		
-		private int _UplFilesNo;
-		
-		public proc_ClientsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int")]
-		public System.Nullable<int> ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Town", DbType="NVarChar(50)")]
-		public string Town
-		{
-			get
-			{
-				return this._Town;
-			}
-			set
-			{
-				if ((this._Town != value))
-				{
-					this._Town = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(60)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this._Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contracts", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Contracts
-		{
-			get
-			{
-				return this._Contracts;
-			}
-			set
-			{
-				if ((this._Contracts != value))
-				{
-					this._Contracts = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Events", DbType="NVarChar(50)")]
-		public string Events
-		{
-			get
-			{
-				return this._Events;
-			}
-			set
-			{
-				if ((this._Events != value))
-				{
-					this._Events = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UplFilesNo", DbType="Int NOT NULL")]
-		public int UplFilesNo
-		{
-			get
-			{
-				return this._UplFilesNo;
-			}
-			set
-			{
-				if ((this._UplFilesNo != value))
-				{
-					this._UplFilesNo = value;
-				}
-			}
-		}
-	}
-	
 	public partial class proc_GetClientEventsResult
 	{
 		
@@ -6467,7 +6344,7 @@ namespace BSData.Models
 		}
 	}
 	
-	public partial class proc_ClientsResult1
+	public partial class proc_ClientsResult
 	{
 		
 		private System.Nullable<int> _ID;
@@ -6482,7 +6359,7 @@ namespace BSData.Models
 		
 		private int _UplFilesNo;
 		
-		public proc_ClientsResult1()
+		public proc_ClientsResult()
 		{
 		}
 		

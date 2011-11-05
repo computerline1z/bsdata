@@ -13,7 +13,7 @@
          var opt=$.extend(this.options, $(input).data("ctrl"));
          var fnEditItem=function(id) {
             new clsEditableForm({ objData: opt.Source, Action: (id)?"Edit":"Add", aRowData: (id)?oDATA.GetRow(id, opt.Source):0,
-               CallBackAfterSave: function(RowData) {//Ikisam naujas val i newval, o teksta i inputa
+               CallBackAfter: function(RowData) {//Ikisam naujas val i newval, o teksta i inputa
                   $(input).data("newval", RowData[opt.iVal]); $(input).val(RowData.MapArrToString(opt.iText));
                   $(input).removeClass("inputTip");
                   var Action=(id)?"Edit":"Add";

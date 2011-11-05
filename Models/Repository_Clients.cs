@@ -10,9 +10,9 @@ namespace BSData.Models {
 
       public Repository_Clients(string ConStr) { dc = new dbDataContext(ConStr); }
 
-      public jsonArrays GetJSON_proc_Clients(int? UserID) {
+      public jsonArrays GetJSON_proc_Clients(int? UserID, int? RecID) {
          jsonArrays JSON = new jsonArrays();
-         JSON.Data = from c in dc.proc_Clients(UserID)
+         JSON.Data = from c in dc.proc_Clients(UserID, RecID)
                      select new object[] {
 c.ID,//0
 c.Town,//1

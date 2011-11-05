@@ -1,41 +1,34 @@
 (function() {
   this.clsEditableForm = (function() {
-    var Action, CallBackAfterSave, ClickedRow, Config, GenNameWhat, RenderHTML, Row, id, oData, oTable, op;
+    var Action, Config, Row, fnResetForm, fnSaveChanges, id, oData, opt;
     id = 0;
     oData = {};
     Config = {};
-    GenNameWhat = "";
     Row = {};
     oData = {};
     Action = {};
-    RenderHTML = 0;
-    op = {};
-    ClickedRow = 0;
-    oTable = oTable ? oTable : 0;
-    CallBackAfterSave = 0;
-    function clsEditableForm(opt) {
-      var AddToTitle, Title, ix, rows, _i, _len, _ref;
+    opt = {
+      DialogFormId: "divDialogForm",
+      fnAddNewForm: "Dialog",
+      CallBackAfter: 0,
+      aRowData: 0
+    };
+    function clsEditableForm(options) {
+      var AddToTitle, ix, rows, _i, _len, _ref;
       $("body").css("cursor", "wait");
+      opt.Title = 0;
+      $.extend(opt, options);
       id = opt.aRowData != null ? opt.aRowData[0] : 0;
-      op = opt;
-      if (!op.DialogFormId) {
-        op.DialogFormId = "divDialogForm";
-      }
-      oTable = opt.oTable != null ? opt.oTable : 0;
       oData = oDATA.Get(opt.objData);
       Action = opt.Action;
-      CallBackAfterSave = opt.CallBackAfterSave ? opt.CallBackAfterSave : 0;
       if (oData == null) {
         alert("Neradau objekto " + opt.objData + " clsEditableForm klaseje");
       }
-      Config = oData.Config;
-      GenNameWhat = Config.Msg.GenNameWhat;
       Row = {
         Cols: oData.Cols,
         Grid: oData.Grid,
         Data: opt.aRowData
       };
-      ClickedRow = opt.ClickedRow ? opt.ClickedRow : 0;
       if (id && !(Row.Data != null)) {
         _ref = oData.Data;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -46,11 +39,10 @@
           }
         }
       }
-      if (opt.Title) {
-        Title = opt.Title;
-      } else {
-        Title = Action === "Add" ? Config.Msg.AddNew : Config.Msg.Edit;
-        if (Config.Msg.AddToTitle) {
+      if (!opt.Title) {
+        Config = oData.Config;
+        opt.Title = Action === "Add" ? Config.Msg.AddNew : Config.Msg.Edit;
+        if (Config.Msg.AddToTitle && Action === "Edit") {
           AddToTitle = (function() {
             var _j, _len2, _ref2, _results;
             _ref2 = Config.Msg.AddToTitle;
@@ -61,119 +53,54 @@
             }
             return _results;
           })();
-          Title += " " + AddToTitle.join(' ');
+          opt.Title += " - " + AddToTitle.join(' ');
         }
       }
-      this.fnLoadEditableForm(Title);
+      this.fnLoadEditableForm();
       $("body").css("cursor", "default");
     }
-    clsEditableForm.prototype.fnLoadEditableForm = function(Title) {
-      var FormTitle, dlgEditableOpt, form, _html;
-      FormTitle = id ? Config.Msg.Edit : Config.Msg.AddNew;
-      dlgEditableOpt = {
-        autoOpen: false,
-        minWidth: '45em',
-        minHeight: '40em',
-        width: '60em',
-        modal: true,
-        title: Title,
-        draggable: true,
-        buttons: {
-          "Išsaugoti pakeitimus": function() {
-            var DataToSave;
-            DataToSave = oGLOBAL.ValidateForm($('#divEditableForm'));
-            if (DataToSave) {
-              return oGLOBAL.UpdateServer({
-                Action: Action,
-                DataToSave: DataToSave,
-                CallBack: {
-                  Success: function(resp, updData) {
-                    var Found, RowI, RowLength, TextId, f, ix, obj, updI, updLength;
-                    RowLength = Row.Cols.length;
-                    RowI = 0;
-                    updLength = updData.DataToSave.Fields.length;
-                    if (Action === "Add") {
-                      Row.Data = new Array(RowLength);
-                      Row.Data[0] = resp.ResponseMsg.ID;
-                    }
-                    while (RowI < RowLength - 1) {
-                      updI = 0;
-                      Found = 0;
-                      RowI++;
-                      while (updI < updLength) {
-                        if (Row.Cols[RowI].FName === updData.DataToSave.Fields[updI]) {
-                          Row.Data[RowI] = updData.DataToSave.Data[updI];
-                          Found = 1;
-                          break;
-                        }
-                        updI++;
-                      }
-                      if (!Found && Action === "Add") {
-                        if (Row.Cols[RowI].Default != null) {
-                          if (Row.Cols[RowI].Default === "Today") {
-                            Row.Data[RowI] = fnGetTodayDateString();
-                          } else if (Row.Cols[RowI].Default === "UserName") {
-                            Row.Data[RowI] = UserData.Name();
-                          } else if (Row.Cols[RowI].Default === "UserId") {
-                            Row.Data[RowI] = UserData.Id();
-                          } else {
-                            Row.Data[RowI] = Row.Cols[RowI].Default;
-                          }
-                        } else if (Row.Cols[RowI].UpdateField) {
-                          f = Row.Cols[RowI].UpdateField;
-                          Row.Data[RowI] = updData.DataToSave[f];
-                        } else {
-                          Row.Data[RowI] = "";
-                        }
-                      }
-                      if (Row.Data[RowI] === null) {
-                        Row.Data[RowI] = "";
-                      }
-                    }
-                    RowI = 0;
-                    while (RowI < RowLength - 1) {
-                      RowI++;
-                      if (Row.Cols[RowI].IdInMe) {
-                        ix = Row.Cols[RowI].IdInMe;
-                        id = Row.Data[ix];
-                        obj = Row.Cols[ix].List.Source;
-                        TextId = Row.Cols[ix].List.iText;
-                        Row.Data[RowI] = oDATA.GetStringFromIndexes(id, obj, TextId);
-                      }
-                    }
-                    oDATA.UpdateRow(Row.Data, oData, Action);
-                    if (CallBackAfterSave) {
-                      CallBackAfterSave(Row.Data);
-                    }
-                    return $("#" + op.DialogFormId).dialog("close");
-                  }
-                },
-                Msg: "",
-                BlockCtrl: $('#divEditableForm')
-              });
-            } else if (DataToSave === 0) {
-              return $("#" + op.DialogFormId).dialog("close");
+    clsEditableForm.prototype.fnLoadEditableForm = function() {
+      var dlgEditableOpt, form, _html;
+      if (!opt.form || opt.form === "Dialog") {
+        dlgEditableOpt = {
+          autoOpen: false,
+          minWidth: '45em',
+          minHeight: '40em',
+          width: '60em',
+          modal: true,
+          title: opt.Title,
+          draggable: true,
+          buttons: {
+            "Išsaugoti pakeitimus": function() {
+              return fnSaveChanges();
+            },
+            "Ištrinti": function() {
+              return $(this).dialog("close");
+            },
+            "Atšaukti": function() {
+              return $(this).dialog("close");
             }
           },
-          "Ištrinti": function() {
-            return $(this).dialog("close");
+          close: function() {
+            return $(this).remove();
           },
-          "Atšaukti": function() {
-            return $(this).dialog("close");
+          dragStart: function() {
+            return $("div.validity-modal-msg").remove();
           }
-        },
-        close: function() {
-          return $(this).remove();
-        },
-        dragStart: function() {
-          return $("div.validity-modal-msg").remove();
-        }
-      };
-      _html = op.RenderHTML ? op.RenderHTML : this.fnGenerateHTML(Row, id);
-      $("#dialog:ui-dialog").dialog("destroy");
-      $("<div id='" + op.DialogFormId + "'></div>").html(_html).dialog(dlgEditableOpt).dialog('open');
+        };
+        _html = opt.RenderHTML ? opt.RenderHTML : this.fnGenerateHTML(Row, id);
+        $("#dialog:ui-dialog").dialog("destroy");
+        $("<div id='" + opt.DialogFormId + "'></div>").html(_html).dialog(dlgEditableOpt).dialog('open');
+      } else {
+        _html = opt.RenderHTML ? opt.RenderHTML : this.fnGenerateHTML(Row, id);
+        $(_html).append('<button style="float:right;" title="Atšaukti">Atšaukti</button>').find('button:last').button().click(function() {
+          return fnResetForm();
+        }).end().append('<button style="float:right;" title="Išsaugoti">Išsaugoti</button>').find('button:last').button().click(function() {
+          return fnSaveChanges();
+        }).end().appendTo(opt.form).append('<div style="clear:both;"></div>').prepend("<h3>" + opt.Title + "</h3>");
+      }
       oCONTROLS.UpdatableForm($("#divEditableForm"));
-      form = $("#" + op.DialogFormId).parent();
+      form = $("#" + opt.DialogFormId).parent();
       form.find("button:contains('Išsaugoti')").attr("disabled", "disabled").addClass("ui-state-disabled");
       form.find("input, textarea").bind('click keyup', function() {
         return form.find("button:contains('Išsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled");
@@ -182,6 +109,92 @@
         return form.find("button:contains('Išsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled");
       });
       return form.find("button:contains('Ištrinti')").css("display", "none");
+    };
+    fnResetForm = function() {
+      if (opt.target) {
+        opt.target.css("display", "block");
+      }
+      return opt.form.empty();
+    };
+    fnSaveChanges = function() {
+      var DataToSave;
+      DataToSave = oGLOBAL.ValidateForm($('#divEditableForm'));
+      if (DataToSave) {
+        return oGLOBAL.UpdateServer({
+          Action: Action,
+          DataToSave: DataToSave,
+          CallBack: {
+            Success: function(resp, updData) {
+              var Found, RowI, RowLength, TextId, f, ix, obj, updI, updLength;
+              RowLength = Row.Cols.length;
+              RowI = 0;
+              updLength = updData.DataToSave.Fields.length;
+              if (Action === "Add") {
+                Row.Data = new Array(RowLength);
+                Row.Data[0] = resp.ResponseMsg.ID;
+              }
+              while (RowI < RowLength - 1) {
+                updI = 0;
+                Found = 0;
+                RowI++;
+                while (updI < updLength) {
+                  if (Row.Cols[RowI].FName === updData.DataToSave.Fields[updI]) {
+                    Row.Data[RowI] = updData.DataToSave.Data[updI];
+                    Found = 1;
+                    break;
+                  }
+                  updI++;
+                }
+                if (!Found && Action === "Add") {
+                  if (Row.Cols[RowI].Default != null) {
+                    if (Row.Cols[RowI].Default === "Today") {
+                      Row.Data[RowI] = fnGetTodayDateString();
+                    } else if (Row.Cols[RowI].Default === "UserName") {
+                      Row.Data[RowI] = UserData.Name();
+                    } else if (Row.Cols[RowI].Default === "UserId") {
+                      Row.Data[RowI] = UserData.Id();
+                    } else {
+                      Row.Data[RowI] = Row.Cols[RowI].Default;
+                    }
+                  } else if (Row.Cols[RowI].UpdateField) {
+                    f = Row.Cols[RowI].UpdateField;
+                    Row.Data[RowI] = updData.DataToSave[f];
+                  } else {
+                    Row.Data[RowI] = "";
+                  }
+                }
+                if (Row.Data[RowI] === null) {
+                  Row.Data[RowI] = "";
+                }
+              }
+              RowI = 0;
+              while (RowI < RowLength - 1) {
+                RowI++;
+                if (Row.Cols[RowI].IdInMe) {
+                  ix = Row.Cols[RowI].IdInMe;
+                  id = Row.Data[ix];
+                  obj = Row.Cols[ix].List.Source;
+                  TextId = Row.Cols[ix].List.iText;
+                  Row.Data[RowI] = oDATA.GetStringFromIndexes(id, obj, TextId);
+                }
+              }
+              oDATA.UpdateRow(Row.Data, oData, Action);
+              if (opt.CallBackAfter) {
+                opt.CallBackAfter(Row.Data);
+              }
+              if (!opt.form || opt.form === "Dialog") {
+                return $("#" + opt.DialogFormId).dialog("close");
+              } else {
+                return fnResetForm();
+              }
+            }
+          },
+          Msg: "",
+          BlockCtrl: $('#divEditableForm')
+        });
+      } else if (DataToSave === 0) {
+        return $("#" + opt.DialogFormId).dialog("close");
+      }
     };
     clsEditableForm.prototype.fnGenerateHTML = function(Row, id) {
       var Append, Head, Length, html, i, t, val;
@@ -284,7 +297,8 @@
       };
       $("<div id='divDialogForm' style='overflow:auto'></div>").html(htmlToRender).ModifyDoom({
         tblProp: tblProp,
-        EditableFormId: EditableFormId
+        EditableFormId: EditableFormId,
+        fnUpdateSuccess: opt.fnUpdateSuccess
       }, DataToSave).dialog(dlgFormOpt).dialog('open').css("height", "auto");
       if (opt.Grid) {
         return oTable = $('#' + opt.Grid.DoomId).clsGrid(opt.Grid.Opt, opt.Grid.Source);
@@ -316,14 +330,20 @@
         }, function(resp, a, b) {
           if (resp.ErrorMsg) {
             Alert(resp.ErrorMsg, "Klaida išsaugant duomenis");
-            el.html(OldVal);
+            return el.html(OldVal);
           } else {
-
+            el.html(resp.ResponseMsg);
+            OldVal = resp.ResponseMsg;
+            DataToSave.Data.push(resp.ResponseMsg);
+            DataToSave.Fields.push(eOpt.Field);
+            if (opt.fnUpdateSuccess) {
+              return opt.fnUpdateSuccess({
+                ctrl: el,
+                eOpt: eOpt,
+                id: frmOpt.id
+              });
+            }
           }
-          el.html(resp.ResponseMsg);
-          OldVal = resp.ResponseMsg;
-          DataToSave.Data.push(resp.ResponseMsg);
-          return DataToSave.Fields.push(eOpt.Field);
         });
       };
       del = {
@@ -346,7 +366,8 @@
               FName: objProp.Cols[ix].FName
             })),
             "classes": "ui-widget-content ui-corner-all",
-            "text": $Node.html()
+            "text": $Node.html(),
+            "Value": $Node.html()
           });
           $Node.html(eHTML).find('input').ComboBox({
             fnValueChanged: function(NewVal, NewText) {

@@ -14,13 +14,20 @@ namespace BSData.Controllers {
       }
 
       [HttpPost]
+      public JsonResult ClientsList1(int RecID) {
+         Repository_Clients Rep = new Repository_Clients();
+         var obj = new { proc_Clients = Rep.GetJSON_proc_Clients(null, RecID) };
+         return Json(obj);
+      }
+
+      [HttpPost]
       public JsonResult ClientsList() {
          ViewBag.Title = "Klientų sąrašas";
          string View = RenderPartialViewToString("../Shared/Grid");
          Repository_Clients Rep = new Repository_Clients();
          var obj = new {
             Render = View,
-            proc_Clients = Rep.GetJSON_proc_Clients(null),
+            proc_Clients = Rep.GetJSON_proc_Clients(null, null),
             tblContracts_Form = Rep.GetJSON_tblContracts_Form(),
             tblDocs_UploadedFiles_ofClient = Rep.GetJSON_tblDocs_UploadedFiles("tblClients"),
             tblUsers = Rep.GetJSON_tblUsers(),
