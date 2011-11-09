@@ -10,7 +10,7 @@ var Title_MyEvents=(function() {
       h1.clone().html("Tvarkomos sutartys").attr("id", "h1Contracts_Unsigned").appendTo("#main-copy");
       div.clone().appendTo("#main-copy").find("#tblGrid").attr("id", "grdContracts_Unsigned");
       var fnUploadsToButton=function(e) {
-         oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: $("#grdContracts_Unsigned").data("ctrl").uid, tblUpdate: "tblContracts", AttachedFiles: "tblDocs_UploadedFiles",
+         oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: UserData.Id(), tblUpdate: "tblContracts", AttachedFiles: "tblContracts_UploadedFiles",
             fnCallBack: function(files) {
                $(e.target).parent().find("span.ui-button-text").html(files.length).parent().closest("button").css("color", ((files.length)?"":"red"));
                oDATA.UpdateCell("Contracts_Unsigned", false, e.data.ID, 9, files.length); //UpdateCell:(obj,tblToUpdate,id,field,NewVal)
@@ -32,4 +32,28 @@ var Title_MyEvents=(function() {
          fnRowCallback: fnRowCallback_Contracts_Unsigned
       }, "Contracts_Unsigned");
    }
+
+   //tblClientEventsNew
+   if(oDATA.Get("tblClientEventsNew").Data.length) {
+      h1.clone().html("Nauji įvykiai per paskutinias 14 dienų").attr("id", "h1tblClientEvents").appendTo("#main-copy");
+      div.clone().appendTo("#main-copy").find("#tblGrid").attr("id", "grdtblClientEvents");
+      var fnUploadsToButton_ClEvt=function(e) {
+         oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: UserData.Id(), tblUpdate: "tblClients_Events", AttachedFiles: "tblNewClientEvents_UploadedFiles",
+            fnCallBack: function(files) {
+               $(e.target).parent().find("span.ui-button-text").html(files.length).parent().closest("button").css("color", ((files.length)?"":"red"));
+               oDATA.UpdateCell("tblClientEventsNew", false, e.data.ID, 9, files.length); //UpdateCell:(obj,tblToUpdate,id,field,NewVal)
+            }
+         })
+      }
+      var fnRowCallback_tblClientEvents=function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+         $('td:eq(5)', nRow).html("<button "+((aData[7]===0)?"style='color:red'":"")+">"+aData[7]+"</button>").find("button")
+            .button({ icons: { primary: "img16-attach"} }).click({ ID: aData[0] }, fnUploadsToButton_ClEvt)
+         return nRow;
+      }
+      var oTable=$('#grdtblClientEvents').clsGrid({// "aaSortingFixed": [[1, 'asc']],           //Del grupavimo
+         fnRowCallback: fnRowCallback_tblClientEvents
+      }, "tblClientEventsNew");
+   }
+
+   //
 })//.call(this);

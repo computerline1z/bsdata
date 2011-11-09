@@ -297,147 +297,166 @@
       };
       $("<div id='divDialogForm' style='overflow:auto'></div>").html(htmlToRender).ModifyDoom({
         tblProp: tblProp,
-        EditableFormId: EditableFormId,
-        fnUpdateSuccess: opt.fnUpdateSuccess
-      }, DataToSave).dialog(dlgFormOpt).dialog('open').css("height", "auto");
+        EditableFormId: EditableFormId
+      }, DataToSave, opt.fnUpdateSuccess).dialog(dlgFormOpt).dialog('open').css("height", "auto");
       if (opt.Grid) {
         return oTable = $('#' + opt.Grid.DoomId).clsGrid(opt.Grid.Opt, opt.Grid.Source);
       }
     };
     return clsEditInPlaceForm;
   })();
-  $.fn.ModifyDoom = function(opt, DataToSave) {
-    var frmOpt, objProp, t;
+  $.fn.ModifyDoom = function(opt, DataToSave, fnUpdateSuccess) {
+    var frmOpt, t;
     t = this.find("#" + opt.EditableFormId);
     frmOpt = eval("(" + (t.attr("data-ctrl")) + ")");
     DataToSave.id = frmOpt.id;
     DataToSave.DataTable = frmOpt.tblUpdate;
-    objProp = oDATA.Get(opt.tblProp);
     t.find('div.EditInPlace, span.EditInPlace').each(function() {
-      var OldVal, del, eOpt, editOpt, el, fnFinishedEdit, ix;
-      el = $(this);
-      OldVal = el.html();
-      eOpt = eval("(" + (el.attr("data-ctrl")) + ")");
+      return $(this).MyEditInPlace({
+        id: frmOpt.id,
+        tblUpdate: frmOpt.tblUpdate,
+        tblProp: opt.tblProp
+      }, DataToSave, fnUpdateSuccess);
+    });
+    return this;
+  };
+  $.fn.MyEditInPlace = function(opt, DataToSave, fnUpdateSuccess) {
+    var OldVal, del, eOpt, editOpt, el, fnFinishedEdit, ix, objProp;
+    el = $(this);
+    OldVal = el.html();
+    eOpt = typeof el.data("ctrl") === "object" ? el.data("ctrl") : eval("(" + (el.attr("data-ctrl")) + ")");
+    if (opt.tblProp) {
+      objProp = oDATA.Get(opt.tblProp);
       ix = objProp.Cols.FNameIndex(eOpt.Field);
-      fnFinishedEdit = function(NewVal, NewText) {
-        el.html('<img src="/Content/images/ajax-loader.gif" alt=' + NewVal + '>');
-        return $.post("/Update/editInPlace", {
-          id: frmOpt.id,
-          tbl: frmOpt.tblUpdate,
-          update_value: NewVal,
-          field: eOpt.Field,
-          show_value: NewText
-        }, function(resp, a, b) {
-          if (resp.ErrorMsg) {
-            Alert(resp.ErrorMsg, "Klaida išsaugant duomenis");
-            return el.html(OldVal);
-          } else {
-            el.html(resp.ResponseMsg);
-            OldVal = resp.ResponseMsg;
+      eOpt = $.extend({}, objProp.Cols[ix], eOpt);
+      $.extend(eOpt, {
+        Title: objProp.Grid.aoColumns[ix].sTitle
+      });
+    }
+    $.extend(eOpt, opt, {
+      FName: eOpt.Field
+    });
+    fnFinishedEdit = function(NewVal, NewText, UpdatePars) {
+      el.html('<img src="/Content/images/ajax-loader.gif" alt=' + NewVal + '>');
+      return $.post("/Update/editInPlace", {
+        id: eOpt.id,
+        tbl: eOpt.tblUpdate,
+        update_value: NewVal,
+        field: eOpt.Field,
+        show_value: NewText
+      }, function(resp, a, b) {
+        if (resp.ErrorMsg) {
+          Alert(resp.ErrorMsg, "Klaida išsaugant duomenis");
+          return el.html(OldVal);
+        } else {
+          el.html(resp.ResponseMsg);
+          OldVal = resp.ResponseMsg;
+          if (DataToSave) {
             DataToSave.Data.push(resp.ResponseMsg);
             DataToSave.Fields.push(eOpt.Field);
-            if (opt.fnUpdateSuccess) {
-              return opt.fnUpdateSuccess({
-                ctrl: el,
-                eOpt: eOpt,
-                id: frmOpt.id
-              });
-            }
           }
-        });
-      };
-      del = {
-        didOpenEditInPlace: function($Node, aSettings) {
-          var w;
-          $Node.attr("width", $Node.width());
-          w = $Node.width() < 200 ? 200 : $Node.width();
-          $Node.find('textarea').width(w);
-          return $Node.find('input').width(w);
+          if (fnUpdateSuccess) {
+            return fnUpdateSuccess({
+              ctrl: el,
+              eOpt: eOpt,
+              id: eOpt.id
+            });
+          }
         }
-      };
-      if (objProp.Cols[ix].List) {
-        del.shouldOpenEditInPlace = function($Node, aSettings, trigEvent) {
-          var eHTML;
-          if ($Node.find("input").length > 0) {
-            return false;
-          }
-          eHTML = oCONTROLS.txt({
-            "data_ctrl": JSON.stringify($.extend({}, objProp.Cols[ix].List, {
-              FName: objProp.Cols[ix].FName
-            })),
-            "classes": "ui-widget-content ui-corner-all",
-            "text": $Node.html(),
-            "Value": $Node.html()
-          });
-          $Node.html(eHTML).find('input').ComboBox({
-            fnValueChanged: function(NewVal, NewText) {
-              return fnFinishedEdit(NewVal, NewText);
-            }
-          }).focus().bind("blur", function(e) {
-            var interval;
-            return interval = setInterval(function() {
-              var atr;
-              atr = $("ul.ui-autocomplete").css("display");
-              if (atr === "none" || atr === void 0) {
-                el.html(OldVal);
-                return clearInterval(interval);
-              }
-            }, 3000);
-          });
-          return false;
-        };
-      } else if (eOpt.Plugin) {
-        del.shouldOpenEditInPlace = function($Node, aSettings, trigEvent) {
-          var Name, Prop, input, _ref;
-          if ($Node.find("input").length > 0) {
-            return false;
-          }
-          $Node.html("<input type='text'></input>");
-          input = $Node.find("input");
-          input.val(OldVal);
-          _ref = eOpt.Plugin;
-          for (Name in _ref) {
-            Prop = _ref[Name];
-            if (Name === "datepicker") {
-              $.extend(Prop, {
-                onClose: function(dateText, inst) {
-                  return fnFinishedEdit(dateText, null);
-                }
-              });
-              input.attr("readonly", "readonly")[Name](Prop).focus();
-            } else if (Name === "mask") {
-              input[Name](Prop).focus().bind("blur", function(e) {
-                var v;
-                t = $(e.target);
-                v = t.mask('value');
-                if (v && v !== OldVal) {
-                  return fnFinishedEdit(v, null);
-                } else {
-                  return $Node.empty().html(OldVal);
-                }
-              });
-            }
-          }
-          return false;
-        };
+      });
+    };
+    del = {
+      didOpenEditInPlace: function($Node, aSettings) {
+        var w;
+        $Node.attr("width", $Node.width());
+        w = $Node.width() < 200 ? 200 : $Node.width();
+        return $Node.find('textarea, input').width(w);
       }
-      editOpt = {
-        field_type: eOpt.field_type ? eOpt.field_type : objProp.Cols[ix].field_type,
-        delegate: del,
-        callback: function(idOfEditor, NewVal, OldVal, settingsPar, callbacks) {
-          fnFinishedEdit(NewVal, null);
-          return '<img src="/Content/images/ajax-loader.gif" alt=' + NewVal + '>';
-        },
-        delegate: del
+    };
+    if (eOpt.List) {
+      del.shouldOpenEditInPlace = function($Node, aSettings, trigEvent) {
+        var eHTML;
+        if ($Node.find("input").length > 0) {
+          return false;
+        }
+        eHTML = oCONTROLS.txt({
+          "data_ctrl": JSON.stringify($.extend(eOpt.List, {
+            FName: eOpt.FName
+          })),
+          "classes": "ui-widget-content ui-corner-all",
+          "text": $Node.html(),
+          "Value": $Node.html()
+        });
+        $Node.html(eHTML).find('input').ComboBox({
+          fnValueChanged: function(NewVal, NewText) {
+            return fnFinishedEdit(NewVal, NewText);
+          }
+        }).focus().bind("blur", function(e) {
+          var interval;
+          return interval = setInterval(function() {
+            var atr;
+            atr = $("ul.ui-autocomplete").css("display");
+            if (atr === "none" || atr === void 0) {
+              el.html(OldVal);
+              return clearInterval(interval);
+            }
+          }, 3000);
+        });
+        return false;
       };
-      return $(this).editInPlace(editOpt).qtip({
+    } else if (eOpt.Plugin) {
+      del.shouldOpenEditInPlace = function($Node, aSettings, trigEvent) {
+        var Name, Prop, input, _ref;
+        if ($Node.find("input").length > 0) {
+          return false;
+        }
+        $Node.html("<input type='text'></input>");
+        input = $Node.find("input");
+        input.val(OldVal);
+        _ref = eOpt.Plugin;
+        for (Name in _ref) {
+          Prop = _ref[Name];
+          if (Name === "datepicker") {
+            $.extend(Prop, {
+              onClose: function(dateText, inst) {
+                return fnFinishedEdit(dateText, null);
+              }
+            });
+            input.attr("readonly", "readonly")[Name](Prop).focus();
+          } else if (Name === "mask") {
+            input[Name](Prop).focus().bind("blur", function(e) {
+              var t, v;
+              t = $(e.target);
+              v = t.mask('value');
+              if (v && v !== OldVal) {
+                return fnFinishedEdit(v, null);
+              } else {
+                return $Node.empty().html(OldVal);
+              }
+            });
+          }
+        }
+        return false;
+      };
+    }
+    editOpt = {
+      field_type: eOpt.field_type,
+      delegate: del,
+      callback: function(idOfEditor, NewVal, OldVal, settingsPar, callbacks) {
+        fnFinishedEdit(NewVal, null);
+        return '<img src="/Content/images/ajax-loader.gif" alt=' + NewVal + '>';
+      }
+    };
+    el.editInPlace(editOpt);
+    if (eOpt.Title) {
+      el.qtip({
         position: {
           at: 'top center',
           my: 'bottom center'
         },
-        content: objProp.Grid.aoColumns[ix].sTitle
+        content: eOpt.Title
       });
-    });
-    return this;
+    }
+    return el;
   };
 }).call(this);
