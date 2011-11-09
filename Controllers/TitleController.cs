@@ -18,13 +18,18 @@ namespace BSData.Controllers {
       public JsonResult MyEvents() {
          ViewBag.Title = "Įvykiai";
          string View = RenderPartialViewToString("../Shared/Grid");
-         Repository_Docs Rep = new Repository_Docs();
+         Repository_Title Rep = new Repository_Title();
          var obj = new {
             Render = View,
             Contracts_Unsigned = Rep.GetJSON_tblContracts_NotApproved(),
-            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
+            tblContracts_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts", null),//tblDocs_UploadedFiles
             tblContracts_Form = Rep.GetJSON_tblContracts_Form(),
             tblUsers = Rep.GetJSON_tblUsers(),
+
+            tblClientEventsNew = Rep.GetJSON_ClientEventsNew(14),
+            tblNewClientEvents_UploadedFiles = Rep.GetJSON_UploadedFiles("tblClients_Events", 14),
+
+            //GetJSON_UploadedFiles
             //tblUsers_Status = Rep.GetJSON_tblUsers_Status(),
             Script = new {
                //File = "../Scripts/Form/Title_MyEvents.js",

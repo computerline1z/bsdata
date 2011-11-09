@@ -347,9 +347,10 @@ new {sTitle="E-paštas",sClass="smallFont"}//8//Email//
          return JSON;
       }
 
-      public jsonArrays GetJSON_tblDocs_UploadedFiles(string FileName) {
+      public jsonArrays GetJSON_UploadedFiles(string FileName, int? DaysOld) {
          jsonArrays JSON = new jsonArrays();
-         JSON.Data = from c in dc.proc_GetTblDocs(FileName)
+
+         JSON.Data = from c in dc.proc_GetUploadedFiles(FileName, DaysOld)
                      select new object[] {
 c.ID,//0
 c.UserID,//1
@@ -368,6 +369,44 @@ new { FName = "FileName"},//4
 new { FName = "RecordId1"},//5
 new { FName = "Description"}//6
 }; JSON.Cols = Cols;
+         return JSON;
+      }
+
+      public jsonArrays GetJSON_ClientEventsNew(int DaysOld) {
+         jsonArrays JSON = new jsonArrays();
+         JSON.Data = from e in dc.proc_GetClientsEventsNew(DaysOld)
+                     select new object[] {
+   e.ID,
+   e.ClientID,
+   e.Date,
+   e.ClientName,
+   e.Town,
+   e.Msg,
+   e.UserName,
+   e.DocsNo
+};
+         object[] Cols ={
+                 new { FName = "ID"},
+                 new { FName = "ClientID"},
+                 new { FName = "Date"},
+                 new { FName = "ClientName"},
+                 new { FName = "Town"},
+                 new { FName = "Msg"},
+                 new { FName = "UserName"},
+                 new { FName = "DocsNo"}
+              }; JSON.Cols = Cols;
+         JSON.Grid = new {
+            aoColumns = new object[]{
+new {bVisible=false,bSearchable=false},//0//ID//
+new {bVisible=false,bSearchable=false},//0//ClientID//
+new {sTitle="Data"},//1//Date//
+new {sTitle="Klientas"},//2//ClientName//
+new {sTitle="Miestas"},//3//Town//
+new {sTitle="Esmė"},//1//Msg//
+new {sTitle="Įrašė"},//1//UserName//
+new {sTitle="Dok."}//1//DocsNo//
+}, aaSorting = new object[] { new object[] { 2, "asc" } }
+         };
          return JSON;
       }
    }

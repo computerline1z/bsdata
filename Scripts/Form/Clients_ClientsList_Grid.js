@@ -30,7 +30,7 @@ var Clients_ClientsList_Grid=(function() {
       return ret;
    }
    var fnUploadsToButton_Events=function(e) {
-      oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: $('#tblEvents').data("ctrl").uid, tblUpdate: "tblClients_Events", AttachedFiles: "tblDocs_UploadedFiles_ofEvent",
+      oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: UserData.Id(), tblUpdate: "tblClients_Events", AttachedFiles: "tblDocs_UploadedFiles_ofEvent",
          DialogTitle: e.data.Date+" įvykio dokumentai, darbuotojas - "+e.data.User,
          fnCallBack: function(files) {
             $(e.target).parent().find("span.ui-button-text").html(files.length).parent().closest("button").css("color", ((files.length)?"":"red"));
@@ -39,7 +39,7 @@ var Clients_ClientsList_Grid=(function() {
       })
    }
    var fnUploadsToButton_Clients=function(e) {
-      oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: $("#tblGrid").data("ctrl").uid, tblUpdate: "tblClients", AttachedFiles: "tblDocs_UploadedFiles_ofClient",
+      oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: UserData.Id(), tblUpdate: "tblClients", AttachedFiles: "tblDocs_UploadedFiles_ofClient",
          DialogTitle: "Bylų prisegimas prie įmonės - "+e.data.Company,
          fnCallBack: function(files) {
             $(e.target).parent().find("span.ui-button-text").html(files.length).parent().closest("button").css("color", ((files.length)?"":"red"));

@@ -301,13 +301,6 @@ namespace BSData.Models
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetTblDocs")]
-		public ISingleResult<proc_GetTblDocsResult> proc_GetTblDocs([global::System.Data.Linq.Mapping.ParameterAttribute(Name="TableName", DbType="VarChar(50)")] string tableName)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), tableName);
-			return ((ISingleResult<proc_GetTblDocsResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetContracts_Approved")]
 		public ISingleResult<proc_GetContracts_ApprovedResult> proc_GetContracts_Approved([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Bit")] System.Nullable<bool> valid)
 		{
@@ -334,6 +327,20 @@ namespace BSData.Models
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, recID);
 			return ((ISingleResult<proc_ClientsResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetUploadedFiles")]
+		public ISingleResult<proc_GetUploadedFilesResult> proc_GetUploadedFiles([global::System.Data.Linq.Mapping.ParameterAttribute(Name="TableName", DbType="VarChar(50)")] string tableName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DaysFromNow", DbType="Int")] System.Nullable<int> daysFromNow)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), tableName, daysFromNow);
+			return ((ISingleResult<proc_GetUploadedFilesResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetClientsEventsNew")]
+		public ISingleResult<proc_GetClientsEventsNewResult> proc_GetClientsEventsNew([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DaysOld", DbType="Int")] System.Nullable<int> daysOld)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), daysOld);
+			return ((ISingleResult<proc_GetClientsEventsNewResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -5682,140 +5689,6 @@ namespace BSData.Models
 		}
 	}
 	
-	public partial class proc_GetTblDocsResult
-	{
-		
-		private int _ID;
-		
-		private int _UserID;
-		
-		private string _Date;
-		
-		private int _SizeKB;
-		
-		private string _FileName;
-		
-		private int _RecordID;
-		
-		private string _Description;
-		
-		public proc_GetTblDocsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					this._UserID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="VarChar(16)")]
-		public string Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this._Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeKB", DbType="Int NOT NULL")]
-		public int SizeKB
-		{
-			get
-			{
-				return this._SizeKB;
-			}
-			set
-			{
-				if ((this._SizeKB != value))
-				{
-					this._SizeKB = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string FileName
-		{
-			get
-			{
-				return this._FileName;
-			}
-			set
-			{
-				if ((this._FileName != value))
-				{
-					this._FileName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecordID", DbType="Int NOT NULL")]
-		public int RecordID
-		{
-			get
-			{
-				return this._RecordID;
-			}
-			set
-			{
-				if ((this._RecordID != value))
-				{
-					this._RecordID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(50)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-	}
-	
 	public partial class proc_GetContracts_ApprovedResult
 	{
 		
@@ -6455,6 +6328,292 @@ namespace BSData.Models
 				if ((this._UplFilesNo != value))
 				{
 					this._UplFilesNo = value;
+				}
+			}
+		}
+	}
+	
+	public partial class proc_GetUploadedFilesResult
+	{
+		
+		private int _ID;
+		
+		private int _UserID;
+		
+		private string _Date;
+		
+		private int _SizeKB;
+		
+		private string _FileName;
+		
+		private int _RecordID;
+		
+		private string _Description;
+		
+		public proc_GetUploadedFilesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
+		public int UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					this._UserID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="VarChar(16)")]
+		public string Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this._Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeKB", DbType="Int NOT NULL")]
+		public int SizeKB
+		{
+			get
+			{
+				return this._SizeKB;
+			}
+			set
+			{
+				if ((this._SizeKB != value))
+				{
+					this._SizeKB = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string FileName
+		{
+			get
+			{
+				return this._FileName;
+			}
+			set
+			{
+				if ((this._FileName != value))
+				{
+					this._FileName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecordID", DbType="Int NOT NULL")]
+		public int RecordID
+		{
+			get
+			{
+				return this._RecordID;
+			}
+			set
+			{
+				if ((this._RecordID != value))
+				{
+					this._RecordID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(50)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+	}
+	
+	public partial class proc_GetClientsEventsNewResult
+	{
+		
+		private int _ID;
+		
+		private System.Nullable<int> _ClientID;
+		
+		private string _Date;
+		
+		private string _ClientName;
+		
+		private string _Town;
+		
+		private string _Msg;
+		
+		private string _UserName;
+		
+		private int _DocsNo;
+		
+		public proc_GetClientsEventsNewResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="Int")]
+		public System.Nullable<int> ClientID
+		{
+			get
+			{
+				return this._ClientID;
+			}
+			set
+			{
+				if ((this._ClientID != value))
+				{
+					this._ClientID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="VarChar(10)")]
+		public string Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this._Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientName", DbType="NVarChar(60)")]
+		public string ClientName
+		{
+			get
+			{
+				return this._ClientName;
+			}
+			set
+			{
+				if ((this._ClientName != value))
+				{
+					this._ClientName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Town", DbType="NVarChar(50)")]
+		public string Town
+		{
+			get
+			{
+				return this._Town;
+			}
+			set
+			{
+				if ((this._Town != value))
+				{
+					this._Town = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Msg", DbType="NVarChar(1000)")]
+		public string Msg
+		{
+			get
+			{
+				return this._Msg;
+			}
+			set
+			{
+				if ((this._Msg != value))
+				{
+					this._Msg = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(71)")]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this._UserName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocsNo", DbType="Int NOT NULL")]
+		public int DocsNo
+		{
+			get
+			{
+				return this._DocsNo;
+			}
+			set
+			{
+				if ((this._DocsNo != value))
+				{
+					this._DocsNo = value;
 				}
 			}
 		}

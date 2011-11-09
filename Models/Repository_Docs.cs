@@ -385,9 +385,9 @@ new {sTitle="E-paštas",sClass="smallFont"}//8//Email//
          return JSON;
       }
 
-      public jsonArrays GetJSON_tblDocs_UploadedFiles(string FileName) {
+      public jsonArrays GetJSON_UploadedFiles(string FileName) {
          jsonArrays JSON = new jsonArrays();
-         JSON.Data = from c in dc.proc_GetTblDocs(FileName)
+         JSON.Data = from c in dc.proc_GetUploadedFiles(FileName, null)
                      select new object[] {
 c.ID,//0
 c.UserID,//1

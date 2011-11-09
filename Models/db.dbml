@@ -265,18 +265,6 @@
     <Parameter Name="Address" Parameter="address" Type="System.String" DbType="NVarChar(250)" />
     <Return Type="System.Int32" />
   </Function>
-  <Function Name="dbo.proc_GetTblDocs" Method="proc_GetTblDocs">
-    <Parameter Name="TableName" Parameter="tableName" Type="System.String" DbType="VarChar(50)" />
-    <ElementType Name="proc_GetTblDocsResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
-      <Column Name="SizeKB" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FileName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="RecordID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.proc_GetContracts_Approved" Method="proc_GetContracts_Approved">
     <Parameter Name="valid" Type="System.Boolean" DbType="Bit" />
     <ElementType Name="proc_GetContracts_ApprovedResult">
@@ -329,6 +317,32 @@
       <Column Name="Contracts" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="Events" Type="System.String" DbType="VarChar(41)" CanBeNull="true" />
       <Column Name="UplFilesNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetUploadedFiles" Method="proc_GetUploadedFiles">
+    <Parameter Name="TableName" Parameter="tableName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="DaysFromNow" Parameter="daysFromNow" Type="System.Int32" DbType="Int" />
+    <ElementType Name="proc_GetUploadedFilesResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
+      <Column Name="SizeKB" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RecordID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetClientsEventsNew" Method="proc_GetClientsEventsNew">
+    <Parameter Name="DaysOld" Parameter="daysOld" Type="System.Int32" DbType="Int" />
+    <ElementType Name="proc_GetClientsEventsNewResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClientID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="Town" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Msg" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(71)" CanBeNull="true" />
+      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

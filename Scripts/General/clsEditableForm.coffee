@@ -180,87 +180,95 @@ class @clsEditInPlaceForm
 			opt.fnFieldsUpdatedCallBack(DataToSave) if opt.fnFieldsUpdatedCallBack and DataToSave.Data
 			$(this).remove()
 		dragStart: () -> $("div.validity-modal-msg").remove()
-		$("<div id='divDialogForm' style='overflow:auto'></div>").html(htmlToRender).ModifyDoom(tblProp:tblProp,EditableFormId:EditableFormId,fnUpdateSuccess:opt.fnUpdateSuccess,DataToSave).dialog(dlgFormOpt).dialog('open').css("height","auto")
-		##oCONTROLS.UpdatableForm($("#"+opt.EditableFormId)) if opt.EditableFormId
+		$("<div id='divDialogForm' style='overflow:auto'></div>").html(htmlToRender).ModifyDoom({tblProp:tblProp,EditableFormId:EditableFormId},DataToSave,opt.fnUpdateSuccess).dialog(dlgFormOpt).dialog('open').css("height","auto")
 		oTable=$('#'+opt.Grid.DoomId).clsGrid(opt.Grid.Opt, opt.Grid.Source) if opt.Grid
 	
-$.fn.ModifyDoom = (opt,DataToSave) ->
+$.fn.ModifyDoom = (opt,DataToSave,fnUpdateSuccess) ->
 	t=@.find("#"+opt.EditableFormId)##ieskom ne doome, o perduotam htmoriginalHTMLl
 	frmOpt=eval("("+(t.attr("data-ctrl"))+")")## kadangi gali but stringas negalim naudot t.data('ctrl')//id,Source,tblUpdate
 	DataToSave.id=frmOpt.id;DataToSave.DataTable=frmOpt.tblUpdate;
-	objProp=oDATA.Get(opt.tblProp)
 	t.find('div.EditInPlace, span.EditInPlace').each(()->
-		##@.editInPlace({ field_type: @.data("ctrl").field_type, params: "id="+id+"&tbl="+tblUpdate+"&field="+@.data("ctrl").Field }
-		el=$(@); OldVal=el.html()
-		eOpt=eval("("+(el.attr("data-ctrl"))+")")
-		ix=objProp.Cols.FNameIndex(eOpt.Field)
-		fnFinishedEdit=(NewVal,NewText)->
-			el.html('<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>')
-			$.post("/Update/editInPlace",{id:frmOpt.id,tbl:frmOpt.tblUpdate,update_value:NewVal,field:eOpt.Field,show_value:NewText}
-			(resp,a,b)->
-				if (resp.ErrorMsg)
-					Alert(resp.ErrorMsg, "Klaida išsaugant duomenis")
-					el.html(OldVal)
-				else
-					el.html(resp.ResponseMsg);OldVal=resp.ResponseMsg
-					DataToSave.Data.push(resp.ResponseMsg)##Jei reiks updatinti lentele ir oDATA
-					DataToSave.Fields.push(eOpt.Field)
-					if opt.fnUpdateSuccess then opt.fnUpdateSuccess({ctrl:el,eOpt:eOpt,id:frmOpt.id})
-			)
-		del=didOpenEditInPlace:($Node, aSettings) ->
-			$Node.attr("width",$Node.width())
-			w=if ($Node.width()<200) then 200 else $Node.width()
-			$Node.find('textarea').width(w)
-			$Node.find('input').width(w)
-		if objProp.Cols[ix].List##List
-			del.shouldOpenEditInPlace=($Node, aSettings, trigEvent) -> 
-				return false if $Node.find("input").length>0
-				eHTML=oCONTROLS.txt(
-					"data_ctrl": JSON.stringify($.extend({},objProp.Cols[ix].List,{FName:objProp.Cols[ix].FName}))
-					"classes": "ui-widget-content ui-corner-all", "text": $Node.html()
-					"Value": $Node.html()
-				)
-				$Node.html(eHTML).find('input').ComboBox(fnValueChanged:(NewVal, NewText)->fnFinishedEdit(NewVal,NewText)).focus()
-					.bind("blur",(e)->
-						interval=setInterval( ()->
-							atr=$("ul.ui-autocomplete").css("display")
-							if (atr=="none" or atr==undefined)
-								el.html(OldVal)
-								clearInterval(interval)
-						3000)
-					)
-					##t=$(e.target)
-					##if (objProp.Cols[ix].List.ListType=="List")
-				false
-		else if eOpt.Plugin##setMask, datapicker
-			del.shouldOpenEditInPlace=($Node, aSettings, trigEvent) -> 
-				return false if $Node.find("input").length>0 
-				$Node.html("<input type='text'></input>")
-				input=$Node.find("input"); input.val(OldVal)
-				for Name, Prop of eOpt.Plugin
-					if (Name=="datepicker")
-						$.extend(Prop, onClose: (dateText, inst) -> fnFinishedEdit(dateText,null))
-						input.attr("readonly","readonly")[Name](Prop).focus()
-					else if (Name=="mask")
-						input[Name](Prop).focus().bind("blur", (e)->
-							t=$(e.target);v=t.mask('value')
-							if v and v!=OldVal then fnFinishedEdit(v,null)
-							else $Node.empty().html(OldVal)
-						)
-				false
-		##$.extend(del,{shouldOpenEditInPlace:shouldOpenEditInPlace}) if shouldOpenEditInPlace
-		editOpt=
-			field_type: if (eOpt.field_type) then eOpt.field_type else objProp.Cols[ix].field_type
-			delegate:del
-			callback:(idOfEditor, NewVal,OldVal,settingsPar,callbacks) -> 
-				##$.post("/Update/editInPlace", {id:frmOpt.id,tbl:frmOpt.tblUpdate,update_value:NewVal,field:eOpt.Field},(newContent,a,b)->el.html(newContent)) if NewVal!=OldVal
-				fnFinishedEdit(NewVal,null)
-				'<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>'
-			delegate:del
-			##show_buttons:true
-		$(@).editInPlace(editOpt).qtip(
-			position: {at: 'top center', my: 'bottom center'}
-			content: objProp.Grid.aoColumns[ix].sTitle
-		)		
+		##el=$(@); OldVal=el.html()
+		##eOpt=eval("("+(el.attr("data-ctrl"))+")")
+		##ix=objProp.Cols.FNameIndex(eOpt.Field)
+		$(@).MyEditInPlace({id:frmOpt.id,tblUpdate:frmOpt.tblUpdate,tblProp:opt.tblProp},DataToSave,fnUpdateSuccess)
 	)
 	@##Grazinam objekto toliau procesint
+
+
+$.fn.MyEditInPlace = (opt,DataToSave,fnUpdateSuccess) ->
+	##opt - turi buti id, tblUpdate, Field(gali but ir data-ctrl)
+	## Nebutini: fnUpdateSuccess(iskviecia po updato),DataToSave(issaugoja naujas vertes),Title
+	##opt papildo eOpt, kuris ateina is:
+		##data-ctrl,
+		##objProp.Cols[ix], jei yra opt.objProp
+	el=$(@); OldVal=el.html()
+	eOpt=if (typeof el.data("ctrl")=="object") then el.data("ctrl") else eval("("+(el.attr("data-ctrl"))+")")
+	if opt.tblProp ## jei yra objektas ikisam jo propercius
+		objProp=oDATA.Get(opt.tblProp)
+		ix=objProp.Cols.FNameIndex(eOpt.Field)
+		eOpt=$.extend({},objProp.Cols[ix], eOpt)
+		$.extend(eOpt,{Title:objProp.Grid.aoColumns[ix].sTitle})
+	$.extend(eOpt, opt,{FName:eOpt.Field})
+	fnFinishedEdit=(NewVal,NewText,UpdatePars)->
+		el.html('<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>')
+		$.post("/Update/editInPlace",{id:eOpt.id,tbl:eOpt.tblUpdate,update_value:NewVal,field:eOpt.Field,show_value:NewText}
+		(resp,a,b)->
+			if (resp.ErrorMsg)
+				Alert(resp.ErrorMsg, "Klaida išsaugant duomenis")
+				el.html(OldVal)
+			else
+				el.html(resp.ResponseMsg);OldVal=resp.ResponseMsg
+				if DataToSave
+					DataToSave.Data.push(resp.ResponseMsg)##Jei reiks updatinti lentele ir oDATA
+					DataToSave.Fields.push(eOpt.Field)
+				if fnUpdateSuccess then fnUpdateSuccess({ctrl:el,eOpt:eOpt,id:eOpt.id})
+		)
+	del=didOpenEditInPlace:($Node, aSettings) ->
+		$Node.attr("width",$Node.width())
+		w=if ($Node.width()<200) then 200 else $Node.width()
+		$Node.find('textarea, input').width(w)
+	if eOpt.List##List
+		del.shouldOpenEditInPlace=($Node, aSettings, trigEvent) -> 
+			return false if $Node.find("input").length>0
+			eHTML=oCONTROLS.txt(
+				"data_ctrl": JSON.stringify($.extend(eOpt.List, {FName:eOpt.FName,}))
+				"classes": "ui-widget-content ui-corner-all", "text": $Node.html()
+				"Value": $Node.html()
+			)
+			$Node.html(eHTML).find('input').ComboBox(fnValueChanged:(NewVal, NewText)->fnFinishedEdit(NewVal,NewText)).focus()
+				.bind("blur",(e)->
+					interval=setInterval( ()->
+						atr=$("ul.ui-autocomplete").css("display")
+						if (atr=="none" or atr==undefined)
+							el.html(OldVal)
+							clearInterval(interval)
+					3000)
+				)
+			false
+	else if eOpt.Plugin##setMask, datapicker
+		del.shouldOpenEditInPlace=($Node, aSettings, trigEvent) -> 
+			return false if $Node.find("input").length>0 
+			$Node.html("<input type='text'></input>")
+			input=$Node.find("input"); input.val(OldVal)
+			for Name, Prop of eOpt.Plugin
+				if (Name=="datepicker")
+					$.extend(Prop, onClose: (dateText, inst) -> fnFinishedEdit(dateText,null))
+					input.attr("readonly","readonly")[Name](Prop).focus()
+				else if (Name=="mask")
+					input[Name](Prop).focus().bind("blur", (e)->
+						t=$(e.target);v=t.mask('value')
+						if v and v!=OldVal then fnFinishedEdit(v,null)
+						else $Node.empty().html(OldVal)
+					)
+			false
+	editOpt=
+		field_type: eOpt.field_type
+		delegate:del
+		callback:(idOfEditor, NewVal,OldVal,settingsPar,callbacks) -> 
+			fnFinishedEdit(NewVal,null)
+			'<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>'
+	el.editInPlace(editOpt)
+	if eOpt.Title
+		el.qtip(position: {at: 'top center', my: 'bottom center'}, content: eOpt.Title)
+	el

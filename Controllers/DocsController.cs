@@ -24,7 +24,7 @@ namespace BSData.Controllers {
             //   File = "../Scripts/Form/Users_All_Grid.js",
             //   oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }
             //},
-            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
+            tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
             tblTowns = Rep.GetJSON_tblTowns(),
             tblClients = Rep.GetJSON_tblClients(),
             tblContracts1 = Rep.GetJSON_tblContracts1(),
@@ -43,7 +43,7 @@ namespace BSData.Controllers {
          var obj = new {
             Render = View,
             Contracts_Unsigned = Rep.GetJSON_tblContracts_NotApproved(),//Galiojancios(arba be datos) ir nepasirasytos
-            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
+            tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
             tblUsers_Status = Rep.GetJSON_tblUsers_Status(),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
@@ -61,7 +61,7 @@ namespace BSData.Controllers {
          var obj = new {
             Render = View,
             Contracts_Valid = Rep.GetJSON_tblContracts_Approved(true),//Tik galiojancios ir pasirasytos
-            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
+            tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan
@@ -78,7 +78,7 @@ namespace BSData.Controllers {
          var obj = new {
             Render = View,
             Contracts_Expired = Rep.GetJSON_tblContracts_Approved(false),//Negaliojancios bet pasirasytos
-            tblDocs_UploadedFiles = Rep.GetJSON_tblDocs_UploadedFiles("tblContracts"),
+            tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan

@@ -15,7 +15,7 @@ var Contracts_Grid=(function() {
       return nRow;
    }
    var fnUploadsToButton=function(e) {
-      oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: $("#tblGrid").data("ctrl").uid, tblUpdate: "tblContracts", AttachedFiles: "tblDocs_UploadedFiles",
+      oCONTROLS.UploadDialog({ RecId: e.data.ID, UserId: UserData.Id(), tblUpdate: "tblContracts", AttachedFiles: "tblDocs_UploadedFiles",
          fnCallBack: function(files) {
             $(e.target).parent().find("span.ui-button-text").html(files.length).parent().closest("button").css("color", ((files.length)?"":"red"));
             oDATA.UpdateCell(tblSource, false, e.data.ID, 9, files.length); //UpdateCell:(obj,tblToUpdate,id,field,NewVal)

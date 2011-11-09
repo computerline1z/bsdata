@@ -250,8 +250,8 @@ oCONTROLS.UploadDialog.SetAttachedFiles=function(par) {
    //ctrl turi but Recordo ID
    var f=par.AttachedFiles, u=oDATA.Get("tblUsers").Data, html="";
    var LeftOuter="<div style='clear:left;'><div style='margin-top:10px;height:46px;width:37px;float:left;'>";
-   var RightOuter="</div><div style='height:46px;width:225px;float:left;'>";
-   var RightInner="<div style='height:15px;width:224px;float:left;'>";
+   var RightOuter="</div><div style='height:46px;width:285px;float:left;'>";
+   var RightInner="<div style='height:15px;width:284px;float:left;'>";
    for(var i=0; i<f.length; i++) {
       if(f[i][5]===par.RecordId) {
          if(!par.fromFileData) { par.FileData[par.FileData.length]=f[i]; }
