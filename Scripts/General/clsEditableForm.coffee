@@ -191,25 +191,26 @@ $.fn.ModifyDoom = (opt,DataToSave,fnUpdateSuccess) ->
 		##el=$(@); OldVal=el.html()
 		##eOpt=eval("("+(el.attr("data-ctrl"))+")")
 		##ix=objProp.Cols.FNameIndex(eOpt.Field)
-		$(@).MyEditInPlace({id:frmOpt.id,tblUpdate:frmOpt.tblUpdate,tblProp:opt.tblProp},DataToSave,fnUpdateSuccess)
+		$(@).MyEditInPlace({id:frmOpt.id,tblUpdate:frmOpt.tblUpdate,tblProp:opt.tblProp,DataToSave:DataToSave,fnUpdateSuccess:fnUpdateSuccess})
 	)
 	@##Grazinam objekto toliau procesint
 
 
-$.fn.MyEditInPlace = (opt,DataToSave,fnUpdateSuccess) ->
+$.fn.MyEditInPlace = (opt) ->
 	##opt - turi buti id, tblUpdate, Field(gali but ir data-ctrl)
-	## Nebutini: fnUpdateSuccess(iskviecia po updato),DataToSave(issaugoja naujas vertes),Title
+	## Nebutini:field_type(default-text) fnUpdateSuccess(iskviecia po updato),DataToSave(issaugoja naujas vertes),Title
 	##opt papildo eOpt, kuris ateina is:
 		##data-ctrl,
 		##objProp.Cols[ix], jei yra opt.objProp
 	el=$(@); OldVal=el.html()
 	eOpt=if (typeof el.data("ctrl")=="object") then el.data("ctrl") else eval("("+(el.attr("data-ctrl"))+")")
+	eOpt={} if !eOpt
+	$.extend(eOpt, opt,{FName:eOpt.Field})
 	if opt.tblProp ## jei yra objektas ikisam jo propercius
 		objProp=oDATA.Get(opt.tblProp)
 		ix=objProp.Cols.FNameIndex(eOpt.Field)
 		eOpt=$.extend({},objProp.Cols[ix], eOpt)
 		$.extend(eOpt,{Title:objProp.Grid.aoColumns[ix].sTitle})
-	$.extend(eOpt, opt,{FName:eOpt.Field})
 	fnFinishedEdit=(NewVal,NewText,UpdatePars)->
 		el.html('<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>')
 		$.post("/Update/editInPlace",{id:eOpt.id,tbl:eOpt.tblUpdate,update_value:NewVal,field:eOpt.Field,show_value:NewText}
@@ -219,10 +220,10 @@ $.fn.MyEditInPlace = (opt,DataToSave,fnUpdateSuccess) ->
 				el.html(OldVal)
 			else
 				el.html(resp.ResponseMsg);OldVal=resp.ResponseMsg
-				if DataToSave
-					DataToSave.Data.push(resp.ResponseMsg)##Jei reiks updatinti lentele ir oDATA
-					DataToSave.Fields.push(eOpt.Field)
-				if fnUpdateSuccess then fnUpdateSuccess({ctrl:el,eOpt:eOpt,id:eOpt.id})
+				if opt.DataToSave
+					opt.DataToSave.Data.push(resp.ResponseMsg)##Jei reiks updatinti lentele ir oDATA
+					opt.DataToSave.Fields.push(eOpt.Field)
+				if opt.fnUpdateSuccess then opt.fnUpdateSuccess({ctrl:el,eOpt:eOpt,id:eOpt.id})
 		)
 	del=didOpenEditInPlace:($Node, aSettings) ->
 		$Node.attr("width",$Node.width())
@@ -262,13 +263,18 @@ $.fn.MyEditInPlace = (opt,DataToSave,fnUpdateSuccess) ->
 						else $Node.empty().html(OldVal)
 					)
 			false
-	editOpt=
-		field_type: eOpt.field_type
-		delegate:del
-		callback:(idOfEditor, NewVal,OldVal,settingsPar,callbacks) -> 
-			fnFinishedEdit(NewVal,null)
-			'<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>'
-	el.editInPlace(editOpt)
+	alert("Nėra privalomų duomenų (id, tblUpdate, Field)-clsEditableForm") if (!eOpt.id or !eOpt.tblUpdate or !eOpt.Field)
+	$.extend(eOpt, {delegate:del,callback:(idOfEditor, NewVal,OldVal,settingsPar,callbacks) ->
+		fnFinishedEdit(NewVal,null)
+		'<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>'
+		})
+	##editOpt=
+	##	field_type: eOpt.field_type
+	##	delegate:del
+	##	callback:(idOfEditor, NewVal,OldVal,settingsPar,callbacks) -> 
+	##		fnFinishedEdit(NewVal,null)
+	##		'<img src="/Content/images/ajax-loader.gif" alt='+NewVal+'>'
+	el.editInPlace(eOpt)
 	if eOpt.Title
 		el.qtip(position: {at: 'top center', my: 'bottom center'}, content: eOpt.Title)
 	el

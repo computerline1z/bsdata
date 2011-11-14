@@ -251,6 +251,27 @@
       <Association Name="tblUser_tblDocs_UploadedFile" Member="tblUser" ThisKey="UserID" OtherKey="ID" Type="tblUser" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.tblClients_Objects" Member="tblClients_Objects">
+    <Type Name="tblClients_Object">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="IsCompany" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ClientID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Device" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SimIMEI" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Coords" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ReactionFree" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReactionPrice" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PriceMonth" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PriceOnce" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.proc_tblUsers_InsertNew" Method="proc_tblUsers_InsertNew">
     <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" Direction="InOut" />
     <Parameter Name="Position" Parameter="position" Type="System.String" DbType="NVarChar(50)" />
@@ -264,37 +285,6 @@
     <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="Address" Parameter="address" Type="System.String" DbType="NVarChar(250)" />
     <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.proc_GetContracts_Approved" Method="proc_GetContracts_Approved">
-    <Parameter Name="valid" Type="System.Boolean" DbType="Bit" />
-    <ElementType Name="proc_GetContracts_ApprovedResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="ClientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ClientName" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="ValidityDate" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
-      <Column Name="ValidityNote" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.proc_GetContracts_NotApproved" Method="proc_GetContracts_NotApproved">
-    <ElementType Name="proc_GetContracts_NotApprovedResult">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="ClientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ClientName" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="UserName" Type="System.String" DbType="NVarChar(71) NOT NULL" CanBeNull="false" />
-      <Column Name="DateSigned" Type="System.String" DbType="Char(10)" CanBeNull="true" />
-      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
-    </ElementType>
   </Function>
   <Function Name="dbo.proc_GetClientEvents" Method="proc_GetClientEvents">
     <Parameter Name="ClientID" Parameter="clientID" Type="System.Int32" DbType="Int" />
@@ -343,6 +333,65 @@
       <Column Name="Msg" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
       <Column Name="UserName" Type="System.String" DbType="NVarChar(71)" CanBeNull="true" />
       <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetContracts_Objects" Method="proc_GetContracts_Objects">
+    <Parameter Name="valid" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="proc_GetContracts_ObjectsResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="ValidityDate" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetContracts_Other" Method="proc_GetContracts_Other">
+    <Parameter Name="valid" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="proc_GetContracts_OtherResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FormID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="ClientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClientName" Type="System.String" DbType="NVarChar(60)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ValidityDate" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ValidityNote" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetContracts_Unsigned" Method="proc_GetContracts_Unsigned">
+    <ElementType Name="proc_GetContracts_UnsignedResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(12) NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(71)" CanBeNull="true" />
+      <Column Name="RecDate" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DocsNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status_Description" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ClientID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetUploadedFiles1" Method="proc_GetUploadedFiles1">
+    <Parameter Name="TableName" Parameter="tableName" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="RecordID" Parameter="recordID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="proc_GetUploadedFiles1Result">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
+      <Column Name="SizeKB" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RecordID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

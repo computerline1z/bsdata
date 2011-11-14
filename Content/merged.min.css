@@ -12,7 +12,7 @@ label.leftlabelforManyF{margin:.7em;color:#666;width:13.6em;display:inline-block
 .ExtendIt label{cursor:pointer;color:#666}
 fieldset.inputFieldset{margin-top:1em;display:inline-block;padding:.3em;width:52.7em}
 span.inputRight,div.inputRight{float:left;margin:1em;display:inline-block;padding:.3em}
-input.inputTip,textarea.inputTip{color:#666;font-style:italic}
+input.inputTip,textarea.inputTip,div.inputTip,span.inputTip{color:#666;font-style:italic}
 input.date,input.number{width:6em!important}
 textarea{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;-ms-box-sizing:border-box}
 .validity-modal-msg{position:absolute;z-index:2000;cursor:pointer;color:#fff;margin-left:2px;margin-top:.8em;font-size:12pt;background-image:url('images/arrow.gif');background-position:left center;background-repeat:no-repeat;padding:2px;padding-left:18px;-moz-border-radius:4px;-webkit-border-radius:4px}
@@ -20,7 +20,7 @@ textarea{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:bor
 .validity-erroneous{border:solid 2px #f56600!important}
 body{color:black;background-color:#f0f0f0;font-family:verdana,helvetica,arial,sans-serif;font-size:71%;margin:0;padding:0}
 html>body{font-size:8.5pt}
-.editInPlace{cursor:pointer;background:#ffc;color:#666}
+.editInPlace{cursor:pointer;background:#ffc;border:1px inset;color:#666}
 acronym,.titleTip{border-bottom:1px dotted #999;cursor:help;margin:0;padding:0 0 .4px 0}
 .doNotDisplay{display:none}
 .smallCaps{font-size:110%;font-variant:small-caps}

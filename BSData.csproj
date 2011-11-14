@@ -108,14 +108,20 @@
     <Content Include="Scripts\Final\js.chirp.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Scripts\Form\Docs_NewContract.coffee">
+    <None Include="Scripts\Form\Docs_Contracts_New_Object.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
-      <LastGenOutput>Docs_NewContract.js</LastGenOutput>
+      <LastGenOutput>Docs_Contracts_New_Object.js</LastGenOutput>
     </None>
-    <None Include="Scripts\General\Copy of MyPlugins2.coffee">
+    <None Include="Scripts\Form\Docs_Contracts_New_Other.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
-      <LastGenOutput>Copy of MyPlugins2.js</LastGenOutput>
+      <LastGenOutput>Docs_Contracts_New_Other.js</LastGenOutput>
     </None>
+    <Content Include="Scripts\Form\mergedForms.min.js">
+      <DependentUpon>zForms.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Form\zForms.chirp.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\General\MyPlugins2.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>MyPlugins2.js</LastGenOutput>
@@ -133,22 +139,24 @@
       <LastGenOutput>clsGrid.js</LastGenOutput>
     </None>
     <Content Include="Scripts\Form\Clients_ClientsList_Grid.js" />
-    <Content Include="Scripts\Form\Title_MyEvents.js" />
-    <Content Include="Scripts\Form\Docs_Contracts_Grid.js" />
-    <Content Include="Scripts\Form\Docs_NewContract.js">
+    <Content Include="Scripts\Form\Docs_ContractsUnsigned_Grid.js" />
+    <Content Include="Scripts\Form\Docs_ContractsObjects_Grid.js" />
+    <Content Include="Scripts\Form\Docs_Contracts_New_Object.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Docs_NewContract.coffee</DependentUpon>
+      <DependentUpon>Docs_Contracts_New_Object.coffee</DependentUpon>
     </Content>
+    <Content Include="Scripts\Form\Docs_Contracts_New_Other.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Docs_Contracts_New_Other.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Form\Title_MyEvents.js" />
+    <Content Include="Scripts\Form\Docs_ContractsOther_Grid.js" />
     <Content Include="Scripts\General\clsEditableForm.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>clsEditableForm.coffee</DependentUpon>
-    </Content>
-    <Content Include="Scripts\General\Copy of MyPlugins2.js">
-      <DependentUpon>Copy of MyPlugins2.coffee</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
     </Content>
     <Content Include="Scripts\General\MyPlugins2.js">
       <AutoGen>True</AutoGen>
@@ -163,9 +171,10 @@
     <Content Include="Scripts\Plugins\Copy of jquery-1.6.2.min.js" />
     <Content Include="Scripts\Plugins\jquery.swfupload.js" />
     <Content Include="Scripts\Plugins\Temp.js" />
-    <Content Include="Views\Docs\NewContract.cshtml" />
+    <Content Include="Views\Docs\NewContract_Other.cshtml" />
     <Content Include="Views\Clients\ClientEvents.cshtml" />
     <Content Include="Views\Clients\NewEvent.cshtml" />
+    <Content Include="Views\Docs\NewContract_Object.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Mail.ConfirmRegistration.lt.htm" />

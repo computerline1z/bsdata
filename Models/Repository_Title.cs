@@ -92,137 +92,140 @@ new {bVisible=false,sTitle="PVM kodas"},//12//Rec_VATCode//
          return JSON;
       }
 
-      public jsonArrays GetJSON_tblContracts1() {//Sutačių pildymui
-         jsonArrays JSON = new jsonArrays();
-         object[] Cols ={
-new { FName = "ID"},//0
-new { FName = "FormID",Tip="Pasirinkite sutarties tipinę formą..", List=new{Source="tblContracts_Form", iVal=0,iText=new object[]{1,2}}},//1
-new { FName = "Date",Type="DateLess", Default="Today",Validity="require().match('date').lessThanOrEqualTo(new Date())"},//2
-new { FName = "DeliveryDate",Type="DateLess", Default="Today",Validity="match('date').lessThanOrEqualTo(new Date())"},//3
-new { FName = "ClientID",Tip="Pradėkite rinkti įmonės pavadinimo arba miesto raides..",List=new{ListType="None",Source="tblClients",iVal=0,iText=new object[]{2,6}}},//4
-new { FName = "ClientNo",Type="String", Validity="nonHtml().maxLength(20)"},//5
-new { FName = "Description",LenMax=200, Type="String", Validity="require().nonHtml().maxLength(100)"},//6
-new { FName = "ValidityDate",Type="Date", classes="ValidTill", Validity="match('date').greaterThan(new Date())"},//7
-new { FName = "ValidityNote",Type="String", classes="ValidTill", Validity="nonHtml().maxLength(50)", AgrValidity=new{Selector=".ValidTill", Validity="require",Msg="Turi būti nurodyta arba galiojimo data arba paaiškinimas"}},//8
-new { FName = "PriceAtOnce",Type="Decimal", classes="Price", Validity="match('number').greaterThanOrEqualTo(0)"},//9
-new { FName = "PricePerMonth",Type="Decimal", classes="Price", Validity="match('number').greaterThanOrEqualTo(0)", AgrValidity=new{Selector=".Price", Validity="require",Msg="Turi būti nurodyta arba vienkartinė kaina arba abonentinis"}},//10
-new { FName = "RespUserID",Tip="Pradėkite rinkti atsakingo asmens vardo ir pavardės raides..",List=new{ListType="None",Source="tblUsers",iVal=0,iText=new object[]{2,3,1}}},//11
-new { FName = "Notes",Type="String",LenMax=200, Validity="nonHtml().maxLength(100)"},//12
-new { FName = "PagesNo",Type="Integer", Validity="require().match('integer').maxLength(5).greaterThanOrEqualTo(0)"},//13
-new { FName = "SubDepID",Tip="Pasirinkite skyrių atsakingą už sutarties vykdymą..", List=new{Source="tblUsers_SubDep",iVal=0,iText=new object[]{1}}},//14
-new { FName = "IsOurCustomer",Type="Boolean"}//,//15
-//new { FName = "IsSigned",Type="Boolean"}//16
-}; JSON.Cols = Cols;
-         JSON.Config = new {
-            Controler = "Contracts", tblUpdate = "tblContracts", Msg = new { AddNew = "Naujos sutarties įvedimas", Edit = "Sutarties redagavimas", Delete = "Ištrinti sutartį", GenName = "Sutartis" }
-         };
-         JSON.Grid = new {
-            aoColumns = new object[]{
-new {bVisible=false,bSearchable=false},//0//ID////DefaultUpdate=0
-new {sTitle="Tipinė forma", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
-new {sTitle="Sutarties"},//2//Date//
-new {sTitle="Gavimo patvirtintos"},//3//DeliveryDate//
-new {sTitle="Pavadinimas", bVisible=false,bSearchable=false},//4//ClientID////DefaultUpdate=0
-new {sTitle="Kitos šalies Nr"},//5//ClientNo//
-new {sTitle="Sutarties esmė",sClass="smallFont"},//6//Description//
-new {sTitle="Data"},//7//ValidityDate//
-new {sTitle="Paaiškinimai"},//8//ValidityNote//
-new {sTitle="Vienkartinė"},//9//PriceAtOnce//
-new {sTitle="Per mėn."},//10//PricePerMonth//
-new {sTitle="Darbuotojas", bVisible=false,bSearchable=false},//11//RespUserID////DefaultUpdate=0
-new {sTitle="Pastabos"},//12//Notes//
-new {sTitle="Puslapių skaičius"},//13//PagesNo//
-new {sTitle="Skyrius", bVisible=false,bSearchable=false},//14//SubDepID////DefaultUpdate=0
-new {sTitle="Tai yra paslaugas ar prekes perkantis klientas"}//,//15//IsOurCustomer//
-//new {sTitle="Sutartis pasirašyta abiejų šalių"}//16//IsSigned//
-}, aaSorting = new object[] { new object[] { 3, "asc" } },//???
-         };
-         return JSON;
-      }
+      //      public jsonArrays GetJSON_tblContracts1() {//Sutačių pildymui
+      //         jsonArrays JSON = new jsonArrays();
+      //         object[] Cols ={
+      //new { FName = "ID"},//0
+      //new { FName = "FormID",Tip="Pasirinkite sutarties tipinę formą..", List=new{Source="tblContracts_Form", iVal=0,iText=new object[]{1,2}}},//1
+      //new { FName = "Date",Type="DateLess", Default="Today",Validity="require().match('date').lessThanOrEqualTo(new Date())"},//2
+      //new { FName = "DeliveryDate",Type="DateLess", Default="Today",Validity="match('date').lessThanOrEqualTo(new Date())"},//3
+      //new { FName = "ClientID",Tip="Pradėkite rinkti įmonės pavadinimo arba miesto raides..",List=new{ListType="None",Source="tblClients",iVal=0,iText=new object[]{2,6}}},//4
+      //new { FName = "ClientNo",Type="String", Validity="nonHtml().maxLength(20)"},//5
+      //new { FName = "Description",LenMax=200, Type="String", Validity="require().nonHtml().maxLength(100)"},//6
+      //new { FName = "ValidityDate",Type="Date", classes="ValidTill", Validity="match('date').greaterThan(new Date())"},//7
+      //new { FName = "ValidityNote",Type="String", classes="ValidTill", Validity="nonHtml().maxLength(50)", AgrValidity=new{Selector=".ValidTill", Validity="require",Msg="Turi būti nurodyta arba galiojimo data arba paaiškinimas"}},//8
+      //new { FName = "PriceAtOnce",Type="Decimal", classes="Price", Validity="match('number').greaterThanOrEqualTo(0)"},//9
+      //new { FName = "PricePerMonth",Type="Decimal", classes="Price", Validity="match('number').greaterThanOrEqualTo(0)", AgrValidity=new{Selector=".Price", Validity="require",Msg="Turi būti nurodyta arba vienkartinė kaina arba abonentinis"}},//10
+      //new { FName = "RespUserID",Tip="Pradėkite rinkti atsakingo asmens vardo ir pavardės raides..",List=new{ListType="None",Source="tblUsers",iVal=0,iText=new object[]{2,3,1}}},//11
+      //new { FName = "Notes",Type="String",LenMax=200, Validity="nonHtml().maxLength(100)"},//12
+      //new { FName = "PagesNo",Type="Integer", Validity="require().match('integer').maxLength(5).greaterThanOrEqualTo(0)"},//13
+      //new { FName = "SubDepID",Tip="Pasirinkite skyrių atsakingą už sutarties vykdymą..", List=new{Source="tblUsers_SubDep",iVal=0,iText=new object[]{1}}},//14
+      //new { FName = "IsOurCustomer",Type="Boolean"}//,//15
+      ////new { FName = "IsSigned",Type="Boolean"}//16
+      //}; JSON.Cols = Cols;
+      //         JSON.Config = new {
+      //            Controler = "Contracts", tblUpdate = "tblContracts", Msg = new { AddNew = "Naujos sutarties įvedimas", Edit = "Sutarties redagavimas", Delete = "Ištrinti sutartį", GenName = "Sutartis" }
+      //         };
+      //         JSON.Grid = new {
+      //            aoColumns = new object[]{
+      //new {bVisible=false,bSearchable=false},//0//ID////DefaultUpdate=0
+      //new {sTitle="Tipinė forma", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
+      //new {sTitle="Sutarties"},//2//Date//
+      //new {sTitle="Gavimo patvirtintos"},//3//DeliveryDate//
+      //new {sTitle="Pavadinimas", bVisible=false,bSearchable=false},//4//ClientID////DefaultUpdate=0
+      //new {sTitle="Kitos šalies Nr"},//5//ClientNo//
+      //new {sTitle="Sutarties esmė",sClass="smallFont"},//6//Description//
+      //new {sTitle="Data"},//7//ValidityDate//
+      //new {sTitle="Paaiškinimai"},//8//ValidityNote//
+      //new {sTitle="Vienkartinė"},//9//PriceAtOnce//
+      //new {sTitle="Per mėn."},//10//PricePerMonth//
+      //new {sTitle="Darbuotojas", bVisible=false,bSearchable=false},//11//RespUserID////DefaultUpdate=0
+      //new {sTitle="Pastabos"},//12//Notes//
+      //new {sTitle="Puslapių skaičius"},//13//PagesNo//
+      //new {sTitle="Skyrius", bVisible=false,bSearchable=false},//14//SubDepID////DefaultUpdate=0
+      //new {sTitle="Tai yra paslaugas ar prekes perkantis klientas"}//,//15//IsOurCustomer//
+      ////new {sTitle="Sutartis pasirašyta abiejų šalių"}//16//IsSigned//
+      //}, aaSorting = new object[] { new object[] { 3, "asc" } },//???
+      //         };
+      //         return JSON;
+      //      }
 
-      public jsonArrays GetJSON_tblContracts_Approved(bool IsValid) {
-         jsonArrays JSON = new jsonArrays();
-         JSON.Data = from c in dc.proc_GetContracts_Approved(IsValid) select new object[] {
-            c.ID,//0
-            c.FormID,//1
-            c.Date,//2
-            c.ClientID,//3
-            c.ClientName,//4
-            c.Description,//5
-            c.ValidityDate,//6
-            c.ValidityNote,//7
-            c.DocsNo//8
-         };
-         object[] Cols ={
-new { FName = "ID"},//0
-new { FName = "FormID"},//1
-new { FName = "Date"},//2
-new { FName = "ClientID"},//3
-new { FName = "ClientName"},//4
-new { FName = "Description"},//5
-new { FName = "ValidityDate"},//6
-new { FName = "ValidityNote"},//7
-new { FName = "DocsNo"}//8
-}; JSON.Cols = Cols;
-         JSON.Grid = new {
-            aoColumns = new object[]{
-new {sTitle="Nr"},//0//ID////DefaultUpdate=0
-new {sTitle="Tipinė forma", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
-new {sTitle="Data"},//2//Date//
-//new {sTitle="Gauta", bVisible=(IsSigned)?false:true,bSearchable=false},//3//DeliveryDate//rodom tik jei nepasirasyta
-new {bVisible=false,bSearchable=false},//4//ClientID////DefaultUpdate=0
-new {sTitle="Kita šalis"},//5
-new {sTitle="Sutarties esmė",sClass="smallFont"},//6//Description//
-new {sTitle="Data"},//7//ValidityDate//
-new {sTitle="Paaiškinimai"},//8//ValidityNote//
-new {sTitle="Dok.", bSearchable=false}//9//DocsNo//
-}, aaSorting = new object[] { new object[] { 2, "asc" } }//Pagal data
-         };
-         return JSON;
-      }
+      //      public jsonArrays GetJSON_tblContracts_Approved(bool IsValid) {
+      //         jsonArrays JSON = new jsonArrays();
+      //         JSON.Data = from c in dc.proc_GetContracts_Approved(IsValid) select new object[] {
+      //            c.ID,//0
+      //            c.FormID,//1
+      //            c.Date,//2
+      //            c.ClientID,//3
+      //            c.ClientName,//4
+      //            c.Description,//5
+      //            c.ValidityDate,//6
+      //            c.ValidityNote,//7
+      //            c.DocsNo//8
+      //         };
+      //         object[] Cols ={
+      //new { FName = "ID"},//0
+      //new { FName = "FormID"},//1
+      //new { FName = "Date"},//2
+      //new { FName = "ClientID"},//3
+      //new { FName = "ClientName"},//4
+      //new { FName = "Description"},//5
+      //new { FName = "ValidityDate"},//6
+      //new { FName = "ValidityNote"},//7
+      //new { FName = "DocsNo"}//8
+      //}; JSON.Cols = Cols;
+      //         JSON.Grid = new {
+      //            aoColumns = new object[]{
+      //new {sTitle="Nr"},//0//ID////DefaultUpdate=0
+      //new {sTitle="Tipinė forma", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
+      //new {sTitle="Data"},//2//Date//
+      //new {sTitle="Gauta", bVisible=(IsSigned)?false:true,bSearchable=false},//3//DeliveryDate//rodom tik jei nepasirasyta
+      //new {bVisible=false,bSearchable=false},//4//ClientID////DefaultUpdate=0
+      //new {sTitle="Kita šalis"},//5
+      //new {sTitle="Sutarties esmė",sClass="smallFont"},//6//Description//
+      //new {sTitle="Data"},//7//ValidityDate//
+      //new {sTitle="Paaiškinimai"},//8//ValidityNote//
+      //new {sTitle="Dok.", bSearchable=false}//9//DocsNo//
+      //}, aaSorting = new object[] { new object[] { 2, "asc" } }//Pagal data
+      //         };
+      //         return JSON;
+      //      }
 
-      public jsonArrays GetJSON_tblContracts_NotApproved() {
+      public jsonArrays GetJSON_tblContracts_Unsigned() {
          jsonArrays JSON = new jsonArrays();
-         JSON.Data = from c in dc.proc_GetContracts_NotApproved() select new object[] {
+         JSON.Data = from c in dc.proc_GetContracts_Unsigned() select new object[] {
             c.ID,//0
-            c.FormID,//1
-            c.Date,//2
-            c.ClientID,//3
+            c.Type,//1 - Tipas
+            c.StartDate,//2
             c.ClientName,//4
             c.Description,//5
             c.UserName,//6
-            c.DateSigned,//7
+            c.RecDate,//7 - Date
             c.DocsNo,//8
             c.Status_Description,
-            c.StatusID
+            c.StatusID,
+            c.UserID,
+            c.ClientID
          };
          object[] Cols ={
 new { FName = "ID"},//0
-new { FName = "FormID"},//1
+new { FName = "Type"},//1
 new { FName = "Date"},//2
-new { FName = "ClientID"},//3
 new { FName = "ClientName"},//4
 new { FName = "Description"},//5
 new { FName = "UserName"},//6
-new { FName = "DateSigned"},//7
+new { FName = "RecDate"},//7
 new { FName = "DocsNo"},//8
 new { FName = "Status_Description"},//9
-new { FName = "StatusID"}//10
+new { FName = "StatusID"},//10
+new { FName = "UserID"},
+new { FName = "ClientID"}
 }; JSON.Cols = Cols;
          JSON.Grid = new {
             aoColumns = new object[]{
 new {sTitle="Nr"},//0//ID////DefaultUpdate=0
-new {sTitle="Tipinė forma", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
-new {sTitle="Data"},//2//Date//
-new {bVisible=false,bSearchable=false},//3
-new {sTitle="Kita šalis"},//4
-new {sTitle="Sutarties esmė",sClass="smallFont"},//5//Description//
-new {sTitle="Naudotojas"},//6//UserName//
-new {sTitle="Data"},//7//DateSigned//
+new {sTitle="Tipas"},//1//Type////DefaultUpdate=0
+new {sTitle="Data"},//2//DateStart//
+new {sTitle="Klientas"},//4
+new {sTitle="Esmė/ objektas"},//5//Description//
+new {sTitle="Darbuotojas"},//6//UserName//
+new {sTitle="Data"},//7//DateRec//
 new {sTitle="Dok.", bSearchable=false},//8//DocsNo//
 new {sTitle="Paaiškinimai"},//9//Status_Description//
-new {sTitle="Esama"}//10//StatusID//
-}, aaSorting = new object[] { new object[] { 2, "asc" } }//Pagal data
+new {sTitle="Esama"},//10//StatusID//
+new {bVisible=false,bSearchable=false},
+new {bVisible=false,bSearchable=false}
+}, aaSorting = new object[] { new object[] { 3, "asc" } }//Pagal data
          };
          return JSON;
       }

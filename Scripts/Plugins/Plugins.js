@@ -1471,7 +1471,7 @@ Help: http://groups.google.com/group/jquery-ui-layout
       var $m=$('<div class="growlUI"></div>');
       if(title) $m.append('<h1>'+title+'</h1>');
       if(message) $m.append('<h2>'+message+'</h2>');
-      if(timeout==undefined) timeout=10000;
+      if(timeout==undefined) timeout=4000;
       $.blockUI({
          message: $m, fadeIn: 700, fadeOut: 1000, centerY: false,
          timeout: timeout, showOverlay: false,
@@ -1565,7 +1565,7 @@ Help: http://groups.google.com/group/jquery-ui-layout
       forceIframe: false,
 
       // z-index for the blocking overlay
-      baseZ: 1000,
+      baseZ: 10000,
 
       // set these to true to have the message automatically centered
       centerX: true, // <-- only effects element blocking (page block controlled via css above)

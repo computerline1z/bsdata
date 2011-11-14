@@ -315,16 +315,24 @@
       return $(this).MyEditInPlace({
         id: frmOpt.id,
         tblUpdate: frmOpt.tblUpdate,
-        tblProp: opt.tblProp
-      }, DataToSave, fnUpdateSuccess);
+        tblProp: opt.tblProp,
+        DataToSave: DataToSave,
+        fnUpdateSuccess: fnUpdateSuccess
+      });
     });
     return this;
   };
-  $.fn.MyEditInPlace = function(opt, DataToSave, fnUpdateSuccess) {
-    var OldVal, del, eOpt, editOpt, el, fnFinishedEdit, ix, objProp;
+  $.fn.MyEditInPlace = function(opt) {
+    var OldVal, del, eOpt, el, fnFinishedEdit, ix, objProp;
     el = $(this);
     OldVal = el.html();
     eOpt = typeof el.data("ctrl") === "object" ? el.data("ctrl") : eval("(" + (el.attr("data-ctrl")) + ")");
+    if (!eOpt) {
+      eOpt = {};
+    }
+    $.extend(eOpt, opt, {
+      FName: eOpt.Field
+    });
     if (opt.tblProp) {
       objProp = oDATA.Get(opt.tblProp);
       ix = objProp.Cols.FNameIndex(eOpt.Field);
@@ -333,9 +341,6 @@
         Title: objProp.Grid.aoColumns[ix].sTitle
       });
     }
-    $.extend(eOpt, opt, {
-      FName: eOpt.Field
-    });
     fnFinishedEdit = function(NewVal, NewText, UpdatePars) {
       el.html('<img src="/Content/images/ajax-loader.gif" alt=' + NewVal + '>');
       return $.post("/Update/editInPlace", {
@@ -351,12 +356,12 @@
         } else {
           el.html(resp.ResponseMsg);
           OldVal = resp.ResponseMsg;
-          if (DataToSave) {
-            DataToSave.Data.push(resp.ResponseMsg);
-            DataToSave.Fields.push(eOpt.Field);
+          if (opt.DataToSave) {
+            opt.DataToSave.Data.push(resp.ResponseMsg);
+            opt.DataToSave.Fields.push(eOpt.Field);
           }
-          if (fnUpdateSuccess) {
-            return fnUpdateSuccess({
+          if (opt.fnUpdateSuccess) {
+            return opt.fnUpdateSuccess({
               ctrl: el,
               eOpt: eOpt,
               id: eOpt.id
@@ -439,15 +444,17 @@
         return false;
       };
     }
-    editOpt = {
-      field_type: eOpt.field_type,
+    if (!eOpt.id || !eOpt.tblUpdate || !eOpt.Field) {
+      alert("Nėra privalomų duomenų (id, tblUpdate, Field)-clsEditableForm");
+    }
+    $.extend(eOpt, {
       delegate: del,
       callback: function(idOfEditor, NewVal, OldVal, settingsPar, callbacks) {
         fnFinishedEdit(NewVal, null);
         return '<img src="/Content/images/ajax-loader.gif" alt=' + NewVal + '>';
       }
-    };
-    el.editInPlace(editOpt);
+    });
+    el.editInPlace(eOpt);
     if (eOpt.Title) {
       el.qtip({
         position: {

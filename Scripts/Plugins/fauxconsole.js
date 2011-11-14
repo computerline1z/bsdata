@@ -11,8 +11,9 @@ var CONSOLE={ init: function() {
    hide: function() { CONSOLE.d.style.display='none'; },
    show: function() { CONSOLE.d.style.display='block'; },
    log: function(o) {
-      if(CONSOLE.d.style.display=='block') { CONSOLE.d.innerHTML+='<br/>'+o; CONSOLE.show(); }
-      else if(window.console) { console.log(o); }
+      //if(CONSOLE.d.style.display==='block') { CONSOLE.d.innerHTML+='<br/>'+o; CONSOLE.show(); }
+      //else 
+      if(window.console) { console.log(o); }
    },
    clear: function() { CONSOLE.d.parentNode.removeChild(CONSOLE.d); CONSOLE.init(); CONSOLE.show(); }
    /*Simon Willison rules*/

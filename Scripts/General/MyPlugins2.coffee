@@ -1,4 +1,4 @@
-$ = jQuery
+ï»¿$ = jQuery
 $.fn.ButtonStatuses = (opts) ->
 	self = $.fn.ButtonStatuses
 	opts=$.extend({}, self.default_options, opts);
@@ -6,10 +6,10 @@ $.fn.ButtonStatuses = (opts) ->
 	btn.click(
 		{btn:btn}, fnSetNewStatus = (e) ->
 			if opts.StatusID>3
-				Alert("Sutartis jau sutvarkyta", "Jeigu yra klausimø kreipkitës pas administracijà")
+				Alert("Sutartis jau sutvarkyta", "Jeigu yra klausimÅ³ kreipkitÄ—s pas administracijÄ¯")
 				return
 			else
-				Confirm(opts.question[opts.StatusID],"Spauskite 'Gerai' jei sutinkate, 'Atğaukti' jei ne",(taip) ->
+				Confirm(opts.question[opts.StatusID],"Spauskite 'Gerai' jei sutinkate, 'AtÅ¡aukti' jei ne",(taip) ->
 					if taip
 						opts.StatusID++
 						##btn= if e.target.tagName.toUpperCase()=="SPAN" then $(e.target).parent() else $(e.target)
@@ -21,12 +21,12 @@ $.fn.ButtonStatuses = (opts) ->
 $.extend $.fn.ButtonStatuses,
 	default_options:
 		iconOpt: [{},{ primary: "img16-tag_red" },{ primary: "img16-tag_yellow" },{ primary: "img16-tag_green" },{primary: "img16-tag_green", secondary: "img16-check" }]
-		tip: ["","Nauja sutartis.<br /> Patvirtiniti sutartá?"
-			"Patvirtinta sutartis.<br /> Ájungti paslaugas?"
-			"Paslaugos ájungtos.<br /> Perkelti prie sutvarkytø?"
-			"Suartis sutvarkyta. Jokiø kitø veiksmø<br /> su ğia sutartimi nereikia."
+		tip: ["","Nauja sutartis.<br /> Patvirtiniti sutartÄ¯?"
+			"Patvirtinta sutartis.<br /> Ä®jungti paslaugas?"
+			"Paslaugos Ä¯jungtos.<br /> Perkelti prie sutvarkytÅ³?"
+			"Suartis sutvarkyta. JokiÅ³ kitÅ³ veiksmÅ³<br /> su Å¡ia sutartimi nereikia."
 		]
-		question: ["","Ar patvirtinate sutarties ásigaliojimà?","Ar ájungtos paslaugos pagal sutartá?","Ar gauti visi dokumentai ir sutartis sutvarkyta?"]
+		question: ["","Ar patvirtinate sutarties Ä¯sigaliojimÄ¯?","Ar Ä¯jungtos paslaugos pagal sutartÄ¯?","Ar gauti visi dokumentai ir sutartis sutvarkyta?"]
 		enableEvents: false
 		##taip pat reikia tblSource, tblUpdate, FieldName (jei updatinam)
 class @clsUserData

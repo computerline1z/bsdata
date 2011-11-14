@@ -101,13 +101,12 @@ jQuery(function($) {
          var opt=$.extend(defaults, options);
          return this.each(function() {
             var t=$(this);
-            //$('<div title="Pasirinkite bylas siuntimui (galima naudoti CTRL/SHIFT pasirinkti keletą bylų iš karto" style="position:relative;margin:.7em;cursor:pointer;"><span style="display:inline-block;" class="img24-attach ui-button-icon-primary"></span><span style="position:absolute;margin:.3em 1em;text-decoration:underline;color:#336699">Prisegti bylas</span><p id="questatus"><p><p id="attachedFiles"><p></div>')
             html=(opt.Legend)?"<fieldset><legend>"+opt.Legend+"</legend>":"";
             html+=(opt.CtrlToSetId)?"<div id='"+opt.CtrlToSetId+"'></div>":"";
             html+='<div title="'+opt.Title+'" style="cursor:pointer;margin-left:2em;position:relative;clear:both;"><span style="display:inline-block;" class="img24-attach ui-button-icon-primary"></span><span style="position:absolute;margin:.3em 1em;text-decoration:underline;color:#336699">Prisegti bylas</span></div>';
             html+=(opt.Legend)?"</fieldset>":"";
             $(html)
-            .find("div")
+            .find("div:last")
             .bind("click", function() {
                var opt=$(this).closest("div.ExtendIt, span.ExtendIt").data("ctrl");
                $.extend(opt, { Control: t });
@@ -125,14 +124,14 @@ oCONTROLS.UploadDialog=function(options) {
    var defaults={
       upload_url: "/Files/AsyncUpload",
       DialogTitle: 'Bylų prisegimas prie dokumento',
-      AttachedFiles: "tblDocs_UploadedFiles"
    }
    var opt=$.extend(defaults, options);
    if(!opt.UserId||!opt.tblUpdate||!opt.RecId) { alert("swfUploaderis neturi vieno iš būtinų parametrų-UserId,tblUpdate,RecId!"); return; }
    var fnSetAttachedFiles=function(fromFileData, CtrlToSetId) {
       var par={ RecordId: opt.RecId };
-      if(fromFileData) { $.extend(par, {ctrl: CtrlToSetId, fromFileData: true, AttachedFiles: FileData }); }
-      else { $.extend(par, { ctrl: 'uplFiles', fromFileData: false, AttachedFiles: oDATA.Get(opt.AttachedFiles).Data, FileData: FileData }); }
+      if(fromFileData) { $.extend(par, { ctrl: CtrlToSetId, fromFileData: true, AttachedFiles: FileData }); }
+      else { $.extend(par, { ctrl: 'uplFiles', fromFileData: false, AttachedFiles: opt.AttachedFiles, FileData: FileData, tblUpdate: opt.tblUpdate }); }
+      //if(oDATA.Get(par.AttachedFiles)) {  }
       oCONTROLS.UploadDialog.SetAttachedFiles(par);
    }
    dlgOpt={ autoOpen: false, minWidth: '400', minHeight: '700', width: '700', modal: true, title: opt.DialogTitle,
@@ -153,7 +152,8 @@ oCONTROLS.UploadDialog=function(options) {
    _html+="</p><div><span id='dialog_file_upload_btn' ></span></div>";
    _html+="<p id='queuestatus' ></p><ol id='log'></ol></div>"
    $("<div id='divDialogForm'></div>").html(_html).dialog(dlgOpt).dialog('open');
-   if(opt.AttachedFiles) { fnSetAttachedFiles(false); } //Sudedam failus kurie jau yra
+   //if(opt.AttachedFiles) { fnSetAttachedFiles(false); } 
+   fnSetAttachedFiles(false);//Sudedam failus kurie jau yra 
    $('#swfupload-control').swfupload({
       upload_url: opt.upload_url,
       post_params: {
@@ -248,25 +248,29 @@ oCONTROLS.UploadDialog.SetAttachedFiles=function(par) {
    //3-SizeKB,FileName
    //5-RecordId,Description
    //ctrl turi but Recordo ID
-   var f=par.AttachedFiles, u=oDATA.Get("tblUsers").Data, html="";
+   //var f=par.AttachedFiles,
+   var u=oDATA.Get("tblUsers").Data;
    var LeftOuter="<div style='clear:left;'><div style='margin-top:10px;height:46px;width:37px;float:left;'>";
-   var RightOuter="</div><div style='height:46px;width:285px;float:left;'>";
-   var RightInner="<div style='height:15px;width:284px;float:left;'>";
-   for(var i=0; i<f.length; i++) {
-      if(f[i][5]===par.RecordId) {
+   var RightOuter="</div><div style='height:46px;width:305px;float:left;'>";
+   var RightInner="<div style='height:15px;width:304px;float:left;'>";
+   var ctrl=$("#"+par.ctrl).empty();
+   $.post("/Files/GetUploads", { FileName: par.tblUpdate, RecordID: par.RecordId }, function(jsRes) {
+      var f=jsRes.Files.Data;
+      for(var i=0; i<f.length; i++) {
          if(!par.fromFileData) { par.FileData[par.FileData.length]=f[i]; }
-         html+=LeftOuter+f[i][4].GetIcon(f[i][0])+RightOuter+RightInner;  //icon,
+         var html=LeftOuter+f[i][4].GetIcon(f[i][0])+RightOuter+RightInner;  //icon,
          html+="Byla: <a href='/Files/Download/"+f[i][0]+"'>"+f[i][4]+", "+f[i][3]+"KB</a></div>"; //FileName, size
          html+=RightInner+"Įkėlė: "+u.findColsByID(f[i][1], [2, 3])+", "+f[i][2]+"</div>"; //vartotojas,data
-         html+=RightInner+'<input style="width:100%;" type="text" value="'+((f[i][6])?f[i][6]:"")+'"></input></div></div></div>';
+         html+=RightInner+'<div style="width:100%;" '+((f[i][6])?'>':'class="inputTip">')+((f[i][6])?f[i][6]:"")+'</div></div></div></div>'; //Pastaba
+         $(html).appendTo(ctrl).find('div:last').MyEditInPlace({ id: f[i][0], tblUpdate: "tblDocs_UploadedFiles", Field: "Description", default_text: "Spragtelkit pridėti pastabą..", Title: "Pastaba apie failą",
+            fnUpdateSuccess: function(pars) { pars.ctrl.removeClass("inputTip"); } //$ctrl,eOpt[is opciju],id
+         });
       }
-   }
-   $("#"+par.ctrl).empty();
-   var input=$((html)).appendTo($("#"+par.ctrl)).find('input').labelify({ labelledClass: " inputTip ", text: function(input) { return "Čia galite įrašyti pastabą.."; } });
-   $("#"+par.ctrl).find("span.img32-Img").each(function() {//rodom paveiksla ant imidzu
-      var h=$(this).parent().attr("href");
-      $(this).parent().qtip({
-         content: '<IMG WIDTH=200 HEIGHT=200 SRC="'+h+'">', position: { at: 'top right', my: 'bottom left' }
+      $("#"+par.ctrl).find("span.img32-Img").each(function() {//rodom paveiksla ant imidzu
+         var h=$(this).parent().attr("href");
+         $(this).parent().qtip({
+            content: '<IMG WIDTH=200 HEIGHT=200 SRC="'+h+'">', position: { at: 'top right', my: 'bottom left' }
+         });
       });
    });
 }

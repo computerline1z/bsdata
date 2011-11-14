@@ -1,5 +1,5 @@
 (function() {
-  this.NewContract = function() {
+  this.Contracts_New_Object = function() {
     var EnableButon, SaveDataHandler, form;
     form = $("#NewContract");
     oCONTROLS.UpdatableForm(form);
@@ -24,17 +24,17 @@
               if (updData.Action === "Add") {
                 $('#introduction').html("Sutartis Nr.:" + NewId);
               }
-              return $("#side-bar ul li a").filter("[data-action='Contracts_Valid'],[data-action='Contracts_Unsigned'],[data-action='Contracts_Expired']").data("opt", "refresh");
+              return $("#side-bar ul li a").filter("[data-action='Contracts_Other'],[data-action='Contracts_Unsigned'],[data-action='Contracts_Expired']").data("opt", "refresh");
             }
           },
           Msg: {
             Success: {
-              Add: "Nauja sutartis iðsaugota.\n Dabar galite prisegti prie sutarties susijusias bylas.",
-              Edit: "Pakeitimai sutartyje iðsaugoti"
+              Add: "Nauja sutartis išsaugota.\n Dabar galite prisegti prie sutarties susijusias bylas.",
+              Edit: "Pakeitimai sutartyje išsaugoti"
             },
             Error: {
-              Add: "Nepavyko iðsaugoti naujos sutarties",
-              Edit: "Nepavyko iðsaugoti pakeitimø sutartyje"
+              Add: "Nepavyko išsaugoti naujos sutarties",
+              Edit: "Nepavyko išsaugoti pakeitimø sutartyje"
             }
           },
           BlockCtrl: form
@@ -42,9 +42,9 @@
       }
     };
     EnableButon = function() {
-      return form.find("button:contains('Iðsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled");
+      return form.find("button:contains('Išsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled");
     };
-    $("<div style='width:53.3em;position:relative;height:2.2em;'><button style='position:absolute;top:.5em;right:0;'>Iðsaugoti pakeitimus</button></div>").appendTo("#NewContractRightCol").find('button').click(SaveDataHandler).button({
+    $("<div style='width:53.3em;position:relative;height:2.2em;'><button style='position:absolute;top:.5em;right:0;'>Išsaugoti pakeitimus</button></div>").appendTo("#NewContractRightCol").find('button').click(SaveDataHandler).button({
       disabled: true,
       icons: {
         primary: 'img16-edit'

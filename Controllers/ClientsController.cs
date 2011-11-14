@@ -29,7 +29,6 @@ namespace BSData.Controllers {
             Render = View,
             proc_Clients = Rep.GetJSON_proc_Clients(null, null),
             tblContracts_Form = Rep.GetJSON_tblContracts_Form(),
-            tblDocs_UploadedFiles_ofClient = Rep.GetJSON_tblDocs_UploadedFiles("tblClients"),
             tblUsers = Rep.GetJSON_tblUsers(),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
@@ -80,7 +79,6 @@ namespace BSData.Controllers {
             obj = new {//Nereikia Render
                Render = View,
                tblClientEvents = Rep.GetJSON_tblClientEvents(ClientID),
-               tblDocs_UploadedFiles_ofEvent = Rep.GetJSON_tblDocs_UploadedFiles("tblClients_Events")
             };
          }
          else {
@@ -91,7 +89,6 @@ namespace BSData.Controllers {
                tblContracts_Form = Rep.GetJSON_tblContracts_Form(),
                tblUsers = Rep.GetJSON_tblUsers(),
                tblTowns = Rep.GetJSON_tblTowns(),
-               tblDocs_UploadedFiles_ofEvent = Rep.GetJSON_tblDocs_UploadedFiles("tblClients_Events")
                //Script = new {
                //   //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                //   oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsUsersEdit ar pan

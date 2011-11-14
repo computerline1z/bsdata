@@ -21,8 +21,8 @@ namespace BSData.Controllers {
          Repository_Title Rep = new Repository_Title();
          var obj = new {
             Render = View,
-            Contracts_Unsigned = Rep.GetJSON_tblContracts_NotApproved(),
-            tblContracts_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts", null),//tblDocs_UploadedFiles
+            Contracts_Unsigned = Rep.GetJSON_tblContracts_Unsigned(),
+
             tblContracts_Form = Rep.GetJSON_tblContracts_Form(),
             tblUsers = Rep.GetJSON_tblUsers(),
 
