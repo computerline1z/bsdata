@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using BSData.Classes;
 using CC.Models;
 
 namespace BSData.Models {
@@ -103,6 +104,27 @@ namespace BSData.Models {
             string filePath = context.HttpContext.Server.MapPath(this.VirtualPath);
             context.HttpContext.Response.TransmitFile(filePath);
          }
+      }
+   }
+
+   public class Repository_Uploads {
+      private dbDataContext dc;
+
+      public Repository_Uploads() { dc = new dbDataContext(); }
+
+      public jsonArrays GetJSON_UploadedFiles1(string FileName, int RecordID) {
+         jsonArrays JSON = new jsonArrays();
+         JSON.Data = from c in dc.proc_GetUploadedFiles1(FileName, RecordID)
+                     select new object[] {
+c.ID,//0
+c.UserID,//1
+c.Date,//2
+c.SizeKB,//3
+c.FileName,//4
+c.RecordID,//5
+c.Description//6
+};
+         return JSON;
       }
    }
 }

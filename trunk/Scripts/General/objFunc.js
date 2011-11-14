@@ -29,7 +29,7 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
    a: function(p) { return "<a "+this.basic(p)+" href='javascript:void(0);return false;'>"+p.Value+"</a>"; },
    txtarea: function(p) { return this.appendLabel(p, "<textarea cols='100' rows='4' "+this.basic(p)+">"+((p.Value)?p.Value:"")+"</textarea>"); },
    chk: function(p) {
-      if(typeof p.Value==="string") { p.Value=((p.Value.search(/false/i)> -1)?0:1); } return "<label"+((p.label.classes)?" class='"+p.label.classes+"'":"")+((p.attr)?p.attr+" ":"")+"><input type='checkbox' "+this.basic(p)+((p.Value)?"checked='checked'":"")+"/>"+((p.label.txt)?p.label.txt:"")+"</label>";
+      if(typeof p.Value==="string") { p.Value=((p.Value.search(/false/i)> -1)?0:1); } return "<label "+((p.label.classes)?" class='"+p.label.classes+"'":"")+((p.attr)?p.attr+" ":"")+"><input type='checkbox' "+this.basic(p)+((p.Value)?"checked='checked'":"")+"/>"+((p.label.txt)?p.label.txt:"")+"</label>";
    },
    //{src:??,alt:??,onclickfn:??}
    img: function(p) { return "<img src='"+p.src+"' alt='"+p.alt+"' onclick='"+p.onclickfn+"'/>"; },
@@ -110,41 +110,39 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
       var sTitle, frmOpt=$(frm).data('ctrl');
       var data=(frmOpt.Source==='NoData')?"NoData":oDATA.Get(frmOpt.Source);
       //if(typeof data==='undefined') { alert('Source undefined in UpdatableForm(objFunc:79)!'); }
-      log('<div>==========UpdatableForm========</div>');
+      //log('<div>==========UpdatableForm========</div>');
+      var elements=$(frm).find('div.ExtendIt, span.ExtendIt');
+//      for(var i=0; i<elements.length; i++) {
+//      }
       $(frm).find('div.ExtendIt, span.ExtendIt').each(function() {
          var e=$(this), eOpt=e.data('ctrl'), eHTML='', ix=0, data_ctrl={};
-         log("-------------------------------");
-         log("Elementas:"+e[0].tagName+"; id:"+e.attr("id")+"; klase:"+e.attr("class")+"; e.data('ctrl'):"+typeof e.data("ctrl"));
+         //log("-------------------------------");
+         //log("Elementas:"+e[0].tagName+"; id:"+e.attr("id")+"; klase:"+e.attr("class")+"; e.data('ctrl'):"+typeof e.data("ctrl"));
          if(typeof eOpt.Control!=="undefined") { if(eOpt.Control==="swfUpload"&&typeof frmOpt.id==="undefined") { return true; } else { e[eOpt.Control](eOpt); return true; } } //swfUpload nerenderinam jei naujas dokumentas
          if(data!=="NoData") {
             var eCols=data.Cols;
             //Surandam lauko indeksa
             for(var i=0; i<eCols.length; i++) { if(eCols[i].FName===eOpt.Field) { ix=i; sTitle=data.Grid.aoColumns[i].sTitle; break; } }
             if(ix===0) { alert('Wrong Field indicated '+eOpt.Field+' in UpdatableForm(objFunc:84)!'); }
-            log("Surastas laukas:'"+eOpt.Field+"'");
+            //log("Surastas laukas:'"+eOpt.Field+"'");
          } else { sTitle=(eOpt.sTitle)?eOpt.sTitle:""; }
          //#region duomenu is data.Cols[ix] ir eOpt(elemento data('ctrl')) surasymas i data_ctrl arba i propercius
          var col=(data==="NoData")?{}:data.Cols[ix], input;
          col=$.extend(col, eOpt); //overridinu data.Cols<----e.data('ctrl')
-
          var Type=(col.List)?"List":col.Type;
          if(!Type) { alert("Nesusiparsino ctrl elemento objFunc.js-UpdatableForm"); return true; }
-
          var AddToClasses="ui-widget-content ui-corner-all UpdateField";
          if(Type==='Integer'||Type==='Decimal') { AddToClasses+=" number"; }
          else if(Type==="List") { col.Type="List"; }
          else if(Type) { if(Type.search("Date")!== -1) { AddToClasses+=" date"; } }    //classes+' text', textarea,
-
          col.classes=(col.classes)?col.classes+" "+AddToClasses:AddToClasses;
          col.Value=(col.Value)?col.Value:"";
-
          for(var prop in col) {
             if(prop==='List') { $.extend(data_ctrl, col[prop]); data_ctrl.Type="List"; } //Listo propercius dedu vienam lygyje su kitais
             else if(prop==='Value'||prop==='Validity'||prop==='AgrValidity'||prop==='Tip'||prop==='Field'||prop==='Type'||prop==='Ext'||prop==='UpdateField') { data_ctrl[prop]=col[prop]; }
          }
-
          data_ctrl=JSON.stringify(data_ctrl);
-         log("data_ctrl stringas:"+data_ctrl);
+         //log("data_ctrl stringas:"+data_ctrl);
          if(Type==='Integer'||Type==='Decimal') { data_ctrl=data_ctrl.replace("match('integer')", "match(integer)").replace("match('number')", "match(number)"); }
          else if(Type.search("Date")!== -1) { data_ctrl=data_ctrl.replace("match('date')", "match(date)"); }
          $.extend(col, { data_ctrl: data_ctrl }, { label: { "txt": sTitle, "type": col.labelType} });
@@ -194,7 +192,7 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
             if(typeof col.Tip!=='undefined') { input.labelify({ labelledClass: " inputTip ", text: function(input) { return $(input).data('ctrl').Tip; } }); }       //, labelledClass: "inputTip"
          }
       });
-      log('<div>==========UpdatableForm========</div>');
+      //log('<div>==========UpdatableForm========</div>');
    },
    //------------------Funkcijos ne tik generuojancios html i kontrola, bet ir upsidatinancios------------------------------------------------------------------------------
    Set_Updatable_HTML: {
@@ -294,7 +292,7 @@ var oGLOBAL={
 
       var url="/Update/"+p.Action, updData=p; //{ "Action": p.Action, "DataToSave": p.DataToSave, "CallBack": p.CallBack, "Msg": p.Msg };
       //url=(p.url)?p.url:("/Update/"+p.Action); //Add/Edit.Delete
-      log('<p style="color:green"><div>CallServer. Action:'+p.Action+'</div><div>DataToServer:'+JSON.stringify(p.DataToSave)+'</div> url:'+url+'</p>');
+      //log('<p style="color:green"><div>CallServer. Action:'+p.Action+'</div><div>DataToServer:'+JSON.stringify(p.DataToSave)+'</div> url:'+url+'</p>');
       CallServer(JSON.stringify(p.DataToSave), this.fnServerUpdated, updData, url, "json");
       ////CallServer(JSON.stringify({ id: id, DataObject: _SD.Config.tblUpdate }), obj.fnResponse_DeleteUser, anSelected, '/'+_SD.Config.Controler+'/Delete', 'json');
    }, fnServerUpdated: function(resp, updData) {  //updData["Action"]
@@ -330,7 +328,7 @@ var oGLOBAL={
       $.validity.setup({ outputMode: "modal" });
       $.validity.start();
       var DataToSave={ Data: [], Fields: [], DataTable: DataTable };
-      log("<div>====ValidaeForm, id:"+(id)?id:"-"+", NewRec:"+NewRec+"====</div>");
+      //log("<div>====ValidaeForm, id:"+(id)?id:"-"+", NewRec:"+NewRec+"====</div>");
       $.each(frm.find(".UpdateField"), function(i, v) {
          log("---------------------------");
          var e=$(v); var elDesc=e[0].tagName+", id-"+e.attr("id"), Value, UpdateField=(e.data("ctrl").UpdateField)?e.data("ctrl").UpdateField:false;
@@ -397,11 +395,11 @@ var oGLOBAL={
 
       if(typeof (DataToSaveAppend)!='undefined') { for(var i=0; i<DataToSaveAppend.length; i++) { DataToSave.Data.push(DataToSaveAppend[i].Data); DataToSave.Fields.push(DataToSaveAppend[i].Fields) } }
 
-      log("Data:"+DataToSave.Data.join(", "));
-      log("Fields:"+DataToSave.Fields.join(", "));
+      //log("Data:"+DataToSave.Data.join(", "));
+      //log("Fields:"+DataToSave.Fields.join(", "));
 
       var ValRes=$.validity.end();
-      log("<div>======Validation rezult: "+ValRes.valid+"===============</div>");
+      //log("<div>======Validation rezult: "+ValRes.valid+"===============</div>");
       if(ValRes.valid&&DataToSave.Data.length) { if(!NewRec) { DataToSave["id"]=id; }; return DataToSave; }
       else if(ValRes.valid) return 0//reiskia, kad niekas nepakeista
       else return false;
@@ -425,7 +423,15 @@ var oVALIDATE={
       return $.validity.end();
    }
 };
-
+var TIMEDIF={
+   s: 0,
+   Start: function() {
+      this.s=(new Date()).getTime();
+   },
+   log: function(str) {
+      dif=(new Date()).getTime()-this.s; console.log(((str)?str:"")+" - "+dif+" msek"); this.s=(new Date()).getTime();
+   }
+}
 function exec_GetTableHTML(DataObject) {
    var Cols=getCols(DataObject.Head.length, DataObject.Config.NotVisibleCol);
    return "<table id='DataGrid'  class='display'>"+GetHead(DataObject.Head, Cols)+GetBody(DataObject.Data, Cols)+"</table>"

@@ -16,5 +16,12 @@ namespace BSData.Classes {
          Repositories_Files FilesRep = new Repositories_Files();
          return FilesRep.GetUploadedFile(id);
       }
+
+      [HttpPost]
+      public JsonResult GetUploads(string FileName, int RecordID) {
+         Repository_Uploads Rep = new Repository_Uploads();
+         var obj = new { Files = Rep.GetJSON_UploadedFiles1(FileName, RecordID) };
+         return Json(obj);
+      }
    }
 }

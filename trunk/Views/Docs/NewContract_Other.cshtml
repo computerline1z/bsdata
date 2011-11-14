@@ -1,5 +1,5 @@
 ﻿<h1 id="introduction">@ViewBag.Title</h1>
-<div id="NewContract" data-ctrl='{"NewRec":1,"Source":"tblContracts1","tblUpdate":"tblContracts"}'>
+<div id="NewContract" data-ctrl='{"NewRec":1,"Source":"tblContracts1_Other","tblUpdate":"tblContracts"}'>
    <div id="NewContractRightCol" style="float: left;">
       <div>
          <fieldset class="inputFieldset"><legend>Sutartis</legend>
@@ -11,7 +11,7 @@
 *@
             <div>
                <label class="leftlabelforManyF">Galiojimas:</label>
-               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"ValidityDate", "labelType":"Top" , "attr":"title=\"Sutarties galiojimo data\"","Plugin":{"datepicker":{"minDate":"+1d","maxDate":"+5y","changeYear": true}}}'></span>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"ValidityDate", "labelType":"Top" , "attr":"title=\"Sutarties galiojimo data\"","Plugin":{"datepicker":{"minDate":"-1y","maxDate":"+5y","changeYear": true}}}'></span>
                <span style="display: inline-block; width: 22.6em;" class='ExtendIt' data-ctrl='{"Field":"ValidityNote", "labelType":"Top", "attr":"title=\"Jeigu sutarties galiojimas apibrėžiamas ne pagal datą (iki įvygdomi įsipareigojimai ir pan.)\""}'></span>
             </div>
             <div>

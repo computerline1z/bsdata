@@ -32,7 +32,7 @@
             return { id: a[0], value: ret };
          });
 
-         if(typeof data!='undefined') { if(input.val()==='') { log('<p style="color:red;">Listas "'+opt.Source+'" nerado value:'+opt.Value+'</p>'); } }
+         //if(typeof data!='undefined') { if(input.val()==='') { log('<p style="color:red;">Listas "'+opt.Source+'" nerado value:'+opt.Value+'</p>'); } }
 
          if(typeof opt.Append!=='undefined') { data[data.length]=opt.Append; } //Pridedam prie listo pvz: {Value:0, Text:"Neapdrausta"}
          $(input).data("newval", opt.Value)
@@ -79,12 +79,12 @@
          //alert("select:"+ui.item.value);
          //ui.item.value  -  "Neapdrausta"  --	$(this).val()
          //ui.item.option.value  -  "0"	--	$(this).data("newval")
-         console.log("Select:"+$(this).data("newval"));
+         //console.log("Select:"+$(this).data("newval"));
       }, change: function(event, ui) {
          //Isimenam naujas reiksmes
          if(ui.item) {
             $(this).data("newval", ui.item.id);
-            console.log("New change:"+$(this).data("newval"));
+            //console.log("New change:"+$(this).data("newval"));
          }
          else {
             $(this).data("newval", "");

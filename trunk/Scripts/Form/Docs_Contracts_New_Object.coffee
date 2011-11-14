@@ -1,4 +1,4 @@
-@NewContract = ->
+@Contracts_New_Object = ->
 	form=$("#NewContract")
 	oCONTROLS.UpdatableForm(form)
 	form.find("input[title], label[title], textarea[title]").qtip(position:
@@ -15,18 +15,17 @@
 					if(updData.Action=="Add") 
 						$('#introduction').html("Sutartis Nr.:"+NewId)
 					##Kad atsisiustu naujas atrefresintas lenteles
-					$("#side-bar ul li a").filter("[data-action='Contracts_Valid'],[data-action='Contracts_Unsigned'],[data-action='Contracts_Expired']").data("opt","refresh");
+					$("#side-bar ul li a").filter("[data-action='Contracts_Other'],[data-action='Contracts_Unsigned'],[data-action='Contracts_Expired']").data("opt","refresh");
 			Msg: 
 				Success: 
-					Add: "Nauja sutartis iðsaugota.\n Dabar galite prisegti prie sutarties susijusias bylas.", Edit: "Pakeitimai sutartyje iðsaugoti"
+					Add: "Nauja sutartis išsaugota.\n Dabar galite prisegti prie sutarties susijusias bylas.", Edit: "Pakeitimai sutartyje išsaugoti"
 				Error:
-					Add: "Nepavyko iðsaugoti naujos sutarties", Edit: "Nepavyko iðsaugoti pakeitimø sutartyje"
+					Add: "Nepavyko išsaugoti naujos sutarties", Edit: "Nepavyko išsaugoti pakeitimø sutartyje"
 			BlockCtrl:form
 			)
 	EnableButon = -> 
-		form.find("button:contains('Iðsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled")
-	
-	$("<div style='width:53.3em;position:relative;height:2.2em;'><button style='position:absolute;top:.5em;right:0;'>Iðsaugoti pakeitimus</button></div>")
+		form.find("button:contains('Išsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled")
+	$("<div style='width:53.3em;position:relative;height:2.2em;'><button style='position:absolute;top:.5em;right:0;'>Išsaugoti pakeitimus</button></div>")
 	.appendTo("#NewContractRightCol").find('button').click(SaveDataHandler).button(disabled: true, icons: {primary:'img16-edit'})
 	form.find("input,#NewContract textarea").keypress(EnableButon)
 	form.find("input.ui-autocomplete-input").focus(EnableButon)

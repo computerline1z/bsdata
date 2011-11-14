@@ -42,7 +42,7 @@
            Menus = (from m in Model.Menus where m.GroupID == Group.ID orderby m.OrderNo select m);
          @:<div><p class="sideBarTitle">@Group.Name</p><ul> <!------------------------->
 foreach (var M in Menus) { <li><a data-Action='@M.Action' href="#">› @M.Name</a></li> } @:</ul></div> <!------------------------->
-                                                                                                                                                                                                                                                                                                                                           }}
+                                                                                                                                                                                                                                                                                                                                                                                                 }}
    </div>
    <div id="main-copy">
    </div>
@@ -75,12 +75,14 @@ foreach (var M in Menus) { <li><a data-Action='@M.Action' href="#">› @M.Name</
    <script src="@Url.Content("~/Scripts/General/clsEditableForm.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/General/Start.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/General/MyPlugins2.js")" type="text/javascript"></script>
-   <script src="../../Scripts/Form/Docs_NewContract.js" type="text/javascript"></script>
-   <script src="../../Scripts/Form/Docs_Contracts_Grid.js" type="text/javascript"></script>
-   <script src="../../Scripts/Form/Title_MyEvents.js" type="text/javascript"></script>
    <script src="../../Scripts/Form/Clients_ClientsList_Grid.js" type="text/javascript"></script>
-   @* <script src="../../Scripts/Plugins/Plugins.js" type="text/javascript"></script>
+   <script src="../../Scripts/Form/Docs_Contracts_New_Object.js" type="text/javascript"></script>
+   <script src="../../Scripts/Form/Docs_Contracts_New_Other.js" type="text/javascript"></script>
+   <script src="../../Scripts/Form/Docs_ContractsObjects_Grid.js" type="text/javascript"></script>
+   <script src="../../Scripts/Form/Docs_ContractsOther_Grid.js" type="text/javascript"></script>
+   <script src="../../Scripts/Form/Docs_ContractsUnsigned_Grid.js" type="text/javascript"></script>
+   <script src="../../Scripts/Form/Title_MyEvents.js" type="text/javascript"></script>
+   @*<script src="../../Scripts/Form/forms.merged.min.js" type="text/javascript"></script> *@ @* <script src="../../Scripts/Plugins/Plugins.js" type="text/javascript"></script>
     <script src="../../Scripts/Plugins/swfupload.js" type="text/javascript"></script>
-   <script src="../../Scripts/Plugins/jquery.swfupload.js" type="text/javascript"></script>
 *@</body>
 </html>

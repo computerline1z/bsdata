@@ -1,0 +1,45 @@
+﻿<h1 id="introduction">@ViewBag.Title</h1>
+<div id="NewContract" data-ctrl='{"NewRec":1,"Source":"tblContracts1_Object","tblUpdate":"tblClients_Objects"}'>
+   <div id="NewContractRightCol" style="float: left;">
+      <div>
+         <fieldset class="inputFieldset"><legend>Klientas</legend>
+            <div class='ExtendIt' data-ctrl='{"Field":"Name", "labelType":"Left", "attr":"title=\"Pavardė, Vardas(Įmonės pavadinimas)\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Description", "labelType":"Left" , "attr":"title=\"Trumpas kliento apibūdinimas\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Value":"false","Field":"IsCompany", "labelType":"Left", "attr":"title=\"Ar klientas įmonė?\""}'>
+            </div>
+         </fieldset>
+         <fieldset class="inputFieldset"><legend>Sutarties sąlygos</legend>
+            <div>
+               <label class="leftlabelforManyF">Galiojimas:</label>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"StartDate", "labelType":"Top" , "attr":"title=\"Sutarties pradžios data\"","Plugin":{"datepicker":{"minDate":"-1y","maxDate":"+5y","changeYear": true}}}'></span>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"EndDate", "labelType":"Top", "attr":"title=\"Sutarties pabaigos data\"","Plugin":{"datepicker":{"minDate":"+1d","maxDate":"+5y","changeYear": true}}}'></span>
+            </div>
+            <div>
+               <label class="leftlabelforManyF">Reagavimas:</label>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"ReactionFree", "labelType":"Top" , "attr":"title=\"Nemokamų atvykimų į objektą sk.\""}'></span>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"ReactionPrice", "labelType":"Top", "attr":"title=\"Atvykimo į objektą kaina\""}'></span>
+            </div>
+            <div>
+               <label class="leftlabelforManyF">Kaina:</label>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"PriceMonth", "labelType":"Top", "attr":"title=\"Abonentinis mok.\""}'></span>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"PriceOnce", "labelType":"Top", "attr":"title=\"Įrangos ir montavimo kaina\""}'></span>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Device", "labelType":"Left", "attr":"title=\"Montuojama įranga\"" }'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"SimIMEI", "labelType":"Left", "attr":"title=\"Sim kortelės IMEI Nr.\"" }'>
+            </div>
+         </fieldset>
+         <fieldset class="inputFieldset"><legend>Duomenys apie objektą</legend>
+            <div class='ExtendIt' data-ctrl='{"Field":"Location", "labelType":"Left", "attr":"title=\"Kaip privažiuoti iki objekto\"" }'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Coords", "labelType":"Left", "attr":"title=\"Objekto koordinatės arba tikslus buvimo vietoje su GPS automobiliu laikas, pvz BRU641 11-12-29 11:11\"" }'>
+            </div>
+         </fieldset>
+      </div>
+   </div>
+   <span class='ExtendIt inputRight Control' data-ctrl='{"Control":"swfUpload","CtrlToSetId":"AtachedFiles", "UserId":@BSData.Classes.UserData.UserID, "tblUpdate":"tblClients_Objects","Legend":"Prie sutarties prisegtos bylos","Title":"Pridėti bylas prie sutarties","DialogTitle":"Bylų prisegimas prie dokumento"}'></span>
+   <div style="clear: both;">
+   </div>
+</div>

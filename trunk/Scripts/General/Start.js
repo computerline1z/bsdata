@@ -9,8 +9,9 @@
     return $('#side-bar li>a').first().trigger('click');
   });
   Start = function() {
-    return $('#side-bar li>a').live('click', function(event) {
+    return $('#side-bar').on('click', 'li>a', function(event) {
       var refresh, url;
+      $('body').addClass("wait");
       $('#side-bar a.highlight').removeClass('highlight');
       $(this).addClass('highlight');
       window.oGLOBAL.Action = $(this).data('action');
@@ -22,10 +23,11 @@
       }
       url = "/" + Controller + "/" + (Action = $(this).data('action'));
       if (jsResData[Action] && !refresh) {
-        return fnSetNewData(jsResData[Action][Index]);
+        fnSetNewData(jsResData[Action][Index]);
       } else {
-        return CallServer(url, '');
+        CallServer(url, '');
       }
+      return $('body').removeClass("wait");
     });
   };
   CallServer = function(url, Par, el) {
@@ -39,7 +41,7 @@
       data: Par,
       dataType: 'json',
       error: function(jqXHR, textStatus, errorThrown) {
-        el.html("<center><h2>Ði dalis dar nebaigta(" + Action + ")</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>");
+        el.html("<center><h2>Ši dalis dar nebaigta(" + Action + ")</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>");
         return el.parent().unblock();
       },
       success: function(jsRes, textStatus, jqXHR) {
@@ -68,13 +70,25 @@
         this.oDATA.Set(Name, jsRes[Name]);
       }
     }
-    if (Action === "Contracts_New") {
-      return NewContract();
-    } else if (Action === "Contracts_Unsigned" || Action === "Contracts_Valid" || Action === "Contracts_Expired") {
+    if (Action === "Contracts_New_Other") {
+      return Contracts_New_Other();
+    } else if (Action === "Contracts_New_Object") {
+      return Contracts_New_Object();
+    } else if (Action === "Contracts_Unsigned") {
       if (jsRes.Script.oSCRIPT) {
         this.oSCRIPT = jsRes.Script.oSCRIPT;
       }
-      return Contracts_Grid();
+      return ContractsUnsigned_Grid();
+    } else if (Action === "Contracts_Other" || Action === "Contracts_Expired") {
+      if (jsRes.Script.oSCRIPT) {
+        this.oSCRIPT = jsRes.Script.oSCRIPT;
+      }
+      return ContractsOther_Grid();
+    } else if (Action === "Contracts_Objects") {
+      if (jsRes.Script.oSCRIPT) {
+        this.oSCRIPT = jsRes.Script.oSCRIPT;
+      }
+      return ContractsObjects_Grid();
     } else if (Action === "MyEvents") {
       return Title_MyEvents();
     } else if (Action === "ClientsList") {
