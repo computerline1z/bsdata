@@ -19,7 +19,7 @@ namespace BSData.Models {
 
       public jsonArrays GetJSON_tblUsers() {
          jsonArrays JSON = new jsonArrays();
-         JSON.Data = from d in dc.tblUsers orderby d.SubDepID, d.OrderNo, d.LastName
+         JSON.Data = from d in dc.tblUsers orderby d.SubDepID, d.OrderNo, d.LastName where d.StatusID < 4//tipo dirba
                      select new object[] {
 d.ID,//0
 d.StatusID,//1

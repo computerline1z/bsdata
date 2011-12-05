@@ -81,9 +81,6 @@ namespace BSData.Models
     partial void InserttblFormsInEvent(tblFormsInEvent instance);
     partial void UpdatetblFormsInEvent(tblFormsInEvent instance);
     partial void DeletetblFormsInEvent(tblFormsInEvent instance);
-    partial void InserttblClient(tblClient instance);
-    partial void UpdatetblClient(tblClient instance);
-    partial void DeletetblClient(tblClient instance);
     partial void InserttblUsersActivities_Update(tblUsersActivities_Update instance);
     partial void UpdatetblUsersActivities_Update(tblUsersActivities_Update instance);
     partial void DeletetblUsersActivities_Update(tblUsersActivities_Update instance);
@@ -96,6 +93,9 @@ namespace BSData.Models
     partial void InserttblClients_Object(tblClients_Object instance);
     partial void UpdatetblClients_Object(tblClients_Object instance);
     partial void DeletetblClients_Object(tblClients_Object instance);
+    partial void InserttblClient(tblClient instance);
+    partial void UpdatetblClient(tblClient instance);
+    partial void DeletetblClient(tblClient instance);
     #endregion
 		
 		public dbDataContext() : 
@@ -264,14 +264,6 @@ namespace BSData.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<tblClient> tblClients
-		{
-			get
-			{
-				return this.GetTable<tblClient>();
-			}
-		}
-		
 		public System.Data.Linq.Table<tblUsersActivities_Update> tblUsersActivities_Updates
 		{
 			get
@@ -301,6 +293,14 @@ namespace BSData.Models
 			get
 			{
 				return this.GetTable<tblClients_Object>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tblClient> tblClients
+		{
+			get
+			{
+				return this.GetTable<tblClient>();
 			}
 		}
 		
@@ -1424,11 +1424,11 @@ namespace BSData.Models
 		
 		private EntitySet<tblClients_Event> _tblClients_Events;
 		
-		private EntitySet<tblClient> _tblClients;
-		
 		private EntitySet<tblUsersActivities_Update> _tblUsersActivities_Updates;
 		
 		private EntitySet<tblDocs_UploadedFile> _tblDocs_UploadedFiles;
+		
+		private EntitySet<tblClient> _tblClients;
 		
 		private EntityRef<tblUsers_Status> _tblUsers_Status;
 		
@@ -1473,9 +1473,9 @@ namespace BSData.Models
 			this._tblUsers_InRoles = new EntitySet<tblUsers_InRole>(new Action<tblUsers_InRole>(this.attach_tblUsers_InRoles), new Action<tblUsers_InRole>(this.detach_tblUsers_InRoles));
 			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
 			this._tblClients_Events = new EntitySet<tblClients_Event>(new Action<tblClients_Event>(this.attach_tblClients_Events), new Action<tblClients_Event>(this.detach_tblClients_Events));
-			this._tblClients = new EntitySet<tblClient>(new Action<tblClient>(this.attach_tblClients), new Action<tblClient>(this.detach_tblClients));
 			this._tblUsersActivities_Updates = new EntitySet<tblUsersActivities_Update>(new Action<tblUsersActivities_Update>(this.attach_tblUsersActivities_Updates), new Action<tblUsersActivities_Update>(this.detach_tblUsersActivities_Updates));
 			this._tblDocs_UploadedFiles = new EntitySet<tblDocs_UploadedFile>(new Action<tblDocs_UploadedFile>(this.attach_tblDocs_UploadedFiles), new Action<tblDocs_UploadedFile>(this.detach_tblDocs_UploadedFiles));
+			this._tblClients = new EntitySet<tblClient>(new Action<tblClient>(this.attach_tblClients), new Action<tblClient>(this.detach_tblClients));
 			this._tblUsers_Status = default(EntityRef<tblUsers_Status>);
 			this._tblUsers_SubDep = default(EntityRef<tblUsers_SubDep>);
 			OnCreated();
@@ -1808,19 +1808,6 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblClient", Storage="_tblClients", ThisKey="ID", OtherKey="NextContactUserID")]
-		public EntitySet<tblClient> tblClients
-		{
-			get
-			{
-				return this._tblClients;
-			}
-			set
-			{
-				this._tblClients.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblUsersActivities_Update", Storage="_tblUsersActivities_Updates", ThisKey="ID", OtherKey="UserID")]
 		public EntitySet<tblUsersActivities_Update> tblUsersActivities_Updates
 		{
@@ -1844,6 +1831,19 @@ namespace BSData.Models
 			set
 			{
 				this._tblDocs_UploadedFiles.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblClient", Storage="_tblClients", ThisKey="ID", OtherKey="NextContactUserID")]
+		public EntitySet<tblClient> tblClients
+		{
+			get
+			{
+				return this._tblClients;
+			}
+			set
+			{
+				this._tblClients.Assign(value);
 			}
 		}
 		
@@ -1971,18 +1971,6 @@ namespace BSData.Models
 			entity.tblUser = null;
 		}
 		
-		private void attach_tblClients(tblClient entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblUser = this;
-		}
-		
-		private void detach_tblClients(tblClient entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblUser = null;
-		}
-		
 		private void attach_tblUsersActivities_Updates(tblUsersActivities_Update entity)
 		{
 			this.SendPropertyChanging();
@@ -2002,6 +1990,18 @@ namespace BSData.Models
 		}
 		
 		private void detach_tblDocs_UploadedFiles(tblDocs_UploadedFile entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblUser = null;
+		}
+		
+		private void attach_tblClients(tblClient entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblUser = this;
+		}
+		
+		private void detach_tblClients(tblClient entity)
 		{
 			this.SendPropertyChanging();
 			entity.tblUser = null;
@@ -4319,631 +4319,6 @@ namespace BSData.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblClients")]
-	public partial class tblClient : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private long _Code;
-		
-		private string _Name;
-		
-		private string _Description;
-		
-		private string _Address;
-		
-		private int _TownID;
-		
-		private string _Contact;
-		
-		private string _ContactDetails;
-		
-		private string _Email;
-		
-		private string _Notes;
-		
-		private string _Rec_Bank;
-		
-		private string _Rec_BankAccount;
-		
-		private string _Rec_VATCode;
-		
-		private System.Nullable<System.Guid> _Rid;
-		
-		private System.Nullable<System.DateTime> _NextContactDate;
-		
-		private System.Nullable<int> _NextContactUserID;
-		
-		private System.Nullable<int> _NextContactContractFormID;
-		
-		private EntitySet<tblContract> _tblContracts;
-		
-		private EntitySet<tblClients_Event> _tblClients_Events;
-		
-		private EntityRef<tblContracts_Form> _tblContracts_Form;
-		
-		private EntityRef<tblTown> _tblTown;
-		
-		private EntityRef<tblUser> _tblUser;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnCodeChanging(long value);
-    partial void OnCodeChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnAddressChanging(string value);
-    partial void OnAddressChanged();
-    partial void OnTownIDChanging(int value);
-    partial void OnTownIDChanged();
-    partial void OnContactChanging(string value);
-    partial void OnContactChanged();
-    partial void OnContactDetailsChanging(string value);
-    partial void OnContactDetailsChanged();
-    partial void OnEmailChanging(string value);
-    partial void OnEmailChanged();
-    partial void OnNotesChanging(string value);
-    partial void OnNotesChanged();
-    partial void OnRec_BankChanging(string value);
-    partial void OnRec_BankChanged();
-    partial void OnRec_BankAccountChanging(string value);
-    partial void OnRec_BankAccountChanged();
-    partial void OnRec_VATCodeChanging(string value);
-    partial void OnRec_VATCodeChanged();
-    partial void OnRidChanging(System.Nullable<System.Guid> value);
-    partial void OnRidChanged();
-    partial void OnNextContactDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnNextContactDateChanged();
-    partial void OnNextContactUserIDChanging(System.Nullable<int> value);
-    partial void OnNextContactUserIDChanged();
-    partial void OnNextContactContractFormIDChanging(System.Nullable<int> value);
-    partial void OnNextContactContractFormIDChanged();
-    #endregion
-		
-		public tblClient()
-		{
-			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
-			this._tblClients_Events = new EntitySet<tblClients_Event>(new Action<tblClients_Event>(this.attach_tblClients_Events), new Action<tblClients_Event>(this.detach_tblClients_Events));
-			this._tblContracts_Form = default(EntityRef<tblContracts_Form>);
-			this._tblTown = default(EntityRef<tblTown>);
-			this._tblUser = default(EntityRef<tblUser>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="BigInt NOT NULL")]
-		public long Code
-		{
-			get
-			{
-				return this._Code;
-			}
-			set
-			{
-				if ((this._Code != value))
-				{
-					this.OnCodeChanging(value);
-					this.SendPropertyChanging();
-					this._Code = value;
-					this.SendPropertyChanged("Code");
-					this.OnCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(250)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
-		public string Address
-		{
-			get
-			{
-				return this._Address;
-			}
-			set
-			{
-				if ((this._Address != value))
-				{
-					this.OnAddressChanging(value);
-					this.SendPropertyChanging();
-					this._Address = value;
-					this.SendPropertyChanged("Address");
-					this.OnAddressChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TownID", DbType="Int NOT NULL")]
-		public int TownID
-		{
-			get
-			{
-				return this._TownID;
-			}
-			set
-			{
-				if ((this._TownID != value))
-				{
-					if (this._tblTown.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnTownIDChanging(value);
-					this.SendPropertyChanging();
-					this._TownID = value;
-					this.SendPropertyChanged("TownID");
-					this.OnTownIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contact", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
-		public string Contact
-		{
-			get
-			{
-				return this._Contact;
-			}
-			set
-			{
-				if ((this._Contact != value))
-				{
-					this.OnContactChanging(value);
-					this.SendPropertyChanging();
-					this._Contact = value;
-					this.SendPropertyChanged("Contact");
-					this.OnContactChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactDetails", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
-		public string ContactDetails
-		{
-			get
-			{
-				return this._ContactDetails;
-			}
-			set
-			{
-				if ((this._ContactDetails != value))
-				{
-					this.OnContactDetailsChanging(value);
-					this.SendPropertyChanging();
-					this._ContactDetails = value;
-					this.SendPropertyChanged("ContactDetails");
-					this.OnContactDetailsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(50)")]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					this.OnEmailChanging(value);
-					this.SendPropertyChanging();
-					this._Email = value;
-					this.SendPropertyChanged("Email");
-					this.OnEmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="NVarChar(500)")]
-		public string Notes
-		{
-			get
-			{
-				return this._Notes;
-			}
-			set
-			{
-				if ((this._Notes != value))
-				{
-					this.OnNotesChanging(value);
-					this.SendPropertyChanging();
-					this._Notes = value;
-					this.SendPropertyChanged("Notes");
-					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_Bank", DbType="NVarChar(50)")]
-		public string Rec_Bank
-		{
-			get
-			{
-				return this._Rec_Bank;
-			}
-			set
-			{
-				if ((this._Rec_Bank != value))
-				{
-					this.OnRec_BankChanging(value);
-					this.SendPropertyChanging();
-					this._Rec_Bank = value;
-					this.SendPropertyChanged("Rec_Bank");
-					this.OnRec_BankChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_BankAccount", DbType="VarChar(30)")]
-		public string Rec_BankAccount
-		{
-			get
-			{
-				return this._Rec_BankAccount;
-			}
-			set
-			{
-				if ((this._Rec_BankAccount != value))
-				{
-					this.OnRec_BankAccountChanging(value);
-					this.SendPropertyChanging();
-					this._Rec_BankAccount = value;
-					this.SendPropertyChanged("Rec_BankAccount");
-					this.OnRec_BankAccountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_VATCode", DbType="VarChar(20)")]
-		public string Rec_VATCode
-		{
-			get
-			{
-				return this._Rec_VATCode;
-			}
-			set
-			{
-				if ((this._Rec_VATCode != value))
-				{
-					this.OnRec_VATCodeChanging(value);
-					this.SendPropertyChanging();
-					this._Rec_VATCode = value;
-					this.SendPropertyChanged("Rec_VATCode");
-					this.OnRec_VATCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rid", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Rid
-		{
-			get
-			{
-				return this._Rid;
-			}
-			set
-			{
-				if ((this._Rid != value))
-				{
-					this.OnRidChanging(value);
-					this.SendPropertyChanging();
-					this._Rid = value;
-					this.SendPropertyChanged("Rid");
-					this.OnRidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextContactDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> NextContactDate
-		{
-			get
-			{
-				return this._NextContactDate;
-			}
-			set
-			{
-				if ((this._NextContactDate != value))
-				{
-					this.OnNextContactDateChanging(value);
-					this.SendPropertyChanging();
-					this._NextContactDate = value;
-					this.SendPropertyChanged("NextContactDate");
-					this.OnNextContactDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextContactUserID", DbType="Int")]
-		public System.Nullable<int> NextContactUserID
-		{
-			get
-			{
-				return this._NextContactUserID;
-			}
-			set
-			{
-				if ((this._NextContactUserID != value))
-				{
-					if (this._tblUser.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnNextContactUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._NextContactUserID = value;
-					this.SendPropertyChanged("NextContactUserID");
-					this.OnNextContactUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextContactContractFormID", DbType="Int")]
-		public System.Nullable<int> NextContactContractFormID
-		{
-			get
-			{
-				return this._NextContactContractFormID;
-			}
-			set
-			{
-				if ((this._NextContactContractFormID != value))
-				{
-					if (this._tblContracts_Form.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnNextContactContractFormIDChanging(value);
-					this.SendPropertyChanging();
-					this._NextContactContractFormID = value;
-					this.SendPropertyChanged("NextContactContractFormID");
-					this.OnNextContactContractFormIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblContract", Storage="_tblContracts", ThisKey="ID", OtherKey="ClientID")]
-		public EntitySet<tblContract> tblContracts
-		{
-			get
-			{
-				return this._tblContracts;
-			}
-			set
-			{
-				this._tblContracts.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblClients_Event", Storage="_tblClients_Events", ThisKey="ID", OtherKey="ClientID")]
-		public EntitySet<tblClients_Event> tblClients_Events
-		{
-			get
-			{
-				return this._tblClients_Events;
-			}
-			set
-			{
-				this._tblClients_Events.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Form_tblClient", Storage="_tblContracts_Form", ThisKey="NextContactContractFormID", OtherKey="ID", IsForeignKey=true)]
-		public tblContracts_Form tblContracts_Form
-		{
-			get
-			{
-				return this._tblContracts_Form.Entity;
-			}
-			set
-			{
-				tblContracts_Form previousValue = this._tblContracts_Form.Entity;
-				if (((previousValue != value) 
-							|| (this._tblContracts_Form.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblContracts_Form.Entity = null;
-						previousValue.tblClients.Remove(this);
-					}
-					this._tblContracts_Form.Entity = value;
-					if ((value != null))
-					{
-						value.tblClients.Add(this);
-						this._NextContactContractFormID = value.ID;
-					}
-					else
-					{
-						this._NextContactContractFormID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("tblContracts_Form");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblTown_tblClient", Storage="_tblTown", ThisKey="TownID", OtherKey="ID", IsForeignKey=true)]
-		public tblTown tblTown
-		{
-			get
-			{
-				return this._tblTown.Entity;
-			}
-			set
-			{
-				tblTown previousValue = this._tblTown.Entity;
-				if (((previousValue != value) 
-							|| (this._tblTown.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblTown.Entity = null;
-						previousValue.tblClients.Remove(this);
-					}
-					this._tblTown.Entity = value;
-					if ((value != null))
-					{
-						value.tblClients.Add(this);
-						this._TownID = value.ID;
-					}
-					else
-					{
-						this._TownID = default(int);
-					}
-					this.SendPropertyChanged("tblTown");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblClient", Storage="_tblUser", ThisKey="NextContactUserID", OtherKey="ID", IsForeignKey=true)]
-		public tblUser tblUser
-		{
-			get
-			{
-				return this._tblUser.Entity;
-			}
-			set
-			{
-				tblUser previousValue = this._tblUser.Entity;
-				if (((previousValue != value) 
-							|| (this._tblUser.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblUser.Entity = null;
-						previousValue.tblClients.Remove(this);
-					}
-					this._tblUser.Entity = value;
-					if ((value != null))
-					{
-						value.tblClients.Add(this);
-						this._NextContactUserID = value.ID;
-					}
-					else
-					{
-						this._NextContactUserID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("tblUser");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_tblContracts(tblContract entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblClient = this;
-		}
-		
-		private void detach_tblContracts(tblContract entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblClient = null;
-		}
-		
-		private void attach_tblClients_Events(tblClients_Event entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblClient = this;
-		}
-		
-		private void detach_tblClients_Events(tblClients_Event entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblClient = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblUsersActivities_Updates")]
 	public partial class tblUsersActivities_Update : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6157,6 +5532,631 @@ namespace BSData.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblClients")]
+	public partial class tblClient : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Code;
+		
+		private string _Name;
+		
+		private string _Description;
+		
+		private string _Address;
+		
+		private int _TownID;
+		
+		private string _Contact;
+		
+		private string _ContactDetails;
+		
+		private string _Email;
+		
+		private string _Notes;
+		
+		private string _Rec_Bank;
+		
+		private string _Rec_BankAccount;
+		
+		private string _Rec_VATCode;
+		
+		private System.Nullable<System.Guid> _Rid;
+		
+		private System.Nullable<System.DateTime> _NextContactDate;
+		
+		private System.Nullable<int> _NextContactUserID;
+		
+		private System.Nullable<int> _NextContactContractFormID;
+		
+		private EntitySet<tblContract> _tblContracts;
+		
+		private EntitySet<tblClients_Event> _tblClients_Events;
+		
+		private EntityRef<tblContracts_Form> _tblContracts_Form;
+		
+		private EntityRef<tblTown> _tblTown;
+		
+		private EntityRef<tblUser> _tblUser;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnCodeChanging(string value);
+    partial void OnCodeChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnAddressChanging(string value);
+    partial void OnAddressChanged();
+    partial void OnTownIDChanging(int value);
+    partial void OnTownIDChanged();
+    partial void OnContactChanging(string value);
+    partial void OnContactChanged();
+    partial void OnContactDetailsChanging(string value);
+    partial void OnContactDetailsChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    partial void OnRec_BankChanging(string value);
+    partial void OnRec_BankChanged();
+    partial void OnRec_BankAccountChanging(string value);
+    partial void OnRec_BankAccountChanged();
+    partial void OnRec_VATCodeChanging(string value);
+    partial void OnRec_VATCodeChanged();
+    partial void OnRidChanging(System.Nullable<System.Guid> value);
+    partial void OnRidChanged();
+    partial void OnNextContactDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnNextContactDateChanged();
+    partial void OnNextContactUserIDChanging(System.Nullable<int> value);
+    partial void OnNextContactUserIDChanged();
+    partial void OnNextContactContractFormIDChanging(System.Nullable<int> value);
+    partial void OnNextContactContractFormIDChanged();
+    #endregion
+		
+		public tblClient()
+		{
+			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
+			this._tblClients_Events = new EntitySet<tblClients_Event>(new Action<tblClients_Event>(this.attach_tblClients_Events), new Action<tblClients_Event>(this.detach_tblClients_Events));
+			this._tblContracts_Form = default(EntityRef<tblContracts_Form>);
+			this._tblTown = default(EntityRef<tblTown>);
+			this._tblUser = default(EntityRef<tblUser>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="VarChar(12) NOT NULL", CanBeNull=false)]
+		public string Code
+		{
+			get
+			{
+				return this._Code;
+			}
+			set
+			{
+				if ((this._Code != value))
+				{
+					this.OnCodeChanging(value);
+					this.SendPropertyChanging();
+					this._Code = value;
+					this.SendPropertyChanged("Code");
+					this.OnCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(255)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TownID", DbType="Int NOT NULL")]
+		public int TownID
+		{
+			get
+			{
+				return this._TownID;
+			}
+			set
+			{
+				if ((this._TownID != value))
+				{
+					if (this._tblTown.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTownIDChanging(value);
+					this.SendPropertyChanging();
+					this._TownID = value;
+					this.SendPropertyChanged("TownID");
+					this.OnTownIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contact", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		public string Contact
+		{
+			get
+			{
+				return this._Contact;
+			}
+			set
+			{
+				if ((this._Contact != value))
+				{
+					this.OnContactChanging(value);
+					this.SendPropertyChanging();
+					this._Contact = value;
+					this.SendPropertyChanged("Contact");
+					this.OnContactChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactDetails", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		public string ContactDetails
+		{
+			get
+			{
+				return this._ContactDetails;
+			}
+			set
+			{
+				if ((this._ContactDetails != value))
+				{
+					this.OnContactDetailsChanging(value);
+					this.SendPropertyChanging();
+					this._ContactDetails = value;
+					this.SendPropertyChanged("ContactDetails");
+					this.OnContactDetailsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(50)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="NVarChar(300)")]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_Bank", DbType="NVarChar(50)")]
+		public string Rec_Bank
+		{
+			get
+			{
+				return this._Rec_Bank;
+			}
+			set
+			{
+				if ((this._Rec_Bank != value))
+				{
+					this.OnRec_BankChanging(value);
+					this.SendPropertyChanging();
+					this._Rec_Bank = value;
+					this.SendPropertyChanged("Rec_Bank");
+					this.OnRec_BankChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_BankAccount", DbType="VarChar(30)")]
+		public string Rec_BankAccount
+		{
+			get
+			{
+				return this._Rec_BankAccount;
+			}
+			set
+			{
+				if ((this._Rec_BankAccount != value))
+				{
+					this.OnRec_BankAccountChanging(value);
+					this.SendPropertyChanging();
+					this._Rec_BankAccount = value;
+					this.SendPropertyChanged("Rec_BankAccount");
+					this.OnRec_BankAccountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_VATCode", DbType="VarChar(20)")]
+		public string Rec_VATCode
+		{
+			get
+			{
+				return this._Rec_VATCode;
+			}
+			set
+			{
+				if ((this._Rec_VATCode != value))
+				{
+					this.OnRec_VATCodeChanging(value);
+					this.SendPropertyChanging();
+					this._Rec_VATCode = value;
+					this.SendPropertyChanged("Rec_VATCode");
+					this.OnRec_VATCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rid", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Rid
+		{
+			get
+			{
+				return this._Rid;
+			}
+			set
+			{
+				if ((this._Rid != value))
+				{
+					this.OnRidChanging(value);
+					this.SendPropertyChanging();
+					this._Rid = value;
+					this.SendPropertyChanged("Rid");
+					this.OnRidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextContactDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> NextContactDate
+		{
+			get
+			{
+				return this._NextContactDate;
+			}
+			set
+			{
+				if ((this._NextContactDate != value))
+				{
+					this.OnNextContactDateChanging(value);
+					this.SendPropertyChanging();
+					this._NextContactDate = value;
+					this.SendPropertyChanged("NextContactDate");
+					this.OnNextContactDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextContactUserID", DbType="Int")]
+		public System.Nullable<int> NextContactUserID
+		{
+			get
+			{
+				return this._NextContactUserID;
+			}
+			set
+			{
+				if ((this._NextContactUserID != value))
+				{
+					if (this._tblUser.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnNextContactUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._NextContactUserID = value;
+					this.SendPropertyChanged("NextContactUserID");
+					this.OnNextContactUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextContactContractFormID", DbType="Int")]
+		public System.Nullable<int> NextContactContractFormID
+		{
+			get
+			{
+				return this._NextContactContractFormID;
+			}
+			set
+			{
+				if ((this._NextContactContractFormID != value))
+				{
+					if (this._tblContracts_Form.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnNextContactContractFormIDChanging(value);
+					this.SendPropertyChanging();
+					this._NextContactContractFormID = value;
+					this.SendPropertyChanged("NextContactContractFormID");
+					this.OnNextContactContractFormIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblContract", Storage="_tblContracts", ThisKey="ID", OtherKey="ClientID")]
+		public EntitySet<tblContract> tblContracts
+		{
+			get
+			{
+				return this._tblContracts;
+			}
+			set
+			{
+				this._tblContracts.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblClients_Event", Storage="_tblClients_Events", ThisKey="ID", OtherKey="ClientID")]
+		public EntitySet<tblClients_Event> tblClients_Events
+		{
+			get
+			{
+				return this._tblClients_Events;
+			}
+			set
+			{
+				this._tblClients_Events.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Form_tblClient", Storage="_tblContracts_Form", ThisKey="NextContactContractFormID", OtherKey="ID", IsForeignKey=true)]
+		public tblContracts_Form tblContracts_Form
+		{
+			get
+			{
+				return this._tblContracts_Form.Entity;
+			}
+			set
+			{
+				tblContracts_Form previousValue = this._tblContracts_Form.Entity;
+				if (((previousValue != value) 
+							|| (this._tblContracts_Form.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblContracts_Form.Entity = null;
+						previousValue.tblClients.Remove(this);
+					}
+					this._tblContracts_Form.Entity = value;
+					if ((value != null))
+					{
+						value.tblClients.Add(this);
+						this._NextContactContractFormID = value.ID;
+					}
+					else
+					{
+						this._NextContactContractFormID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("tblContracts_Form");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblTown_tblClient", Storage="_tblTown", ThisKey="TownID", OtherKey="ID", IsForeignKey=true)]
+		public tblTown tblTown
+		{
+			get
+			{
+				return this._tblTown.Entity;
+			}
+			set
+			{
+				tblTown previousValue = this._tblTown.Entity;
+				if (((previousValue != value) 
+							|| (this._tblTown.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblTown.Entity = null;
+						previousValue.tblClients.Remove(this);
+					}
+					this._tblTown.Entity = value;
+					if ((value != null))
+					{
+						value.tblClients.Add(this);
+						this._TownID = value.ID;
+					}
+					else
+					{
+						this._TownID = default(int);
+					}
+					this.SendPropertyChanged("tblTown");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblClient", Storage="_tblUser", ThisKey="NextContactUserID", OtherKey="ID", IsForeignKey=true)]
+		public tblUser tblUser
+		{
+			get
+			{
+				return this._tblUser.Entity;
+			}
+			set
+			{
+				tblUser previousValue = this._tblUser.Entity;
+				if (((previousValue != value) 
+							|| (this._tblUser.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblUser.Entity = null;
+						previousValue.tblClients.Remove(this);
+					}
+					this._tblUser.Entity = value;
+					if ((value != null))
+					{
+						value.tblClients.Add(this);
+						this._NextContactUserID = value.ID;
+					}
+					else
+					{
+						this._NextContactUserID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("tblUser");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tblContracts(tblContract entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblClient = this;
+		}
+		
+		private void detach_tblContracts(tblContract entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblClient = null;
+		}
+		
+		private void attach_tblClients_Events(tblClients_Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblClient = this;
+		}
+		
+		private void detach_tblClients_Events(tblClients_Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblClient = null;
 		}
 	}
 	

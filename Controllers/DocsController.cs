@@ -46,7 +46,7 @@ namespace BSData.Controllers {
             //   File = "../Scripts/Form/Users_All_Grid.js",
             //   oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }
             //},
-            tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblClients_Objects"),
+            //tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblClients_Objects"),
             tblTowns = Rep.GetJSON_tblTowns(),
             tblClients = Rep.GetJSON_tblClients(),
             tblContracts1_Object = Rep.GetJSON_tblContracts1_Object(),
@@ -114,7 +114,7 @@ namespace BSData.Controllers {
          var obj = new {
             Render = View,
             Contracts_Expired = Rep.GetJSON_tblContracts_Other(false),//Negaliojancios bet pasirasytos
-            tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
+            //tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan
@@ -131,7 +131,7 @@ namespace BSData.Controllers {
          var obj = new {
             Render = View,
             Contracts_Expired = Rep.GetJSON_tblContracts_Other(false),//Negaliojancios bet pasirasytos
-            tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
+            //tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan

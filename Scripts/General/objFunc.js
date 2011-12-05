@@ -112,18 +112,20 @@ var oCONTROLS={ lbl: function(text) { return "<label class='dialog-form-label'>"
       //if(typeof data==='undefined') { alert('Source undefined in UpdatableForm(objFunc:79)!'); }
       //log('<div>==========UpdatableForm========</div>');
       var elements=$(frm).find('div.ExtendIt, span.ExtendIt');
-//      for(var i=0; i<elements.length; i++) {
-//      }
+      //      for(var i=0; i<elements.length; i++) {
+      //      }
       $(frm).find('div.ExtendIt, span.ExtendIt').each(function() {
-         var e=$(this), eOpt=e.data('ctrl'), eHTML='', ix=0, data_ctrl={};
+         var e=$(this), eOpt=e.data('ctrl'), eHTML='', ix=-1, data_ctrl={};
          //log("-------------------------------");
          //log("Elementas:"+e[0].tagName+"; id:"+e.attr("id")+"; klase:"+e.attr("class")+"; e.data('ctrl'):"+typeof e.data("ctrl"));
          if(typeof eOpt.Control!=="undefined") { if(eOpt.Control==="swfUpload"&&typeof frmOpt.id==="undefined") { return true; } else { e[eOpt.Control](eOpt); return true; } } //swfUpload nerenderinam jei naujas dokumentas
          if(data!=="NoData") {
             var eCols=data.Cols;
             //Surandam lauko indeksa
-            for(var i=0; i<eCols.length; i++) { if(eCols[i].FName===eOpt.Field) { ix=i; sTitle=data.Grid.aoColumns[i].sTitle; break; } }
-            if(ix===0) { alert('Wrong Field indicated '+eOpt.Field+' in UpdatableForm(objFunc:84)!'); }
+            for(var i=0; i<eCols.length; i++) {
+               if(eCols[i].FName===eOpt.Field) { ix=i; sTitle=data.Grid.aoColumns[i].sTitle; break; } 
+            }
+            if(ix===-1) { alert('Wrong Field indicated '+eOpt.Field+' in UpdatableForm(objFunc:84)!'); }
             //log("Surastas laukas:'"+eOpt.Field+"'");
          } else { sTitle=(eOpt.sTitle)?eOpt.sTitle:""; }
          //#region duomenu is data.Cols[ix] ir eOpt(elemento data('ctrl')) surasymas i data_ctrl arba i propercius

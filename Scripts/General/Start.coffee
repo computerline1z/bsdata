@@ -47,6 +47,8 @@ fnSetNewData = (jsRes,el=$('#main-copy')) ->
 		@oDATA.Set(Name, jsRes[Name])
 	if  Action=="Contracts_New_Other"
 		Contracts_New_Other()
+	else if  Action=="Clients_NewClient"
+		Clients_NewClient()
 	else if  Action=="Contracts_New_Object"
 		Contracts_New_Object()
 	else if Action=="Contracts_Unsigned"

@@ -99,7 +99,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Content\images_dataTables\Sorting icons.psd" />
     <Content Include="Content\images\cancel.png" />
-    <Content Include="Content\images\wdp_buttons_upload_114x29.png" />
     <Content Include="Content\jquery-ui-custom2.css" />
     <Content Include="Content\images_ui\Sprite16.png" />
     <Content Include="Content\images_ui\Sprite24.png" />
@@ -108,6 +107,16 @@
     <Content Include="Scripts\Final\js.chirp.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Scripts\Final\jsGeneral.chirp.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\Final\jsGeneral2.chirp.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Scripts\Form\Clients_NewClient.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>Clients_NewClient.js</LastGenOutput>
+    </None>
     <None Include="Scripts\Form\Docs_Contracts_New_Object.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Docs_Contracts_New_Object.js</LastGenOutput>
@@ -116,8 +125,19 @@
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Docs_Contracts_New_Other.js</LastGenOutput>
     </None>
-    <Content Include="Scripts\Form\mergedForms.min.js">
-      <DependentUpon>zForms.chirp.config</DependentUpon>
+    <Content Include="Scripts\Final\merged1.min.js">
+      <DependentUpon>js.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Final\mergedGeneral.min.js">
+      <DependentUpon>jsGeneral.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Final\mergedGeneral2.js">
+      <DependentUpon>jsGeneral2.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Form\Clients_NewClient.js">
+      <DependentUpon>Clients_NewClient.coffee</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Content>
     <Content Include="Scripts\Form\zForms.chirp.config">
       <SubType>Designer</SubType>
@@ -175,6 +195,7 @@
     <Content Include="Views\Clients\ClientEvents.cshtml" />
     <Content Include="Views\Clients\NewEvent.cshtml" />
     <Content Include="Views\Docs\NewContract_Object.cshtml" />
+    <Content Include="Views\Clients\NewClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Mail.ConfirmRegistration.lt.htm" />
@@ -252,9 +273,6 @@
       <DependentUpon>CSS.chirp.config</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="Scripts\Final\merged.min.js">
-      <DependentUpon>js.chirp.config</DependentUpon>
-    </Content>
     <Content Include="Scripts\Form\Users_All_Grid.js" />
     <Content Include="Scripts\General\clsDialogUi.js" />
     <Content Include="Scripts\Plugins\fauxconsole.js" />

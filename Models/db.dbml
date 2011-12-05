@@ -71,9 +71,9 @@
       <Association Name="tblUser_tblUsers_InRole" Member="tblUsers_InRoles" ThisKey="ID" OtherKey="UserID" Type="tblUsers_InRole" />
       <Association Name="tblUser_tblContract" Member="tblContracts" ThisKey="ID" OtherKey="RespUserID" Type="tblContract" />
       <Association Name="tblUser_tblClients_Event" Member="tblClients_Events" ThisKey="ID" OtherKey="UserID" Type="tblClients_Event" />
-      <Association Name="tblUser_tblClient" Member="tblClients" ThisKey="ID" OtherKey="NextContactUserID" Type="tblClient" />
       <Association Name="tblUser_tblUsersActivities_Update" Member="tblUsersActivities_Updates" ThisKey="ID" OtherKey="UserID" Type="tblUsersActivities_Update" />
       <Association Name="tblUser_tblDocs_UploadedFile" Member="tblDocs_UploadedFiles" ThisKey="ID" OtherKey="UserID" Type="tblDocs_UploadedFile" />
+      <Association Name="tblUser_tblClient" Member="tblClients" ThisKey="ID" OtherKey="NextContactUserID" Type="tblClient" />
       <Association Name="tblUsers_Status_tblUser" Member="tblUsers_Status" ThisKey="StatusID" OtherKey="ID" Type="tblUsers_Status" IsForeignKey="true" />
       <Association Name="tblUsers_SubDep_tblUser" Member="tblUsers_SubDep" ThisKey="SubDepID" OtherKey="ID" Type="tblUsers_SubDep" IsForeignKey="true" />
     </Type>
@@ -189,32 +189,6 @@
       <Association Name="tblContracts_Form_tblFormsInEvent" Member="tblContracts_Form" ThisKey="ContractFormID" OtherKey="ID" Type="tblContracts_Form" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tblClients" Member="tblClients">
-    <Type Name="tblClient">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Code" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="Address" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="TownID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Contact" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="ContactDetails" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="Rec_Bank" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Rec_BankAccount" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="Rec_VATCode" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="Rid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="NextContactDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="NextContactUserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="NextContactContractFormID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="tblClient_tblContract" Member="tblContracts" ThisKey="ID" OtherKey="ClientID" Type="tblContract" />
-      <Association Name="tblClient_tblClients_Event" Member="tblClients_Events" ThisKey="ID" OtherKey="ClientID" Type="tblClients_Event" />
-      <Association Name="tblContracts_Form_tblClient" Member="tblContracts_Form" ThisKey="NextContactContractFormID" OtherKey="ID" Type="tblContracts_Form" IsForeignKey="true" />
-      <Association Name="tblTown_tblClient" Member="tblTown" ThisKey="TownID" OtherKey="ID" Type="tblTown" IsForeignKey="true" />
-      <Association Name="tblUser_tblClient" Member="tblUser" ThisKey="NextContactUserID" OtherKey="ID" Type="tblUser" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tblUsersActivities_Updates" Member="tblUsersActivities_Updates">
     <Type Name="tblUsersActivities_Update">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -270,6 +244,32 @@
       <Column Name="PriceOnce" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="StatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Status_Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblClients" Member="tblClients">
+    <Type Name="tblClient">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="VarChar(12) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TownID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Contact" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="ContactDetails" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="Rec_Bank" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Rec_BankAccount" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Rec_VATCode" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Rid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="NextContactDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NextContactUserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NextContactContractFormID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tblClient_tblContract" Member="tblContracts" ThisKey="ID" OtherKey="ClientID" Type="tblContract" />
+      <Association Name="tblClient_tblClients_Event" Member="tblClients_Events" ThisKey="ID" OtherKey="ClientID" Type="tblClients_Event" />
+      <Association Name="tblContracts_Form_tblClient" Member="tblContracts_Form" ThisKey="NextContactContractFormID" OtherKey="ID" Type="tblContracts_Form" IsForeignKey="true" />
+      <Association Name="tblTown_tblClient" Member="tblTown" ThisKey="TownID" OtherKey="ID" Type="tblTown" IsForeignKey="true" />
+      <Association Name="tblUser_tblClient" Member="tblUser" ThisKey="NextContactUserID" OtherKey="ID" Type="tblUser" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.proc_tblUsers_InsertNew" Method="proc_tblUsers_InsertNew">

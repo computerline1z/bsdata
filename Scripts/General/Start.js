@@ -1,13 +1,19 @@
 (function() {
   var Action, CallServer, Controller, Index, Start, fnSetNewData, jsResData;
+
   jsResData = {};
+
   Index = 0;
+
   Controller = $('#header div.subHeader a.highlight').data('controller');
+
   Action = "";
+
   $(function() {
     Start();
     return $('#side-bar li>a').first().trigger('click');
   });
+
   Start = function() {
     return $('#side-bar').on('click', 'li>a', function(event) {
       var refresh, url;
@@ -30,10 +36,9 @@
       return $('body').removeClass("wait");
     });
   };
+
   CallServer = function(url, Par, el) {
-    if (el == null) {
-      el = $('#main-copy');
-    }
+    if (el == null) el = $('#main-copy');
     el.parent().block();
     return $.ajax({
       url: url,
@@ -56,14 +61,11 @@
       }
     });
   };
+
   fnSetNewData = function(jsRes, el) {
     var Name, obj;
-    if (el == null) {
-      el = $('#main-copy');
-    }
-    if (jsRes.Render) {
-      el.empty().html(jsRes.Render);
-    }
+    if (el == null) el = $('#main-copy');
+    if (jsRes.Render) el.empty().html(jsRes.Render);
     for (Name in jsRes) {
       obj = jsRes[Name];
       if ((Name !== "Render" && Name !== "Script") && !oDATA.Get[Name]) {
@@ -72,42 +74,36 @@
     }
     if (Action === "Contracts_New_Other") {
       return Contracts_New_Other();
+    } else if (Action === "Clients_NewClient") {
+      return Clients_NewClient();
     } else if (Action === "Contracts_New_Object") {
       return Contracts_New_Object();
     } else if (Action === "Contracts_Unsigned") {
-      if (jsRes.Script.oSCRIPT) {
-        this.oSCRIPT = jsRes.Script.oSCRIPT;
-      }
+      if (jsRes.Script.oSCRIPT) this.oSCRIPT = jsRes.Script.oSCRIPT;
       return ContractsUnsigned_Grid();
     } else if (Action === "Contracts_Other" || Action === "Contracts_Expired") {
-      if (jsRes.Script.oSCRIPT) {
-        this.oSCRIPT = jsRes.Script.oSCRIPT;
-      }
+      if (jsRes.Script.oSCRIPT) this.oSCRIPT = jsRes.Script.oSCRIPT;
       return ContractsOther_Grid();
     } else if (Action === "Contracts_Objects") {
-      if (jsRes.Script.oSCRIPT) {
-        this.oSCRIPT = jsRes.Script.oSCRIPT;
-      }
+      if (jsRes.Script.oSCRIPT) this.oSCRIPT = jsRes.Script.oSCRIPT;
       return ContractsObjects_Grid();
     } else if (Action === "MyEvents") {
       return Title_MyEvents();
     } else if (Action === "ClientsList") {
       return Clients_ClientsList_Grid();
     } else if (jsRes.Script) {
-      if (jsRes.Script.File) {
-        $.getScript(jsRes.Script.File);
-      }
-      if (jsRes.Script.oSCRIPT) {
-        return this.oSCRIPT = jsRes.Script.oSCRIPT;
-      }
+      if (jsRes.Script.File) $.getScript(jsRes.Script.File);
+      if (jsRes.Script.oSCRIPT) return this.oSCRIPT = jsRes.Script.oSCRIPT;
     }
   };
+
   Array.prototype.remove = function(e) {
     var t, _ref;
     if ((t = this.indexOf(e)) > -1) {
       return ([].splice.apply(this, [t, t - t + 1].concat(_ref = [])), _ref);
     }
   };
+
   this.oDATA = {
     Obj: {},
     Set: function(objData, oINST) {
@@ -137,6 +133,8 @@
         i++;
         if (Data[i][0] === id) {
           return Data[i];
+        } else {
+          _results.push(void 0);
         }
       }
       return _results;
@@ -180,4 +178,5 @@
       }
     }
   };
+
 }).call(this);

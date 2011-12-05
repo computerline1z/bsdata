@@ -3,7 +3,6 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 using BSData.Classes;
 using CC.Models;
@@ -52,10 +51,10 @@ namespace BSData.Models {
    }
 
    public class Repositories_Files {
-      private string _uploadsFolder = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["Uploads"]);
+      //private string _uploadsFolder = HostingEnvironment.MapPath(ConfigurationManager.AppSettings["Uploads"]);
 
       private string GetDiskLocation(int FileId, string FileExtension) {
-         return Path.Combine(_uploadsFolder, FileId.ToString() + FileExtension);
+         return Path.Combine(ConfigurationManager.AppSettings["Uploads"], FileId.ToString() + FileExtension);
       }
 
       public object SaveUploadedFile(UploadedFilePars Pars) {
@@ -101,8 +100,9 @@ namespace BSData.Models {
             //Response.AddHeader(“content-type”, “application/octet-stream”)
             //This will force the “Save As/Open With” Dialog box to show up.
 
-            string filePath = context.HttpContext.Server.MapPath(this.VirtualPath);
-            context.HttpContext.Response.TransmitFile(filePath);
+            //string filePath = context.HttpContext.Server.MapPath(this.VirtualPath);
+
+            context.HttpContext.Response.TransmitFile(this.VirtualPath);
          }
       }
    }

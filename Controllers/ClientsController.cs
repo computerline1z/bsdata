@@ -29,7 +29,7 @@ namespace BSData.Controllers {
             Render = View,
             proc_Clients = Rep.GetJSON_proc_Clients(null, null),
             tblContracts_Form = Rep.GetJSON_tblContracts_Form(),
-            tblUsers = Rep.GetJSON_tblUsers(),
+            //tblUsers = Rep.GetJSON_tblUsers(),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsUsersEdit ar pan
@@ -42,6 +42,25 @@ namespace BSData.Controllers {
       public JsonResult NewEventHTML() {
          string View = RenderPartialViewToString("../Clients/NewEvent");
          var obj = new { Render = View };
+         return Json(obj);
+      }
+
+      [HttpPost]
+      public JsonResult Clients_NewClient() {
+         ViewBag.Title = "Naujas klientas";
+         string View = RenderPartialViewToString("../Clients/NewClient");
+         Repository_Clients Rep = new Repository_Clients();
+         var obj = new {
+            Render = View,
+            //Script = new {
+            //   File = "../Scripts/Form/Users_All_Grid.js",
+            //   oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }
+            //},
+            //tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblClients_Objects"),
+            tblTowns = Rep.GetJSON_tblTowns(),
+            tblClient1 = Rep.GetJSON_tblClient1(),
+            tblUsers = Rep.GetJSON_tblUsers()
+         };
          return Json(obj);
       }
 
@@ -87,8 +106,8 @@ namespace BSData.Controllers {
                tblClient_prop = Rep.GetJSON_tblClient_prop(),
                tblClientEvents = Rep.GetJSON_tblClientEvents(ClientID),
                tblContracts_Form = Rep.GetJSON_tblContracts_Form(),
-               tblUsers = Rep.GetJSON_tblUsers(),
-               tblTowns = Rep.GetJSON_tblTowns(),
+               //tblUsers = Rep.GetJSON_tblUsers(),
+               //tblTowns = Rep.GetJSON_tblTowns(),
                //Script = new {
                //   //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                //   oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsUsersEdit ar pan
