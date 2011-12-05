@@ -174,64 +174,65 @@ new {sTitle="Name"}//1//Name//
 
       //----------- Gal nereikia----------start-------------
 
-      public jsonArrays GetJSON_tblClient1(int ClientID) {
+      //public jsonArrays GetJSON_tblClient1(int ClientID) {
+      public jsonArrays GetJSON_tblClient1() {
          jsonArrays JSON = new jsonArrays();
-         JSON.Data = from d in dc.tblClients join t in dc.tblTowns on d.TownID equals t.ID
-                     where d.ID == ClientID
-                     select new object[] {
-d.ID,//0
-d.Code,//1
-d.Name,//2
-d.Description,//3
-d.Address,//4
-//d.TownID,//5
-t.Name,
-d.Contact,//6
-d.ContactDetails,//7
-d.Email,//8
-d.Notes,//9
-d.NextContactUserID,
-d.NextContactDate,
-d.NextContactContractFormID
-};
+         //         JSON.Data = from d in dc.tblClients join t in dc.tblTowns on d.TownID equals t.ID
+         //                     where d.ID == ClientID
+         //                     select new object[] {
+         //d.ID,//0
+         //d.Code,//1
+         //d.Name,//2
+         //d.Description,//3
+         //d.Address,//4
+         ////d.TownID,//5
+         //t.Name,
+         //d.Contact,//6
+         //d.ContactDetails,//7
+         //d.Email,//8
+         //d.Notes,//9
+         //d.NextContactUserID,
+         //d.NextContactDate,
+         //d.NextContactContractFormID
+         //};
          // if (!onlyData) {
          object[] Cols ={
-new { FName = "ID"},//0
+//new { FName = "ID"},//0
 new { FName = "Code",Type="Integer", Validity="require().match(/^\\d{9}$/, \"Įmonės kodas turi būt sudarytas iš 9 skaičių.\")"},//1
 new { FName = "Name",Type="String", Validity="require().nonHtml().maxLength(60)"},//2
 new { FName = "Description",Type="String", Validity="require().nonHtml().maxLength(250)"},//3
 new { FName = "Address",Type="String", Validity="require().nonHtml().maxLength(200)"},//4
-//new { FName = "TownID",Tip="Pradėkite rinkti artimiausio miesto pavadinimą..",List=new{ListType="None",Source="tblTowns",iVal=0,iText=new object[]{1}}},//5
-new { FName = "TownName"},//5 , IdInMe=5
+new { FName = "TownID",Tip="Pradėkite rinkti artimiausio miesto pavadinimą..",List=new{ListType="None",Source="tblTowns",iVal=0,iText=new object[]{1}}},//5
+//new { FName = "TownName"},//5 , IdInMe=5
 new { FName = "Contact",Type="String", Validity="require().nonHtml().maxLength(125)"},//6
-new { FName = "ContactDetails",Type="String", Validity="require().nonHtml().maxLength(125)"},//7
+new { FName = "ContactDetails",Type="textarea", Validity="require().nonHtml().maxLength(125)"},//7
 new { FName = "Email",Type="Email", Validity="require().match(\"email\").maxLength(25)"},//8match('email')
-new { FName = "Notes",Type="String", Validity="require().nonHtml().maxLength(500)"},//9
+new { FName = "Notes",Type="String", Validity="require().nonHtml().maxLength(500)"}//,//9
 
-new { FName = "NextContactUserID",List=new{ListType="None",Source="tblUsers",iVal=0,iText=new object[]{1,2}}},//10
-new { FName = "NextContactDate",Type="Date", Validity="match('date').greaterThan(new Date())"},//11
-new { FName = "NextContactContractFormID",List=new{ListType="None",Source="tblContracts_Form",iVal=0,iText=new object[]{1}}}//12
+//new { FName = "NextContactUserID",List=new{ListType="None",Source="tblUsers",iVal=0,iText=new object[]{1,2}}},//10
+//new { FName = "NextContactDate",Type="Date", Validity="match('date').greaterThan(new Date())"},//11
+//new { FName = "NextContactContractFormID",List=new{ListType="None",Source="tblContracts_Form",iVal=0,iText=new object[]{1}}}//12
 }; JSON.Cols = Cols;
          JSON.Config = new {
             Controler = "Clients", tblUpdate = "tblClients", Msg = new { AddNew = "Naujo kliento įvedimas", Edit = "Kliento duomenų redagavimas", Delete = "Ištrinti klientą", GenName = "Klientas" }
          };
          JSON.Grid = new {
             aoColumns = new object[]{
-new {bVisible=false,bSearchable=false},//0//ID////DefaultUpdate=0
-new {sTitle="Įmonės kodas"},//1//Code//
+//new {bVisible=false,bSearchable=false},//0//ID////DefaultUpdate=0
+new {sTitle="Kodas"},//1//Code//
 new {sTitle="Pavadinimas"},//2//Name//
 new {sTitle="Aprašymas"},//3//Description//
 new {sTitle="Adresas"},//4//Address//
-//new {sTitle="Miestas",bSearchable=false},//5//TownID////DefaultUpdate=0
-new {sTitle="Miestas",bSearchable=false},//5//TownName////DefaultUpdate=0
+new {sTitle="Miestas",bSearchable=false},//5//TownID////DefaultUpdate=0
+//new {sTitle="Miestas",bSearchable=false},//5//TownName////DefaultUpdate=0
 new {sTitle="Konataktinis asmuo(-ys)"},//6//Contact//
 new {sTitle="Kontaktinė informacija"},//7//ContactDetails//
 new {sTitle="E.paštas"},//8//Email//
-new {sTitle="Kita"},//9//Notes//
+new {sTitle="Kas domina"}//,//9//Notes//
 
-new {sTitle="Darbuotojas"},//10//NextContactUserID//
-new {sTitle="Data"},//11//NextContactDate//
-new {sTitle="Sritis"}//12//NextContactContractFormID//
+//new {sTitle="Darbuotojas"},//10//NextContactUserID//
+//new {sTitle="Data"},//11//NextContactDate//
+//new {sTitle="Sritis"}//12//NextContactContractFormID//
          }
          };
          //}

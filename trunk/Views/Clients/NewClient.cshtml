@@ -1,0 +1,41 @@
+﻿<div id="NewClient" data-ctrl='{"NewRec":1,"Source":"tblClient1","tblUpdate":"tblClients"}'>
+   <div id="NewContractRightCol" style="float: left;">
+      <div>
+         <fieldset class="inputFieldset"><legend>Klientas (įmonė)</legend>
+            <div class='ExtendIt' data-ctrl='{"Field":"Name", "labelType":"Left", "attr":"title=\"Pavadinimas\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Code", "labelType":"Left", "attr":"title=\"Įmonės kodas\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Description", "labelType":"Left", "attr":"title=\"Pastabos apie įmonę\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Notes", "labelType":"Left", "attr":"title=\"Kas domina?\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"TownID", "labelType":"Left", "attr":"title=\"Miestas/apskrities centras\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Address", "labelType":"Left", "attr":"title=\"Adresas\""}'>
+            </div>
+         </fieldset>
+      </div>
+      <div>
+         <fieldset class="inputFieldset"><legend>Kontaktinė informacija</legend>
+            <div class='ExtendIt' data-ctrl='{"Field":"Contact", "labelType":"Left" , "attr":"title=\"Asmuo(vardas, pavardė)\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Email", "labelType":"Left" , "attr":"title=\"E-paštas\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"ContactDetails", "labelType":"Left", "attr":"title=\"Kita kontaktinė informacija\""}'>
+            </div>
+         </fieldset>
+         @*         <fieldset class="inputFieldset"><legend>Rekvizitai</legend>
+            <div class='ExtendIt' data-ctrl='{"Field":"Rec_VATCode", "labelType":"Left" , "attr":"title=\"PVM kodas\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Rec_Bank", "labelType":"Left" , "attr":"title=\"Bankas\""}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"Rec_BankAccount", "labelType":"Left" , "attr":"title=\"Banko sąskaita\""}'>
+            </div>
+         </fieldset>*@ </div>
+   </div>
+   <span class='ExtendIt inputRight Control' data-ctrl='{"Control":"swfUpload","CtrlToSetId":"AtachedFiles", "UserId":@BSData.Classes.UserData.UserID,"tblUpdate":"tblClients","Legend":"Prie kliento prisegtos bylos","Title":"Kliento bylos","DialogTitle":"Pridėti bylas apie klientą"}'>
+   </span>
+   <div style="clear: both;">
+   </div>
+</div>
