@@ -217,16 +217,11 @@ String.prototype.format=function() {
    return s;
 };
 String.prototype.GetIcon=function(FileId) {
-   var pPosition=this.search("\\."); ret="<span style='display:inline-block;' class='{0} ui-button-icon-primary'>"; img="img32-Help";
+   var pPosition=this.search("\\."), ret="<span style='display:inline-block;' class='{0} ui-button-icon-primary'>", img="img32-Help";
    if(pPosition>0) {
       var type=(this.substring(this.search("\\.")+1)).toLowerCase();
-      if(type==="png"||type==="jpg"||type==="gif"||type==="jpg"||type==="jpeg"||type==="bmp") {
-         ret="<a href='/Uploads/"+FileId+"."+type+"' target='_blank'>"+ret+"</a>";
-         img="img32-Img";
-//         if(file.name.IsImage()) { item.qtip({ content: '<IMG WIDTH=200 HEIGHT=200 SRC="'+'/Uploads/'+s.FileId+type+'" ALT="'+file.name+'">', position: { at: 'top right', my: 'bottom left'} }) }
-//         //else { item.qtip({ position: { corner: { target: "bottomLeft"}} }); }
-//         else { item.qtip({ style: { tip: "bottomLeft"} }) }
-      }
+      ret="<a href='/Uploads/"+FileId+"."+type+"' target='_blank'>"+ret+"</a>";
+      if(type==="png"||type==="jpg"||type==="gif"||type==="jpg"||type==="jpeg"||type==="bmp") { img="img32-Img"; }
       else if(type==="xls"||type==="xlsx") { img="img32-Excel"; }
       else if(type==="pdf") { img="img32-Pdf"; }
       else if(type==="ppt"||type==="pptx") { img="img32-ppt"; }

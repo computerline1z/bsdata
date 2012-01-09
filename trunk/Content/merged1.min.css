@@ -11,6 +11,7 @@ label.leftlabelforManyF{margin:.7em;color:#666;width:13.6em;display:inline-block
 .ExtendIt{margin:.7em}
 .ExtendIt label{cursor:pointer;color:#666}
 fieldset.inputFieldset{margin-top:1em;display:inline-block;padding:.3em;width:52.7em}
+fieldset.inputFieldset Legend{font-weight:bold}
 span.inputRight,div.inputRight{float:left;margin:1em;display:inline-block;padding:.3em}
 input.inputTip,textarea.inputTip,div.inputTip,span.inputTip{color:#666;font-style:italic}
 input.date,input.number{width:6em!important}
@@ -70,10 +71,11 @@ h2{text-align:left;color:#65809D;font-weight:bold;font-size:2em;padding-bottom:1
 .input-validation-error{border:1px solid #900;background-color:#900}
 .validation-summary-errors{font-weight:bold;color:#900}
 .validation-summary-valid{display:none}
-input[type=text].UpdateField,input[type=password].UpdateField,textarea.UpdateField{width:30em;background:#ffc;border:1px inset;font-size:10pt;height:1.5em;padding-left:5px}
-.input_Long{width:30em;background:#ffc;border:1px inset;font-size:10pt;height:1.5em;padding-left:5px;width:27em}
-.input_Long_Disabled{width:30em;background:#ffc;border:1px inset;font-size:10pt;height:1.5em;padding-left:5px;background-color:#EBEBE4!important}
+input[type=text].UpdateField,input[type=text].NotUpdateField,input[type=password].UpdateField,textarea.UpdateField{background:#ffc;border:1px inset;font-size:10pt;height:1.5em;padding-left:5px;width:30em}
+.input_Long{background:#ffc;border:1px inset;font-size:10pt;height:1.5em;padding-left:5px;width:27em}
+.input_Long_Disabled{background:#ffc;border:1px inset;font-size:10pt;height:1.5em;padding-left:5px;background-color:#EBEBE4!important}
 .button{width:90px;font-size:8pt;height:2.5em}
+input.time{background:#ffc;border:1px inset;font-size:10pt;height:1.5em;padding-left:5px;width:3em}
 .shadow{-moz-box-shadow:3px 3px 4px #C0C0C0;-webkit-box-shadow:3px 3px 4px #C0C0C0;box-shadow:3px 3px 4px #C0C0C0;-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#C0C0C0')"}
 .innershadow{-moz-box-shadow:inset 0 0 10px #000;-webkit-box-shadow:inset 0 0 10px #000;box-shadow:inset 0 0 10px #000}
 DIV.ProgressBar{width:100px;padding:0;border:1px solid black;margin-right:1em;height:.75em;margin-left:1em;display:-moz-inline-stack;display:inline-block;zoom:1;display:inline}

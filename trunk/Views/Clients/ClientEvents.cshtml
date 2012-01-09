@@ -12,15 +12,15 @@
       </fieldset>
       <fieldset style="display: inline-block; vertical-align: top; text-align: left;"><legend>Kontaktiniai duomenys</legend>
          <div class='EditInPlace' data-ctrl='{"Field":"Contact"}'>@Model.Contact</div>
-         <div class='EditInPlace' data-ctrl='{"Field":"ContactDetails"}'>@Model.ContactDetails</div>
-         <div class='EditInPlace' data-ctrl='{"Field":"Email"}'>@Model.Email</div>
+@*         <div class='EditInPlace' data-ctrl='{"Field":"ContactDetails"}'>@Model.ContactDetails</div>
+*@         <div class='EditInPlace' data-ctrl='{"Field":"Email"}'>@Model.Email</div>
       </fieldset>
       <fieldset style="display: inline-block; vertical-align: top; text-align: left;"><legend>Sekantis kontaktas</legend>
          <div class='EditInPlace' data-ctrl='{"Field":"NextContactDate","Plugin":{"datepicker":{"minDate":"0","maxDate":"+3y"}}}'>@((Model.NextContactDate.HasValue) ? Model.NextContactDate.Value.ToString("yyyy-MM-dd") : "-")</div>
          <div class='EditInPlace' data-ctrl='{"Field":"NextContactUserID","UserId":@(Model.NextContactUserID.HasValue ? Model.tblUser.ID : 0)}'>@(Model.NextContactUserID.HasValue ? Model.tblUser.LastName + " " + Model.tblUser.Name : "-")</div>
-         <div class='EditInPlace' data-ctrl='{"Field":"NextContactContractFormID"}'>@(Model.NextContactContractFormID.HasValue ? Model.tblContracts_Form.Name : "-")</div>
+@*         <div class='EditInPlace' data-ctrl='{"Field":"NextContactContractFormID"}'>@(Model.NextContactContractFormID.HasValue ? Model.tblContracts_Form.Name : "-")</div>
          <div class='EditInPlace' data-ctrl='{"Field":"Notes"}'>@Model.Notes</div>
-      </fieldset>
+*@      </fieldset>
    </div>
    <table id="tblEvents" data-ctrl='{"uid":@BSData.Classes.UserData.UserID}' class='display' border="0" cellpadding="0" cellspacing="0">
    </table>

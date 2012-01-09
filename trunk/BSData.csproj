@@ -24,6 +24,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DeployEncryptKey>Encryption password is used only if any deployment setting is marked as secure</DeployEncryptKey>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+    <PackageAsSingleFile>false</PackageAsSingleFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -70,6 +73,7 @@
     <Compile Include="Classes\SQLHelper.cs" />
     <Compile Include="Classes\UserData.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\TitleController.cs" />
     <Compile Include="Controllers\DocsController.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Repository_Contracts.cs" />
     <Compile Include="Models\Repository_Clients.cs" />
     <Compile Include="Models\Repository_Title.cs" />
     <Compile Include="Models\Repositories_Files.cs" />
@@ -103,6 +108,9 @@
     <Content Include="Content\images_ui\Sprite16.png" />
     <Content Include="Content\images_ui\Sprite24.png" />
     <Content Include="Content\images_ui\Sprite32.png" />
+    <Content Include="Content\merged1.min.css">
+      <DependentUpon>CSS.chirp.config</DependentUpon>
+    </Content>
     <Content Include="Content\qTip.css" />
     <Content Include="Scripts\Final\js.chirp.config">
       <SubType>Designer</SubType>
@@ -110,12 +118,13 @@
     <Content Include="Scripts\Final\jsGeneral.chirp.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\Final\jsGeneral2.chirp.config">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Scripts\Form\Clients_NewClient.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Clients_NewClient.js</LastGenOutput>
+    </None>
+    <None Include="Scripts\Form\Contracts_NewNo.coffee">
+      <Generator>CoffeeScriptGenerator</Generator>
+      <LastGenOutput>Contracts_NewNo.js</LastGenOutput>
     </None>
     <None Include="Scripts\Form\Docs_Contracts_New_Object.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
@@ -125,19 +134,21 @@
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Docs_Contracts_New_Other.js</LastGenOutput>
     </None>
-    <Content Include="Scripts\Final\merged1.min.js">
+    <Content Include="Scripts\Final\merged3.min.js">
       <DependentUpon>js.chirp.config</DependentUpon>
     </Content>
-    <Content Include="Scripts\Final\mergedGeneral.min.js">
+    <Content Include="Scripts\Final\mergedGenera3.min.js">
       <DependentUpon>jsGeneral.chirp.config</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Final\mergedGeneral2.js">
-      <DependentUpon>jsGeneral2.chirp.config</DependentUpon>
     </Content>
     <Content Include="Scripts\Form\Clients_NewClient.js">
       <DependentUpon>Clients_NewClient.coffee</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Scripts\Form\Contracts_NewNo.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Contracts_NewNo.coffee</DependentUpon>
     </Content>
     <Content Include="Scripts\Form\zForms.chirp.config">
       <SubType>Designer</SubType>
@@ -196,6 +207,8 @@
     <Content Include="Views\Clients\NewEvent.cshtml" />
     <Content Include="Views\Docs\NewContract_Object.cshtml" />
     <Content Include="Views\Clients\NewClient.cshtml" />
+    <Content Include="Views\Contracts\NewNo.cshtml" />
+    <Content Include="Views\Contracts\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Mail.ConfirmRegistration.lt.htm" />
@@ -268,9 +281,6 @@
     <None Include="Content\css-screen.chirp.less" />
     <Content Include="Content\CSS.chirp.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Content\merged.min.css">
-      <DependentUpon>CSS.chirp.config</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Scripts\Form\Users_All_Grid.js" />

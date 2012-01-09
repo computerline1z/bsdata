@@ -64,7 +64,7 @@ namespace BSData.Controllers {
          Repository_Docs Rep = new Repository_Docs();
          var obj = new {
             Render = View,
-            Contracts_Unsigned = Rep.GetJSON_tblContracts_Unsigned(),
+            //Contracts_Unsigned = Rep.GetJSON_tblContracts_Unsigned(),
             tblUsers_Status = Rep.GetJSON_tblUsers_Status(),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
@@ -81,7 +81,7 @@ namespace BSData.Controllers {
          Repository_Docs Rep = new Repository_Docs();
          var obj = new {
             Render = View,
-            Contracts_Other = Rep.GetJSON_tblContracts_Other(true),//Tik galiojancios ir pasirasytos
+            //Contracts_Other = Rep.GetJSON_tblContracts_Other(true),//Tik galiojancios ir pasirasytos
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan
@@ -97,7 +97,7 @@ namespace BSData.Controllers {
          Repository_Docs Rep = new Repository_Docs();
          var obj = new {
             Render = View,
-            Contracts_Objects = Rep.GetJSON_tblContracts_Objects(true),//Tik galiojancios ir pasirasytos
+            //Contracts_Objects = Rep.GetJSON_tblContracts_Objects(true),//Tik galiojancios ir pasirasytos
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
                oSCRIPT = new { Editable = UserData.HasRole("UsersEdit") }//TODO:Pakeisti role i DocsEdit ar pan
@@ -113,7 +113,7 @@ namespace BSData.Controllers {
          Repository_Docs Rep = new Repository_Docs();
          var obj = new {
             Render = View,
-            Contracts_Expired = Rep.GetJSON_tblContracts_Other(false),//Negaliojancios bet pasirasytos
+            //Contracts_Expired = Rep.GetJSON_tblContracts_Other(false),//Negaliojancios bet pasirasytos
             //tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",
@@ -130,7 +130,7 @@ namespace BSData.Controllers {
          Repository_Docs Rep = new Repository_Docs();
          var obj = new {
             Render = View,
-            Contracts_Expired = Rep.GetJSON_tblContracts_Other(false),//Negaliojancios bet pasirasytos
+            //Contracts_Expired = Rep.GetJSON_tblContracts_Other(false),//Negaliojancios bet pasirasytos
             //tblDocs_UploadedFiles = Rep.GetJSON_UploadedFiles("tblContracts"),
             Script = new {
                //File = "../Scripts/Form/Docs_Contracts_Grid.js",

@@ -1,0 +1,123 @@
+﻿@model BSData.Models.ContractModel
+<h1 id="introduction">@ViewBag.Title</h1>
+<div style="display: inline-block; vertical-align: top;">
+   <div class="ExtendItHead" id="NewContract" data-ctrl='{"NewRec":0,"id":@Model.Contract.ID,"Source":"tblContract1","tblUpdate":"tblContracts"}'>
+      <div>
+         <fieldset class="inputFieldset"><legend>Sutartis</legend><h2 style="margin: 0;">Sutartis Nr.:
+            <span style="color: Red">@(Model.Contract.No + "/" + @Model.Contract.ID)</span></h2>
+            <h3 style="margin: 0;">Tipas: @Model.Contract.tblContracts_Type.Name</h3>
+            @*<span class='ExtendIt' data-ctrl='{"Type":"String", "attr":"disabled=\"disabled\"","Value":"@Model.Contract.No"}'></span>
+         <span class='ExtendIt' data-ctrl='{"Type":"String", "attr":"disabled=\"disabled\"","Value":"@Model.Contract.tblContracts_Type.Name"}'></span>
+        <span class='ExtendIt' data-ctrl='{"Field":"No", "attr":"disabled=\"disabled\"","Value":"@Model.Contract.No"}'>
+         </span> Palikta tipinei formai darasyt *@
+            <div class='ExtendIt' data-ctrl='{"Field":"Description","Value":"@((Model.Contract.Description == null) ? "" : Model.Contract.Description)"}'>
+            </div>
+            <div>
+               <label class="leftlabelforManyF">Galiojimas:</label>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"StartDate","Value":"@((Model.Contract.StartDate == null) ? "" : Model.Contract.StartDate.Value.ToString("yyyy-MM-dd"))", "Default":"Today"}'></span>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"EndDate","Value":"@((Model.Contract.EndDate == null) ? "" : Model.Contract.EndDate.Value.ToString("yyyy-MM-dd"))"}'></span>
+            </div>
+            @*<label class="leftlabelforManyF">Klientas:</label>*@ @*<div>
+               <label class="leftlabelforManyF">Vykdytojas:</label>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"SubDepID","Value":""}'></span>
+               <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"RespUserID","Value":""}'></span>
+            </div>*@
+            <div class='ExtendIt' data-ctrl='{"Field":"SubDepID","Value":"@(Model.Contract.SubDepID.ToString() ?? "")"}'>
+            </div>
+            <div class='ExtendIt' data-ctrl='{"Field":"RespUserID","Value":"@(Model.Contract.RespUserID.ToString() ?? "")"}'>
+            </div>
+         </fieldset>
+      </div>
+   </div>
+   <div class="ExtendItHead" id="NewClient" data-ctrl='{"NewRec":1,"id":@Model.Contract.ID,"Source":"tblClients","tblUpdate":"tblClients"}'>
+      <div>
+         <fieldset class="inputFieldset"><legend>Klientas</legend>
+            @if (Model.Contract.tblClient == null) {
+               <div class='ExtendIt OnlyNew' data-ctrl='{"Field":"Private","id":"chkPrivate","Value":true}'>@*Tik įvedant naują dar gali keist, paskui jau ne - OnlyNew*@ </div>
+@*priklauso jei ne privatus privatus*@
+               <div class='ExtendIt NotUpdateField' data-ctrl='{"id":"SelectCompany","sTitle":"Įmonės pasirinkimui:","Tip":"Pasirinkite įmonę..","List":{"ListType":"Combo","Source":"tblClients","iVal":0,"iText":[1,2,6]}}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Code","Value":""}'>
+               </div>
+@*priklauso jei ne privatus privatus*@
+               <div class='ExtendIt' data-ctrl='{"Field":"Name","Value":"","sTitle":"Vardas, pavardė"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"TownID","Value":""}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Address","Value":""}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Description","Value":""}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Contact","Value":""}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Email","Value":""}'>
+               </div>
+            }
+            else {
+               <div class='ExtendIt NotUpdateField' style="display: none;" data-ctrl='{"id":"SelectCompany","sTitle":"Įmonės pasirinkimui:","Tip":"Pasirinkite įmonę..","List":{"ListType":"Combo","Source":"tblClients","iVal":0,"iText":[1,2,6]}}'>
+               </div>
+               if (Model.Contract.tblClient.Private == false) {
+               <div class='ExtendIt' data-ctrl='{"Field":"Code","Value":"@((Model.Contract.tblClient.Code == null) ? "" : Model.Contract.tblClient.Code)"}'>
+               </div>
+               }
+               <div class='ExtendIt' data-ctrl='{"Field":"Name","Value":"@((Model.Contract.tblClient.Name == null) ? "" : Model.Contract.tblClient.Name)"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"TownID","Value":"@(Model.Contract.tblClient.tblTown.ID.ToString() == null) ?? "")"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Address","Value":"@((Model.Contract.tblClient.Address == null) ? "" : Model.Contract.tblClient.Address)"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Description","Value":"@((Model.Contract.tblClient.Description == null) ? "" : Model.Contract.tblClient.Description)"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Contact","Value":"@((Model.Contract.tblClient.Contact == null) ? "" : Model.Contract.tblClient.Contact)"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Email","Value":"@((Model.Contract.tblClient.Email == null) ? "" : Model.Contract.tblClient.Email)"}'>
+               </div>
+            }
+         </fieldset>
+      </div>
+   </div>
+   <div class="ExtendItHead" id="NewObject" data-ctrl='{"NewRec":1,@((Model.Object == null) ? "" : ("id:" + Model.Object.ID + ","))"Source":"tblClient_object1","tblUpdate":"tblClients_Objects"}'>
+      <div>
+         <fieldset class="inputFieldset"><legend>Duomenys apie saugomą objektą</legend>
+            @if (Model.Object == null) {
+               <div class='ExtendIt' data-ctrl='{"Type":"hidden","Field":"ContractID","Value":@(Model.Contract.ID)}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Name","Value":""}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Device","Value":""}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"SimIMEI","Value":""}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Location","Value":""}'>
+               </div>
+               <div>
+                  <label class="leftlabelforManyF">Duomenys koord. nustat.:</label>
+                  <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"Coords_AutoID","Value":""}'></span>
+                  <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"Coords_Time","Value":""}'></span>
+               </div>
+            }
+            else {
+               <div class='ExtendIt' data-ctrl='{"Type":"hidden","Field":"ContractID","Value":"@(Model.Contract.ID)"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Name","Value":"@((Model.Object.Name == null) ? "" : Model.Object.Name)"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Device","Value":"@((Model.Object.Device == null) ? "" : Model.Object.Device)"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"SimIMEI","Value":"@((Model.Object.SimIMEI == null) ? "" : Model.Object.SimIMEI)"}'>
+               </div>
+               <div class='ExtendIt' data-ctrl='{"Field":"Location","Value":"@((Model.Object.Location == null) ? "" : Model.Object.Location)"}'>
+               </div>
+               <div>
+                  <label class="leftlabelforManyF">Duomenys koord. nustat.:</label>
+                  <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"Coords_AutoID","Value":"@((Model.Object.Coords_AutoID == null) ? 0 : Model.Object.Coords_AutoID)"}'></span>
+                  <span style="display: inline-block;" class='ExtendIt' data-ctrl='{"Field":"Coords_Time","Value":"@((Model.Object.Coords_Time == null) ? "" : Model.Object.Coords_Time.Value.ToString("yyyy-MM-dd hh:mm"))"}'></span>
+               </div>
+            }
+         </fieldset>
+      </div>
+   </div>
+</div>
+<div class="ExtendItHead" style="display:inline-block;vertical-align:top;" id="AttachedFiles" data-ctrl='{"id":@Model.Contract.ID,"Source":"tblContract1","tblUpdate":"tblContracts"}'>
+   <span class='ExtendIt inputRight Control' data-ctrl='{"Control":"swfUpload", "CtrlToSetId":"ContractFiles", "UserId":@BSData.Classes.UserData.UserID,"RecId":@Model.Contract.ID, "tblUpdate":"tblContracts","Legend":"Prie sutarties prisegtos bylos","Title":"Pridėti bylas prie sutarties","DialogTitle":"Bylų prisegimas prie sutarties"}'>
+   </span>
+</div>

@@ -1,4 +1,5 @@
 (function() {
+
   this.Contracts_New_Object = function() {
     var EnableButon, SaveDataHandler, form;
     form = $("#NewContract");
@@ -53,4 +54,5 @@
     form.find("input,#NewContract textarea").keypress(EnableButon);
     return form.find("input.ui-autocomplete-input").focus(EnableButon);
   };
+
 }).call(this);

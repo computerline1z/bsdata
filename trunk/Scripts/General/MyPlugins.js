@@ -101,7 +101,7 @@ jQuery(function($) {
          var opt=$.extend(defaults, options);
          return this.each(function() {
             var t=$(this);
-            html=(opt.Legend)?"<fieldset><legend>"+opt.Legend+"</legend>":"";
+            html=(opt.Legend)?"<fieldset><legend style='font-weight:bold;'>"+opt.Legend+"</legend>":"";
             html+=(opt.CtrlToSetId)?"<div id='"+opt.CtrlToSetId+"'></div>":"";
             html+='<div title="'+opt.Title+'" style="cursor:pointer;margin-left:2em;position:relative;clear:both;"><span style="display:inline-block;" class="img24-attach ui-button-icon-primary"></span><span style="position:absolute;margin:.3em 1em;text-decoration:underline;color:#336699">Prisegti bylas</span></div>';
             html+=(opt.Legend)?"</fieldset>":"";
@@ -110,16 +110,17 @@ jQuery(function($) {
             .bind("click", function() {
                var opt=$(this).closest("div.ExtendIt, span.ExtendIt").data("ctrl");
                $.extend(opt, { Control: t });
-               oCONTROLS.UploadDialog(opt);
+               oCONTROLS.UploadDialog(opt,true);//2-ToDialog
             })
             .qtip({ position: { at: 'top center', my: 'bottom center'} })
             .end()
             .appendTo(t);
+            oCONTROLS.UploadDialog.SetAttachedFiles(opt);//Prikabinam priatachintus failus
          });
       }
    });
 })(jQuery);
-oCONTROLS.UploadDialog=function(options) {
+oCONTROLS.UploadDialog=function(options,ToDialog) {
    var FileData=[];
    var defaults={
       upload_url: "/Files/AsyncUpload",
@@ -127,12 +128,13 @@ oCONTROLS.UploadDialog=function(options) {
    }
    var opt=$.extend(defaults, options);
    if(!opt.UserId||!opt.tblUpdate||!opt.RecId) { alert("swfUploaderis neturi vieno iš būtinų parametrų-UserId,tblUpdate,RecId!"); return; }
-   var fnSetAttachedFiles=function(fromFileData, CtrlToSetId) {
-      var par={ RecordId: opt.RecId };
-      if(fromFileData) { $.extend(par, { ctrl: CtrlToSetId, fromFileData: true, AttachedFiles: FileData, tblUpdate: opt.tblUpdate }); }
-      else { $.extend(par, { ctrl: 'uplFiles', fromFileData: false, AttachedFiles: opt.AttachedFiles, FileData: FileData, tblUpdate: opt.tblUpdate }); }
+   var fnSetAttachedFiles=function(HaveData,ToDialog) {
+      //var par={ RecordId: opt.RecId };
+      var par=opt;
+      if(HaveData) { $.extend(par, { HaveData: false }); }
+      else { $.extend(par, { HaveData: true, FileData: FileData }); }
       //if(oDATA.Get(par.AttachedFiles)) {  }
-      oCONTROLS.UploadDialog.SetAttachedFiles(par);
+      oCONTROLS.UploadDialog.SetAttachedFiles(par,ToDialog);
    }
    dlgOpt={ autoOpen: false, minWidth: '400', minHeight: '700', width: '700', modal: true, title: opt.DialogTitle,
       buttons: {
@@ -142,7 +144,8 @@ oCONTROLS.UploadDialog=function(options) {
       },
       close: function() {
          if(opt.fnCallBack) { opt.fnCallBack(FileData); }
-         if(opt.CtrlToSetId) { fnSetAttachedFiles(true, opt.CtrlToSetId); }
+         if(opt.CtrlToSetId) { fnSetAttachedFiles(true,false); }
+         //if(opt.refreshAction){$("#side-bar ul li a").filter("[data-action='"+opt.refreshAction+"']").data("opt","refresh")}
          return $(this).remove();
       }
    };
@@ -152,8 +155,7 @@ oCONTROLS.UploadDialog=function(options) {
    _html+="</p><div><span id='dialog_file_upload_btn' ></span></div>";
    _html+="<p id='queuestatus' ></p><ol id='log'></ol></div>"
    $("<div id='divDialogForm'></div>").html(_html).dialog(dlgOpt).dialog('open');
-   //if(opt.AttachedFiles) { fnSetAttachedFiles(false); }
-   fnSetAttachedFiles(false);//Sudedam failus kurie jau yra
+   fnSetAttachedFiles((FileData.length>0)?true:false,true);//Sudedam failus i Dialoga
    $('#swfupload-control').swfupload({
       upload_url: opt.upload_url,
       post_params: {
@@ -242,22 +244,22 @@ oCONTROLS.UploadDialog=function(options) {
    //      if(!$('.success').length) { $('#queuestatus').css('display', 'none'); }
    //   }
 };
-oCONTROLS.UploadDialog.SetAttachedFiles=function(par) {
-   //{FileData:(jei reikia filtruot iš AttachedFiles), RecordId:??, ctrl:'uplFiles' arba i nurodyta,AttachedFiles: formatas kaip nurodyta zemiau}
+oCONTROLS.UploadDialog.SetAttachedFiles=function(par,ToDialog) {
+   //{FileData:(jei reikia filtruot iš AttachedFiles), RecId:??, CtrlToSetId:'uplFiles' arba i nurodyta,AttachedFiles: formatas kaip nurodyta zemiau}
    //0-FileId,User,Date-from server
    //3-SizeKB,FileName
-   //5-RecordId,Description
+   //5-RecId,Description
    //ctrl turi but Recordo ID
    //var f=par.AttachedFiles,
    var u=oDATA.Get("tblUsers").Data;
    var LeftOuter="<div style='clear:left;'><div style='margin-top:10px;height:46px;width:37px;float:left;'>";
    var RightOuter="</div><div style='height:46px;width:305px;float:left;'>";
    var RightInner="<div style='height:15px;width:304px;float:left;'>";
-   var ctrl=$("#"+par.ctrl).empty();
-   $.post("/Files/GetUploads", { FileName: par.tblUpdate, RecordID: par.RecordId }, function(jsRes) {
+   var ctrl =((ToDialog)?$("#uplFiles"):$("#"+par.CtrlToSetId)).empty();
+   $.post("/Files/GetUploads", { FileName: par.tblUpdate, RecordID: par.RecId }, function(jsRes) {
       var f=jsRes.Files.Data;
       for(var i=0; i<f.length; i++) {
-         if(!par.fromFileData) { par.FileData[par.FileData.length]=f[i]; }
+         if(par.HaveData) { par.FileData[par.FileData.length]=f[i]; }
          var html=LeftOuter+f[i][4].GetIcon(f[i][0])+RightOuter+RightInner;  //icon,
          html+="Byla: <a href='/Files/Download/"+f[i][0]+"'>"+f[i][4]+", "+f[i][3]+"KB</a></div>"; //FileName, size
          html+=RightInner+"Įkėlė: "+u.findColsByID(f[i][1], [2, 3])+", "+f[i][2]+"</div>"; //vartotojas,data
@@ -266,7 +268,7 @@ oCONTROLS.UploadDialog.SetAttachedFiles=function(par) {
             fnUpdateSuccess: function(pars) { pars.ctrl.removeClass("inputTip"); } //$ctrl,eOpt[is opciju],id
          });
       }
-      $("#"+par.ctrl).find("span.img32-Img").each(function() {//rodom paveiksla ant imidzu
+      ctrl.find("span.img32-Img").each(function() {//rodom paveiksla ant imidzu
          var h=$(this).parent().attr("href");
          $(this).parent().qtip({
             content: '<IMG WIDTH=200 HEIGHT=200 SRC="'+h+'">', position: { at: 'top right', my: 'bottom left' }

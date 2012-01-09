@@ -83,12 +83,12 @@ d.Address,//4
 d.TownID,//5
 t.Name,
 d.Contact,//6
-d.ContactDetails,//7
-d.Email,//8
-d.Notes,//9
-d.Rec_Bank,//10
-d.Rec_BankAccount,//11
-d.Rec_VATCode,//12
+//d.ContactDetails,//7
+//d.Email,//8
+//d.Notes,//9
+//d.Rec_Bank,//10
+//d.Rec_BankAccount,//11
+//d.Rec_VATCode,//12
 };
          object[] Cols ={
 new { FName = "ID"},//0
@@ -220,129 +220,129 @@ new {sTitle="Įrengimo"}//13//PriceOnce//
          return JSON;
       }
 
-      public jsonArrays GetJSON_tblContracts_Other(bool IsValid) {
-         jsonArrays JSON = new jsonArrays();
-         JSON.Data = from c in dc.proc_GetContracts_Other(IsValid) select new object[] {
-            c.ID,//0
-            c.FormID,//1
-            c.Date,//2
-            c.ClientID,//3
-            c.ClientName,//4
-            c.Description,//5
-            c.ValidityDate,//6
-            c.ValidityNote,//7
-            c.DocsNo//8
-         };
-         object[] Cols ={
-new { FName = "ID"},//0
-new { FName = "FormID"},//1
-new { FName = "Date"},//2
-new { FName = "ClientID"},//3
-new { FName = "ClientName"},//4
-new { FName = "Description"},//5
-new { FName = "ValidityDate"},//6
-new { FName = "ValidityNote"},//7
-new { FName = "DocsNo"}//8
-}; JSON.Cols = Cols;
-         JSON.Grid = new {
-            aoColumns = new object[]{
-new {sTitle="Nr"},//0//ID////DefaultUpdate=0
-new {sTitle="Tipinė forma", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
-new {sTitle="Data"},//2//Date//
-//new {sTitle="Gauta", bVisible=(IsSigned)?false:true,bSearchable=false},//3//DeliveryDate//rodom tik jei nepasirasyta
-new {bVisible=false,bSearchable=false},//4//ClientID////DefaultUpdate=0
-new {sTitle="Kita šalis"},//5
-new {sTitle="Sutarties esmė",sClass="smallFont"},//6//Description//
-new {sTitle="Data"},//7//ValidityDate//
-new {sTitle="Paaiškinimai"},//8//ValidityNote//
-new {sTitle="Dok.", bSearchable=false}//9//DocsNo//
-}, aaSorting = new object[] { new object[] { 2, "asc" } }//Pagal data
-         };
-         return JSON;
-      }
+      //      public jsonArrays GetJSON_tblContracts_Other(bool IsValid) {
+      //         jsonArrays JSON = new jsonArrays();
+      //         JSON.Data = from c in dc.proc_GetContracts_Other(IsValid) select new object[] {
+      //            c.ID,//0
+      //            c.FormID,//1
+      //            c.Date,//2
+      //            c.ClientID,//3
+      //            c.ClientName,//4
+      //            c.Description,//5
+      //            c.ValidityDate,//6
+      //            c.ValidityNote,//7
+      //            c.DocsNo//8
+      //         };
+      //         object[] Cols ={
+      //new { FName = "ID"},//0
+      //new { FName = "FormID"},//1
+      //new { FName = "Date"},//2
+      //new { FName = "ClientID"},//3
+      //new { FName = "ClientName"},//4
+      //new { FName = "Description"},//5
+      //new { FName = "ValidityDate"},//6
+      //new { FName = "ValidityNote"},//7
+      //new { FName = "DocsNo"}//8
+      //}; JSON.Cols = Cols;
+      //         JSON.Grid = new {
+      //            aoColumns = new object[]{
+      //new {sTitle="Nr"},//0//ID////DefaultUpdate=0
+      //new {sTitle="Tipinė forma", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
+      //new {sTitle="Data"},//2//Date//
+      ////new {sTitle="Gauta", bVisible=(IsSigned)?false:true,bSearchable=false},//3//DeliveryDate//rodom tik jei nepasirasyta
+      //new {bVisible=false,bSearchable=false},//4//ClientID////DefaultUpdate=0
+      //new {sTitle="Kita šalis"},//5
+      //new {sTitle="Sutarties esmė",sClass="smallFont"},//6//Description//
+      //new {sTitle="Data"},//7//ValidityDate//
+      //new {sTitle="Paaiškinimai"},//8//ValidityNote//
+      //new {sTitle="Dok.", bSearchable=false}//9//DocsNo//
+      //}, aaSorting = new object[] { new object[] { 2, "asc" } }//Pagal data
+      //         };
+      //         return JSON;
+      //      }
 
-      public jsonArrays GetJSON_tblContracts_Objects(bool IsValid) {
-         jsonArrays JSON = new jsonArrays();
-         JSON.Data = from c in dc.proc_GetContracts_Objects(IsValid) select new object[] {
-            c.ID,//0
-            c.UserID,//1
-            c.Date,//2
-            c.ClientName,//3
-            c.Description,//4
-            c.ValidityDate,//5
-            c.DocsNo//7
-         };
-         object[] Cols ={
-new { FName = "ID"},//0
-new { FName = "UserID"},//1
-new { FName = "Date"},//2
-new { FName = "ClientName"},//4
-new { FName = "Description"},//5
-new { FName = "ValidityDate"},//6
-new { FName = "DocsNo"}//8
-}; JSON.Cols = Cols;
-         JSON.Grid = new {
-            aoColumns = new object[]{
-new {sTitle="Nr"},//0//ID////DefaultUpdate=0
-new {sTitle="Darbuotojas", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
-new {sTitle="Data"},//2//Date//
-new {sTitle="Klientas"},//5
-new {sTitle="Objekto apibūdinimas"},//6//Description//
-new {sTitle="Galiojimo data"},//7//ValidityDate//
-new {sTitle="Dok.", bSearchable=false}//9//DocsNo//
-}, aaSorting = new object[] { new object[] { 2, "asc" } }//Pagal data
-         };
-         return JSON;
-      }
+      //      public jsonArrays GetJSON_tblContracts_Objects(bool IsValid) {
+      //         jsonArrays JSON = new jsonArrays();
+      //         JSON.Data = from c in dc.proc_GetContracts_Objects(IsValid) select new object[] {
+      //            c.ID,//0
+      //            c.UserID,//1
+      //            c.Date,//2
+      //            c.ClientName,//3
+      //            c.Description,//4
+      //            c.ValidityDate,//5
+      //            c.DocsNo//7
+      //         };
+      //         object[] Cols ={
+      //new { FName = "ID"},//0
+      //new { FName = "UserID"},//1
+      //new { FName = "Date"},//2
+      //new { FName = "ClientName"},//4
+      //new { FName = "Description"},//5
+      //new { FName = "ValidityDate"},//6
+      //new { FName = "DocsNo"}//8
+      //}; JSON.Cols = Cols;
+      //         JSON.Grid = new {
+      //            aoColumns = new object[]{
+      //new {sTitle="Nr"},//0//ID////DefaultUpdate=0
+      //new {sTitle="Darbuotojas", bVisible=false,bSearchable=false},//1//FormID////DefaultUpdate=0
+      //new {sTitle="Data"},//2//Date//
+      //new {sTitle="Klientas"},//5
+      //new {sTitle="Objekto apibūdinimas"},//6//Description//
+      //new {sTitle="Galiojimo data"},//7//ValidityDate//
+      //new {sTitle="Dok.", bSearchable=false}//9//DocsNo//
+      //}, aaSorting = new object[] { new object[] { 2, "asc" } }//Pagal data
+      //         };
+      //         return JSON;
+      //      }
 
-      public jsonArrays GetJSON_tblContracts_Unsigned() {
-         jsonArrays JSON = new jsonArrays();
-         JSON.Data = from c in dc.proc_GetContracts_Unsigned() select new object[] {
-            c.ID,//0
-            c.Type,//1 - Tipas
-            c.StartDate,//2
-            c.ClientName,//4
-            c.Description,//5
-            c.UserName,//6
-            c.RecDate,//7 - Date
-            c.DocsNo,//8
-            c.Status_Description,
-            c.StatusID,
-            c.UserID,
-            c.ClientID
-         };
-         object[] Cols ={
-new { FName = "ID"},//0
-new { FName = "Type"},//1
-new { FName = "Date"},//2
-new { FName = "ClientName"},//4
-new { FName = "Description"},//5
-new { FName = "UserName"},//6
-new { FName = "RecDate"},//7
-new { FName = "DocsNo"},//8
-new { FName = "Status_Description"},//9
-new { FName = "StatusID"},//10
-new { FName = "UserID"},
-new { FName = "ClientID"}
-}; JSON.Cols = Cols;
-         JSON.Grid = new {
-            aoColumns = new object[]{
-new {sTitle="Nr"},//0//ID////DefaultUpdate=0
-new {sTitle="Tipas"},//1//Type////DefaultUpdate=0
-new {sTitle="Data"},//2//DateStart//
-new {sTitle="Klientas"},//4
-new {sTitle="Esmė/ objektas"},//5//Description//
-new {sTitle="Darbuotojas"},//6//UserName//
-new {sTitle="Data"},//7//DateRec//
-new {sTitle="Dok.", bSearchable=false},//8//DocsNo//
-new {sTitle="Paaiškinimai"},//9//Status_Description//
-new {sTitle="Esama"},//10//StatusID//
-new {bVisible=false,bSearchable=false},
-new {bVisible=false,bSearchable=false}
-}, aaSorting = new object[] { new object[] { 3, "asc" } }//Pagal data
-         };
-         return JSON;
-      }
+      //      public jsonArrays GetJSON_tblContracts_Unsigned() {
+      //         jsonArrays JSON = new jsonArrays();
+      //         JSON.Data = from c in dc.proc_GetContracts_Unsigned() select new object[] {
+      //            c.ID,//0
+      //            c.Type,//1 - Tipas
+      //            c.StartDate,//2
+      //            c.ClientName,//4
+      //            c.Description,//5
+      //            c.UserName,//6
+      //            c.RecDate,//7 - Date
+      //            c.DocsNo,//8
+      //            c.Status_Description,
+      //            c.StatusID,
+      //            c.UserID,
+      //            c.ClientID
+      //         };
+      //         object[] Cols ={
+      //new { FName = "ID"},//0
+      //new { FName = "Type"},//1
+      //new { FName = "Date"},//2
+      //new { FName = "ClientName"},//4
+      //new { FName = "Description"},//5
+      //new { FName = "UserName"},//6
+      //new { FName = "RecDate"},//7
+      //new { FName = "DocsNo"},//8
+      //new { FName = "Status_Description"},//9
+      //new { FName = "StatusID"},//10
+      //new { FName = "UserID"},
+      //new { FName = "ClientID"}
+      //}; JSON.Cols = Cols;
+      //         JSON.Grid = new {
+      //            aoColumns = new object[]{
+      //new {sTitle="Nr"},//0//ID////DefaultUpdate=0
+      //new {sTitle="Tipas"},//1//Type////DefaultUpdate=0
+      //new {sTitle="Data"},//2//DateStart//
+      //new {sTitle="Klientas"},//4
+      //new {sTitle="Esmė/ objektas"},//5//Description//
+      //new {sTitle="Darbuotojas"},//6//UserName//
+      //new {sTitle="Data"},//7//DateRec//
+      //new {sTitle="Dok.", bSearchable=false},//8//DocsNo//
+      //new {sTitle="Paaiškinimai"},//9//Status_Description//
+      //new {sTitle="Esama"},//10//StatusID//
+      //new {bVisible=false,bSearchable=false},
+      //new {bVisible=false,bSearchable=false}
+      //}, aaSorting = new object[] { new object[] { 3, "asc" } }//Pagal data
+      //         };
+      //         return JSON;
+      //      }
 
       public jsonArrays GetJSON_tblContracts_Form() {
          jsonArrays JSON = new jsonArrays();

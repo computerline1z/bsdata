@@ -24,11 +24,11 @@
          }
          //opt = $.extend({ ListType: "List", Editable: false, iVal: 0, iText: [1], selectFirst: false }, opt);     //ListType:{None(be nieko, galima spausdint), List(listas, spausdint negalima), Combo(Listas, spausdint galima)}
          var Editable=(opt.Editable.Add||opt.Editable.Edit)?true:false;
-         var data=$.map(oDATA.Get(opt.Source).Data,
+         var OptVal=parseInt(opt.Value,10), data=$.map(oDATA.Get(opt.Source).Data,
          function(a) {
             var ret=a.MapArrToString(opt.iText);
             //for(var i=0; i<opt.iText.length; i++) { { ret.push(a[opt.iText[i]]); } }
-            if(a[0]===opt.Value) { input.val(ret); } //Idedam verte i textboxa
+            if(a[0]===OptVal) { input.val(ret); } //Idedam verte i textboxa
             return { id: a[0], value: ret };
          });
 
@@ -108,7 +108,7 @@
          if(opt.fnValueChanged&&input.data("newval")) { opt.fnValueChanged(input.data("newval"), input.val()); } //NewVal,NewText
       }, open: function() {
          if(opt.ListType!=="List") { if(!input.hasClass("activeField")) { input.addClass("activeField"); } }
-         if(opt.ListType=="None") {
+         if(opt.ListType=="None"||opt.ListType=="Combo") {
             var acData=$(this).data('autocomplete');
             var termTemplate='<span style="color:red">%s</span>';
             acData.menu.element.find('a').each(function() {
