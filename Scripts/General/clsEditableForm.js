@@ -1,18 +1,27 @@
 (function() {
+
   this.clsEditableForm = (function() {
     var Action, Config, Row, fnResetForm, fnSaveChanges, id, oData, opt;
+
     id = 0;
+
     oData = {};
+
     Config = {};
+
     Row = {};
+
     oData = {};
+
     Action = {};
+
     opt = {
       DialogFormId: "divDialogForm",
       fnAddNewForm: "Dialog",
       CallBackAfter: 0,
       aRowData: 0
     };
+
     function clsEditableForm(options) {
       var AddToTitle, ix, rows, _i, _len, _ref;
       $("body").css("cursor", "wait");
@@ -59,14 +68,15 @@
       this.fnLoadEditableForm();
       $("body").css("cursor", "default");
     }
+
     clsEditableForm.prototype.fnLoadEditableForm = function() {
       var dlgEditableOpt, form, _html;
       if (!opt.form || opt.form === "Dialog") {
         dlgEditableOpt = {
           autoOpen: false,
-          minWidth: '45em',
+          minWidth: '65em',
           minHeight: '40em',
-          width: '60em',
+          width: '80em',
           modal: true,
           title: opt.Title,
           draggable: true,
@@ -110,12 +120,12 @@
       });
       return form.find("button:contains('Ištrinti')").css("display", "none");
     };
+
     fnResetForm = function() {
-      if (opt.target) {
-        opt.target.css("display", "block");
-      }
+      if (opt.target) opt.target.css("display", "block");
       return opt.form.empty();
     };
+
     fnSaveChanges = function() {
       var DataToSave;
       DataToSave = oGLOBAL.ValidateForm($('#divEditableForm'));
@@ -163,9 +173,7 @@
                     Row.Data[RowI] = "";
                   }
                 }
-                if (Row.Data[RowI] === null) {
-                  Row.Data[RowI] = "";
-                }
+                if (Row.Data[RowI] === null) Row.Data[RowI] = "";
               }
               RowI = 0;
               while (RowI < RowLength - 1) {
@@ -179,9 +187,7 @@
                 }
               }
               oDATA.UpdateRow(Row.Data, oData, Action);
-              if (opt.CallBackAfter) {
-                opt.CallBackAfter(Row.Data);
-              }
+              if (opt.CallBackAfter) opt.CallBackAfter(Row.Data);
               if (!opt.form || opt.form === "Dialog") {
                 return $("#" + opt.DialogFormId).dialog("close");
               } else {
@@ -196,6 +202,7 @@
         return $("#" + opt.DialogFormId).dialog("close");
       }
     };
+
     clsEditableForm.prototype.fnGenerateHTML = function(Row, id) {
       var Append, Head, Length, html, i, t, val;
       Length = Row.Cols.length;
@@ -224,18 +231,25 @@
       Head += '"Source":"' + (Config.Source ? Config.Source : Config.tblUpdate) + '","tblUpdate":"' + Config.tblUpdate + '"';
       return "<div id='divEditableForm' class='inputform' style='margin:0 2em;' data-ctrl='{" + Head + "}'>" + html + "</div>";
     };
+
     return clsEditableForm;
+
   })();
+
   this.clsEditInPlaceForm = (function() {
     var DataToSave, fnLoadForm, oTablel, opt;
+
     opt = {};
+
     DataToSave = {
       Fields: [],
       Data: [],
       id: 0,
       DataTable: ""
     };
+
     oTablel = null;
+
     function clsEditInPlaceForm(options) {
       $("body").addClass("wait");
       opt = options;
@@ -243,17 +257,11 @@
         var Name, oSCRIPT, obj;
         for (Name in jsRes) {
           obj = jsRes[Name];
-          if (Name !== "Render" && Name !== "Script") {
-            oDATA.Set(Name, jsRes[Name]);
-          }
+          if (Name !== "Render" && Name !== "Script") oDATA.Set(Name, jsRes[Name]);
         }
         if (jsRes.Script) {
-          if (jsRes.Script.File) {
-            $.getScript(jsRes.Script.File);
-          }
-          if (jsRes.Script.oSCRIPT) {
-            oSCRIPT = jsRes.Script.oSCRIPT;
-          }
+          if (jsRes.Script.File) $.getScript(jsRes.Script.File);
+          if (jsRes.Script.oSCRIPT) oSCRIPT = jsRes.Script.oSCRIPT;
         }
         if (jsRes.Render) {
           fnLoadForm(opt.formTitle, jsRes.Render, opt.tblProp, opt.EditableFormId, opt.Buttons);
@@ -263,6 +271,7 @@
         return $("body").removeClass("wait");
       });
     }
+
     fnLoadForm = function(formTitle, htmlToRender, tblProp, EditableFormId, Buttons) {
       var dlgFormOpt, oTable;
       oTable = null;
@@ -280,7 +289,9 @@
         position: ['center', 50],
         resize: 'auto',
         minWidth: '45em',
-        width: '65em',
+        width: '65em'
+      };
+      ({
         modal: true,
         title: formTitle,
         draggable: true,
@@ -294,7 +305,7 @@
         dragStart: function() {
           return $("div.validity-modal-msg").remove();
         }
-      };
+      });
       $("<div id='divDialogForm' style='overflow:auto'></div>").html(htmlToRender).ModifyDoom({
         tblProp: tblProp,
         EditableFormId: EditableFormId
@@ -303,8 +314,11 @@
         return oTable = $('#' + opt.Grid.DoomId).clsGrid(opt.Grid.Opt, opt.Grid.Source);
       }
     };
+
     return clsEditInPlaceForm;
+
   })();
+
   $.fn.ModifyDoom = function(opt, DataToSave, fnUpdateSuccess) {
     var frmOpt, t;
     t = this.find("#" + opt.EditableFormId);
@@ -322,14 +336,13 @@
     });
     return this;
   };
+
   $.fn.MyEditInPlace = function(opt) {
     var OldVal, del, eOpt, el, fnFinishedEdit, ix, objProp;
     el = $(this);
     OldVal = el.html();
     eOpt = typeof el.data("ctrl") === "object" ? el.data("ctrl") : eval("(" + (el.attr("data-ctrl")) + ")");
-    if (!eOpt) {
-      eOpt = {};
-    }
+    if (!eOpt) eOpt = {};
     $.extend(eOpt, opt, {
       FName: eOpt.Field
     });
@@ -381,9 +394,7 @@
     if (eOpt.List) {
       del.shouldOpenEditInPlace = function($Node, aSettings, trigEvent) {
         var eHTML;
-        if ($Node.find("input").length > 0) {
-          return false;
-        }
+        if ($Node.find("input").length > 0) return false;
         eHTML = oCONTROLS.txt({
           "data_ctrl": JSON.stringify($.extend(eOpt.List, {
             FName: eOpt.FName
@@ -412,9 +423,7 @@
     } else if (eOpt.Plugin) {
       del.shouldOpenEditInPlace = function($Node, aSettings, trigEvent) {
         var Name, Prop, input, _ref;
-        if ($Node.find("input").length > 0) {
-          return false;
-        }
+        if ($Node.find("input").length > 0) return false;
         $Node.html("<input type='text'></input>");
         input = $Node.find("input");
         input.val(OldVal);
@@ -466,4 +475,5 @@
     }
     return el;
   };
+
 }).call(this);

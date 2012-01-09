@@ -8,7 +8,7 @@
 		DataToSave=oGLOBAL.ValidateForm(form)
 		if DataToSave
 			oGLOBAL.UpdateServer(Action: (if form.data("ctrl").NewRec then "Add" else "Edit"), DataToSave: DataToSave
-			CallBack:
+			,CallBack:
 				Success:(resp, updData) ->
 					NewId=if resp.ResponseMsg.ID then resp.ResponseMsg.ID else 0
 					oCONTROLS.UpdatableForm_toSaved(NewId,form)##Atnaujinam issaugota forma
@@ -16,12 +16,12 @@
 						$('#introduction').html("Sutartis Nr.:"+NewId)
 					##Kad atsisiustu naujas atrefresintas lenteles
 					$("#side-bar ul li a").filter("[data-action='Contracts_Other'],[data-action='Contracts_Unsigned'],[data-action='Contracts_Expired']").data("opt","refresh");
-			Msg: 
+			,Msg: 
 				Success: 
 					Add: "Nauja sutartis išsaugota.\n Dabar galite prisegti prie sutarties susijusias bylas.", Edit: "Pakeitimai sutartyje išsaugoti"
 				Error:
 					Add: "Nepavyko išsaugoti naujos sutarties", Edit: "Nepavyko išsaugoti pakeitimø sutartyje"
-			BlockCtrl:form
+			,BlockCtrl:form
 			)
 	EnableButon = -> 
 		form.find("button:contains('Išsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled")

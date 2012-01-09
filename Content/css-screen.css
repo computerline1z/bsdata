@@ -61,6 +61,9 @@ fieldset.inputFieldset {
   padding: 0.3em;
   width: 52.7em;
 }
+fieldset.inputFieldset Legend {
+  font-weight: bold;
+}
 span.inputRight, div.inputRight {
   float: left;
   margin: 1em;
@@ -408,16 +411,18 @@ h2 {
 }
 /*----------------------------------------------------------*/
 /* Input design */
-input[type=text].UpdateField, input[type=password].UpdateField, textarea.UpdateField {
-  width: 30em;
+input[type=text].UpdateField,
+input[type=text].NotUpdateField,
+input[type=password].UpdateField,
+textarea.UpdateField {
   background: #ffc;
   border: 1px inset;
   font-size: 10pt;
   height: 1.5em;
   padding-left: 5px;
+  width: 30em;
 }
 .input_Long {
-  width: 30em;
   background: #ffc;
   border: 1px inset;
   font-size: 10pt;
@@ -426,7 +431,6 @@ input[type=text].UpdateField, input[type=password].UpdateField, textarea.UpdateF
   width: 27em;
 }
 .input_Long_Disabled {
-  width: 30em;
   background: #ffc;
   border: 1px inset;
   font-size: 10pt;
@@ -438,6 +442,14 @@ input[type=text].UpdateField, input[type=password].UpdateField, textarea.UpdateF
   width: 90px;
   font-size: 8pt;
   height: 2.5em;
+}
+input.time {
+  background: #ffc;
+  border: 1px inset;
+  font-size: 10pt;
+  height: 1.5em;
+  padding-left: 5px;
+  width: 3em;
 }
 /*----------------------------------------------------------*/
 /* Effects */

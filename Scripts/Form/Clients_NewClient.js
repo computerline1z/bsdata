@@ -1,3 +1,4 @@
+(function() {
 
   this.Clients_NewClient = function() {
     var EnableButon, SaveDataHandler, form;
@@ -53,3 +54,5 @@
     form.find("input,#NewClient textarea").keypress(EnableButon);
     return form.find("input.ui-autocomplete-input").focus(EnableButon);
   };
+
+}).call(this);

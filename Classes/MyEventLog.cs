@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace BSData.Classes {
@@ -47,9 +46,9 @@ namespace BSData.Classes {
             Msg += "</td></tr><tr><td>Klaidos tekstas:</td><td>" + e.Message + Environment.NewLine;
             Msg += "</td></tr><tr><td>Source:</td><td>" + e.Source + Environment.NewLine;
             string d = "";
-            foreach (KeyValuePair<String, String> entry in e.Data) {
-               d += entry.Key.ToString() + ":" + entry.Value.ToString();
-            }
+            //foreach (KeyValuePair<String, String> entry in e.Data) {
+            //   d += entry.Key.ToString() + ":" + entry.Value.ToString();
+            //}
             Msg += "</td></tr><tr><td>Data:</td><td>" + d + "</td></tr></table>";
             EL.WriteEntry(Msg, EventLogEntryType.Error, 999);
             if (SendMail) MailHelper.SendMailMessage("saulius@bs.lt", null, "justas@bs.lt", src, Msg);

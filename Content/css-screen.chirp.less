@@ -16,6 +16,7 @@ label.leftlabelforManyF {margin: .7em; color: #666; width: 13.6em; display: inli
 .ExtendIt {margin:.7em;}
 .ExtendIt label {cursor: pointer;color: #666666;}
 fieldset.inputFieldset {margin-top:1em;display:inline-block;padding:0.3em;width:52.7em;}
+fieldset.inputFieldset Legend {font-weight:bold;}
 span.inputRight, div.inputRight{float:left; margin:1em;display:inline-block;padding:0.3em;}
 
 input.inputTip, textarea.inputTip, div.inputTip, span.inputTip { color: #666666; font-style: italic; }
@@ -57,9 +58,8 @@ html > body { font-size: 8.5pt; }
 @err-color:#990000;
 @bar-margins:10px;
 
-.input-field () { width: 30em; background: #ffc; border: 1px inset; font-size: 10pt; height: 1.5em; padding-left: 5px; }
+.input-field () { background: #ffc; border: 1px inset; font-size: 10pt; height: 1.5em; padding-left: 5px; }
 .editInPlace{cursor:pointer; background: #ffc; border: 1px inset; color: #666666;}
-
 
 .row-bar(){ width: 100%; padding: 0;height: 2em;line-height: 2em;}
 acronym, .titleTip { border-bottom: 1px dotted rgb(153,153,153); cursor: help; margin: 0; padding: 0 0 0.4px 0; }
@@ -157,11 +157,11 @@ h2 { text-align: left; color: #65809D; font-weight: bold; font-size: 2em; paddin
 .validation-summary-valid { display: none; }
 /*----------------------------------------------------------*/
 /* Input design */
-input[type=text].UpdateField,input[type=password].UpdateField,textarea.UpdateField { .input-field; }
+input[type=text].UpdateField,input[type=text].NotUpdateField,input[type=password].UpdateField,textarea.UpdateField { .input-field; width: 30em; }
 .input_Long { .input-field;width:27em;}
 .input_Long_Disabled { .input-field; background-color:#EBEBE4 !important; }
 .button { width: 90px; font-size: 8pt; height: 2.5em; }
-
+input.time { .input-field; width: 3em; }
 /*----------------------------------------------------------*/
 /* Effects */
 .shadow

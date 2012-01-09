@@ -3,6 +3,8 @@
 
   jsResData = {};
 
+  this.My = {};
+
   Index = 0;
 
   Controller = $('#header div.subHeader a.highlight').data('controller');
@@ -16,10 +18,12 @@
 
   Start = function() {
     return $('#side-bar').on('click', 'li>a', function(event) {
-      var refresh, url;
+      var Par, refresh, url;
       $('body').addClass("wait");
       $('#side-bar a.highlight').removeClass('highlight');
       $(this).addClass('highlight');
+      Par = $(this).data('Par') ? JSON.stringify($(this).data('Par')) : '';
+      if (Par) $(this).data("opt", "refresh");
       window.oGLOBAL.Action = $(this).data('action');
       if ($(this).data("opt") === "refresh") {
         refresh = true;
@@ -31,7 +35,7 @@
       if (jsResData[Action] && !refresh) {
         fnSetNewData(jsResData[Action][Index]);
       } else {
-        CallServer(url, '');
+        CallServer(url, Par);
       }
       return $('body').removeClass("wait");
     });
@@ -45,6 +49,10 @@
       type: 'POST',
       data: Par,
       dataType: 'json',
+      contentType: "application/json; charset=utf-8",
+      beforeSend: function(xhr) {
+        return xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+      },
       error: function(jqXHR, textStatus, errorThrown) {
         el.html("<center><h2>Ši dalis dar nebaigta(" + Action + ")</h2><img src='/Content/images/UnderConstruction.gif' alt=''/></center>");
         return el.parent().unblock();
@@ -72,21 +80,8 @@
         this.oDATA.Set(Name, jsRes[Name]);
       }
     }
-    if (Action === "Contracts_New_Other") {
-      return Contracts_New_Other();
-    } else if (Action === "Clients_NewClient") {
+    if (Action === "Clients_NewClient") {
       return Clients_NewClient();
-    } else if (Action === "Contracts_New_Object") {
-      return Contracts_New_Object();
-    } else if (Action === "Contracts_Unsigned") {
-      if (jsRes.Script.oSCRIPT) this.oSCRIPT = jsRes.Script.oSCRIPT;
-      return ContractsUnsigned_Grid();
-    } else if (Action === "Contracts_Other" || Action === "Contracts_Expired") {
-      if (jsRes.Script.oSCRIPT) this.oSCRIPT = jsRes.Script.oSCRIPT;
-      return ContractsOther_Grid();
-    } else if (Action === "Contracts_Objects") {
-      if (jsRes.Script.oSCRIPT) this.oSCRIPT = jsRes.Script.oSCRIPT;
-      return ContractsObjects_Grid();
     } else if (Action === "MyEvents") {
       return Title_MyEvents();
     } else if (Action === "ClientsList") {
@@ -94,6 +89,8 @@
     } else if (jsRes.Script) {
       if (jsRes.Script.File) $.getScript(jsRes.Script.File);
       if (jsRes.Script.oSCRIPT) return this.oSCRIPT = jsRes.Script.oSCRIPT;
+    } else {
+      return My[Action]();
     }
   };
 
@@ -124,20 +121,14 @@
       }
     },
     GetRow: function(id, obj) {
-      var Data, Length, i, _results;
+      var Data, Length, i;
       Data = this.GetData(obj);
       Length = Data.length - 1;
       i = -1;
-      _results = [];
       while (i < Length) {
         i++;
-        if (Data[i][0] === id) {
-          return Data[i];
-        } else {
-          _results.push(void 0);
-        }
+        if (Data[i][0] === id) return Data[i];
       }
-      return _results;
     },
     GetData: function(obj, Cols) {
       if (typeof obj === "string") {

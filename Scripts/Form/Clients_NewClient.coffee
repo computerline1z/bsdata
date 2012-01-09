@@ -9,7 +9,7 @@
 		DataToSave=oGLOBAL.ValidateForm(form)
 		if DataToSave
 			oGLOBAL.UpdateServer(Action: (if form.data("ctrl").NewRec then "Add" else "Edit"), DataToSave: DataToSave
-			CallBack:
+			,CallBack:
 				Success:(resp, updData) ->
 					NewId=if resp.ResponseMsg.ID then resp.ResponseMsg.ID else 0
 					oCONTROLS.UpdatableForm_toSaved(NewId,form)##Atnaujinam issaugota forma
@@ -17,12 +17,12 @@
 						$('#introduction').html("Klientas Nr.:"+NewId)
 					##Kad atsisiustu naujas atrefresintas lenteles
 					$("#side-bar ul li a").filter("[data-action='Clients_NewClient']").data("opt","refresh");
-			Msg: 
+			,Msg: 
 				Success: 
 					Add: "Naujas klientas išsaugotas.\n Dabar galite prisegti susijusias bylas.", Edit: "Pakeitimai kliento duomenyse išsaugoti"
 				Error:
 					Add: "Nepavyko išsaugoti naujo kliento", Edit: "Nepavyko išsaugoti pakeitimų kliento duomenyse"
-			BlockCtrl:form
+			,BlockCtrl:form
 			)
 	EnableButon = -> 
 		form.find("button:contains('Išsaugoti')").removeAttr("disabled").removeClass("ui-state-disabled")

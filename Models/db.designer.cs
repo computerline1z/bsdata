@@ -69,18 +69,12 @@ namespace BSData.Models
     partial void InserttblContracts_Status(tblContracts_Status instance);
     partial void UpdatetblContracts_Status(tblContracts_Status instance);
     partial void DeletetblContracts_Status(tblContracts_Status instance);
-    partial void InserttblContract(tblContract instance);
-    partial void UpdatetblContract(tblContract instance);
-    partial void DeletetblContract(tblContract instance);
     partial void InserttblClients_Event(tblClients_Event instance);
     partial void UpdatetblClients_Event(tblClients_Event instance);
     partial void DeletetblClients_Event(tblClients_Event instance);
     partial void InserttblTown(tblTown instance);
     partial void UpdatetblTown(tblTown instance);
     partial void DeletetblTown(tblTown instance);
-    partial void InserttblFormsInEvent(tblFormsInEvent instance);
-    partial void UpdatetblFormsInEvent(tblFormsInEvent instance);
-    partial void DeletetblFormsInEvent(tblFormsInEvent instance);
     partial void InserttblUsersActivities_Update(tblUsersActivities_Update instance);
     partial void UpdatetblUsersActivities_Update(tblUsersActivities_Update instance);
     partial void DeletetblUsersActivities_Update(tblUsersActivities_Update instance);
@@ -90,16 +84,25 @@ namespace BSData.Models
     partial void InserttblDocs_UploadedFile(tblDocs_UploadedFile instance);
     partial void UpdatetblDocs_UploadedFile(tblDocs_UploadedFile instance);
     partial void DeletetblDocs_UploadedFile(tblDocs_UploadedFile instance);
+    partial void InserttblContracts_Type(tblContracts_Type instance);
+    partial void UpdatetblContracts_Type(tblContracts_Type instance);
+    partial void DeletetblContracts_Type(tblContracts_Type instance);
+    partial void InserttblContract(tblContract instance);
+    partial void UpdatetblContract(tblContract instance);
+    partial void DeletetblContract(tblContract instance);
     partial void InserttblClients_Object(tblClients_Object instance);
     partial void UpdatetblClients_Object(tblClients_Object instance);
     partial void DeletetblClients_Object(tblClients_Object instance);
+    partial void InserttblVehicle(tblVehicle instance);
+    partial void UpdatetblVehicle(tblVehicle instance);
+    partial void DeletetblVehicle(tblVehicle instance);
     partial void InserttblClient(tblClient instance);
     partial void UpdatetblClient(tblClient instance);
     partial void DeletetblClient(tblClient instance);
     #endregion
 		
 		public dbDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["BSConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["BSConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -232,14 +235,6 @@ namespace BSData.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<tblContract> tblContracts
-		{
-			get
-			{
-				return this.GetTable<tblContract>();
-			}
-		}
-		
 		public System.Data.Linq.Table<tblClients_Event> tblClients_Events
 		{
 			get
@@ -253,14 +248,6 @@ namespace BSData.Models
 			get
 			{
 				return this.GetTable<tblTown>();
-			}
-		}
-		
-		public System.Data.Linq.Table<tblFormsInEvent> tblFormsInEvents
-		{
-			get
-			{
-				return this.GetTable<tblFormsInEvent>();
 			}
 		}
 		
@@ -288,11 +275,35 @@ namespace BSData.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<tblContracts_Type> tblContracts_Types
+		{
+			get
+			{
+				return this.GetTable<tblContracts_Type>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tblContract> tblContracts
+		{
+			get
+			{
+				return this.GetTable<tblContract>();
+			}
+		}
+		
 		public System.Data.Linq.Table<tblClients_Object> tblClients_Objects
 		{
 			get
 			{
 				return this.GetTable<tblClients_Object>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tblVehicle> tblVehicles
+		{
+			get
+			{
+				return this.GetTable<tblVehicle>();
 			}
 		}
 		
@@ -340,32 +351,18 @@ namespace BSData.Models
 			return ((ISingleResult<proc_GetClientsEventsNewResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetContracts_Objects")]
-		public ISingleResult<proc_GetContracts_ObjectsResult> proc_GetContracts_Objects([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Bit")] System.Nullable<bool> valid)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), valid);
-			return ((ISingleResult<proc_GetContracts_ObjectsResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetContracts_Other")]
-		public ISingleResult<proc_GetContracts_OtherResult> proc_GetContracts_Other([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Bit")] System.Nullable<bool> valid)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), valid);
-			return ((ISingleResult<proc_GetContracts_OtherResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetContracts_Unsigned")]
-		public ISingleResult<proc_GetContracts_UnsignedResult> proc_GetContracts_Unsigned()
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
-			return ((ISingleResult<proc_GetContracts_UnsignedResult>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetUploadedFiles1")]
 		public ISingleResult<proc_GetUploadedFiles1Result> proc_GetUploadedFiles1([global::System.Data.Linq.Mapping.ParameterAttribute(Name="TableName", DbType="VarChar(50)")] string tableName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RecordID", DbType="Int")] System.Nullable<int> recordID)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), tableName, recordID);
 			return ((ISingleResult<proc_GetUploadedFiles1Result>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_GetContracts")]
+		public ISingleResult<proc_GetContractsResult> proc_GetContracts([global::System.Data.Linq.Mapping.ParameterAttribute(Name="StatusID", DbType="Int")] System.Nullable<int> statusID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ExpireInDays", DbType="Int")] System.Nullable<int> expireInDays)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), statusID, userID, expireInDays);
+			return ((ISingleResult<proc_GetContractsResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1420,13 +1417,13 @@ namespace BSData.Models
 		
 		private EntitySet<tblUsers_InRole> _tblUsers_InRoles;
 		
-		private EntitySet<tblContract> _tblContracts;
-		
 		private EntitySet<tblClients_Event> _tblClients_Events;
 		
 		private EntitySet<tblUsersActivities_Update> _tblUsersActivities_Updates;
 		
 		private EntitySet<tblDocs_UploadedFile> _tblDocs_UploadedFiles;
+		
+		private EntitySet<tblContract> _tblContracts;
 		
 		private EntitySet<tblClient> _tblClients;
 		
@@ -1471,10 +1468,10 @@ namespace BSData.Models
 		public tblUser()
 		{
 			this._tblUsers_InRoles = new EntitySet<tblUsers_InRole>(new Action<tblUsers_InRole>(this.attach_tblUsers_InRoles), new Action<tblUsers_InRole>(this.detach_tblUsers_InRoles));
-			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
 			this._tblClients_Events = new EntitySet<tblClients_Event>(new Action<tblClients_Event>(this.attach_tblClients_Events), new Action<tblClients_Event>(this.detach_tblClients_Events));
 			this._tblUsersActivities_Updates = new EntitySet<tblUsersActivities_Update>(new Action<tblUsersActivities_Update>(this.attach_tblUsersActivities_Updates), new Action<tblUsersActivities_Update>(this.detach_tblUsersActivities_Updates));
 			this._tblDocs_UploadedFiles = new EntitySet<tblDocs_UploadedFile>(new Action<tblDocs_UploadedFile>(this.attach_tblDocs_UploadedFiles), new Action<tblDocs_UploadedFile>(this.detach_tblDocs_UploadedFiles));
+			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
 			this._tblClients = new EntitySet<tblClient>(new Action<tblClient>(this.attach_tblClients), new Action<tblClient>(this.detach_tblClients));
 			this._tblUsers_Status = default(EntityRef<tblUsers_Status>);
 			this._tblUsers_SubDep = default(EntityRef<tblUsers_SubDep>);
@@ -1782,19 +1779,6 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblContract", Storage="_tblContracts", ThisKey="ID", OtherKey="RespUserID")]
-		public EntitySet<tblContract> tblContracts
-		{
-			get
-			{
-				return this._tblContracts;
-			}
-			set
-			{
-				this._tblContracts.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblClients_Event", Storage="_tblClients_Events", ThisKey="ID", OtherKey="UserID")]
 		public EntitySet<tblClients_Event> tblClients_Events
 		{
@@ -1831,6 +1815,19 @@ namespace BSData.Models
 			set
 			{
 				this._tblDocs_UploadedFiles.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblContract", Storage="_tblContracts", ThisKey="ID", OtherKey="RespUserID")]
+		public EntitySet<tblContract> tblContracts
+		{
+			get
+			{
+				return this._tblContracts;
+			}
+			set
+			{
+				this._tblContracts.Assign(value);
 			}
 		}
 		
@@ -1947,18 +1944,6 @@ namespace BSData.Models
 			entity.tblUser = null;
 		}
 		
-		private void attach_tblContracts(tblContract entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblUser = this;
-		}
-		
-		private void detach_tblContracts(tblContract entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblUser = null;
-		}
-		
 		private void attach_tblClients_Events(tblClients_Event entity)
 		{
 			this.SendPropertyChanging();
@@ -1990,6 +1975,18 @@ namespace BSData.Models
 		}
 		
 		private void detach_tblDocs_UploadedFiles(tblDocs_UploadedFile entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblUser = null;
+		}
+		
+		private void attach_tblContracts(tblContract entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblUser = this;
+		}
+		
+		private void detach_tblContracts(tblContract entity)
 		{
 			this.SendPropertyChanging();
 			entity.tblUser = null;
@@ -2824,10 +2821,6 @@ namespace BSData.Models
 		
 		private EntitySet<tblContract> _tblContracts;
 		
-		private EntitySet<tblFormsInEvent> _tblFormsInEvents;
-		
-		private EntitySet<tblClient> _tblClients;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2843,8 +2836,6 @@ namespace BSData.Models
 		public tblContracts_Form()
 		{
 			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
-			this._tblFormsInEvents = new EntitySet<tblFormsInEvent>(new Action<tblFormsInEvent>(this.attach_tblFormsInEvents), new Action<tblFormsInEvent>(this.detach_tblFormsInEvents));
-			this._tblClients = new EntitySet<tblClient>(new Action<tblClient>(this.attach_tblClients), new Action<tblClient>(this.detach_tblClients));
 			OnCreated();
 		}
 		
@@ -2921,32 +2912,6 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Form_tblFormsInEvent", Storage="_tblFormsInEvents", ThisKey="ID", OtherKey="ContractFormID")]
-		public EntitySet<tblFormsInEvent> tblFormsInEvents
-		{
-			get
-			{
-				return this._tblFormsInEvents;
-			}
-			set
-			{
-				this._tblFormsInEvents.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Form_tblClient", Storage="_tblClients", ThisKey="ID", OtherKey="NextContactContractFormID")]
-		public EntitySet<tblClient> tblClients
-		{
-			get
-			{
-				return this._tblClients;
-			}
-			set
-			{
-				this._tblClients.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2974,30 +2939,6 @@ namespace BSData.Models
 		}
 		
 		private void detach_tblContracts(tblContract entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblContracts_Form = null;
-		}
-		
-		private void attach_tblFormsInEvents(tblFormsInEvent entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblContracts_Form = this;
-		}
-		
-		private void detach_tblFormsInEvents(tblFormsInEvent entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblContracts_Form = null;
-		}
-		
-		private void attach_tblClients(tblClient entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblContracts_Form = this;
-		}
-		
-		private void detach_tblClients(tblClient entity)
 		{
 			this.SendPropertyChanging();
 			entity.tblContracts_Form = null;
@@ -3118,657 +3059,6 @@ namespace BSData.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblContracts")]
-	public partial class tblContract : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _FormID;
-		
-		private System.DateTime _Date;
-		
-		private int _ClientID;
-		
-		private string _ClientNo;
-		
-		private string _Description;
-		
-		private System.Nullable<System.DateTime> _ValidityDate;
-		
-		private string _ValidityNote;
-		
-		private System.Nullable<double> _PriceAtOnce;
-		
-		private System.Nullable<double> _PricePerMonth;
-		
-		private int _RespUserID;
-		
-		private string _Notes;
-		
-		private System.Nullable<int> _PagesNo;
-		
-		private int _SubDepID;
-		
-		private bool _IsOurCustomer;
-		
-		private int _StatusID;
-		
-		private string _Status_Description;
-		
-		private EntityRef<tblContracts_Form> _tblContracts_Form;
-		
-		private EntityRef<tblContracts_Status> _tblContracts_Status;
-		
-		private EntityRef<tblUser> _tblUser;
-		
-		private EntityRef<tblUsers_SubDep> _tblUsers_SubDep;
-		
-		private EntityRef<tblClient> _tblClient;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnFormIDChanging(int value);
-    partial void OnFormIDChanged();
-    partial void OnDateChanging(System.DateTime value);
-    partial void OnDateChanged();
-    partial void OnClientIDChanging(int value);
-    partial void OnClientIDChanged();
-    partial void OnClientNoChanging(string value);
-    partial void OnClientNoChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnValidityDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnValidityDateChanged();
-    partial void OnValidityNoteChanging(string value);
-    partial void OnValidityNoteChanged();
-    partial void OnPriceAtOnceChanging(System.Nullable<double> value);
-    partial void OnPriceAtOnceChanged();
-    partial void OnPricePerMonthChanging(System.Nullable<double> value);
-    partial void OnPricePerMonthChanged();
-    partial void OnRespUserIDChanging(int value);
-    partial void OnRespUserIDChanged();
-    partial void OnNotesChanging(string value);
-    partial void OnNotesChanged();
-    partial void OnPagesNoChanging(System.Nullable<int> value);
-    partial void OnPagesNoChanged();
-    partial void OnSubDepIDChanging(int value);
-    partial void OnSubDepIDChanged();
-    partial void OnIsOurCustomerChanging(bool value);
-    partial void OnIsOurCustomerChanged();
-    partial void OnStatusIDChanging(int value);
-    partial void OnStatusIDChanged();
-    partial void OnStatus_DescriptionChanging(string value);
-    partial void OnStatus_DescriptionChanged();
-    #endregion
-		
-		public tblContract()
-		{
-			this._tblContracts_Form = default(EntityRef<tblContracts_Form>);
-			this._tblContracts_Status = default(EntityRef<tblContracts_Status>);
-			this._tblUser = default(EntityRef<tblUser>);
-			this._tblUsers_SubDep = default(EntityRef<tblUsers_SubDep>);
-			this._tblClient = default(EntityRef<tblClient>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormID", DbType="Int NOT NULL")]
-		public int FormID
-		{
-			get
-			{
-				return this._FormID;
-			}
-			set
-			{
-				if ((this._FormID != value))
-				{
-					if (this._tblContracts_Form.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFormIDChanging(value);
-					this.SendPropertyChanging();
-					this._FormID = value;
-					this.SendPropertyChanged("FormID");
-					this.OnFormIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="Date NOT NULL")]
-		public System.DateTime Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this.OnDateChanging(value);
-					this.SendPropertyChanging();
-					this._Date = value;
-					this.SendPropertyChanged("Date");
-					this.OnDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="Int NOT NULL")]
-		public int ClientID
-		{
-			get
-			{
-				return this._ClientID;
-			}
-			set
-			{
-				if ((this._ClientID != value))
-				{
-					if (this._tblClient.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnClientIDChanging(value);
-					this.SendPropertyChanging();
-					this._ClientID = value;
-					this.SendPropertyChanged("ClientID");
-					this.OnClientIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientNo", DbType="NVarChar(20)")]
-		public string ClientNo
-		{
-			get
-			{
-				return this._ClientNo;
-			}
-			set
-			{
-				if ((this._ClientNo != value))
-				{
-					this.OnClientNoChanging(value);
-					this.SendPropertyChanging();
-					this._ClientNo = value;
-					this.SendPropertyChanged("ClientNo");
-					this.OnClientNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValidityDate", DbType="Date")]
-		public System.Nullable<System.DateTime> ValidityDate
-		{
-			get
-			{
-				return this._ValidityDate;
-			}
-			set
-			{
-				if ((this._ValidityDate != value))
-				{
-					this.OnValidityDateChanging(value);
-					this.SendPropertyChanging();
-					this._ValidityDate = value;
-					this.SendPropertyChanged("ValidityDate");
-					this.OnValidityDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValidityNote", DbType="NVarChar(50)")]
-		public string ValidityNote
-		{
-			get
-			{
-				return this._ValidityNote;
-			}
-			set
-			{
-				if ((this._ValidityNote != value))
-				{
-					this.OnValidityNoteChanging(value);
-					this.SendPropertyChanging();
-					this._ValidityNote = value;
-					this.SendPropertyChanged("ValidityNote");
-					this.OnValidityNoteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceAtOnce", DbType="Float")]
-		public System.Nullable<double> PriceAtOnce
-		{
-			get
-			{
-				return this._PriceAtOnce;
-			}
-			set
-			{
-				if ((this._PriceAtOnce != value))
-				{
-					this.OnPriceAtOnceChanging(value);
-					this.SendPropertyChanging();
-					this._PriceAtOnce = value;
-					this.SendPropertyChanged("PriceAtOnce");
-					this.OnPriceAtOnceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PricePerMonth", DbType="Float")]
-		public System.Nullable<double> PricePerMonth
-		{
-			get
-			{
-				return this._PricePerMonth;
-			}
-			set
-			{
-				if ((this._PricePerMonth != value))
-				{
-					this.OnPricePerMonthChanging(value);
-					this.SendPropertyChanging();
-					this._PricePerMonth = value;
-					this.SendPropertyChanged("PricePerMonth");
-					this.OnPricePerMonthChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RespUserID", DbType="Int NOT NULL")]
-		public int RespUserID
-		{
-			get
-			{
-				return this._RespUserID;
-			}
-			set
-			{
-				if ((this._RespUserID != value))
-				{
-					if (this._tblUser.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRespUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._RespUserID = value;
-					this.SendPropertyChanged("RespUserID");
-					this.OnRespUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="NVarChar(100)")]
-		public string Notes
-		{
-			get
-			{
-				return this._Notes;
-			}
-			set
-			{
-				if ((this._Notes != value))
-				{
-					this.OnNotesChanging(value);
-					this.SendPropertyChanging();
-					this._Notes = value;
-					this.SendPropertyChanged("Notes");
-					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PagesNo", DbType="Int")]
-		public System.Nullable<int> PagesNo
-		{
-			get
-			{
-				return this._PagesNo;
-			}
-			set
-			{
-				if ((this._PagesNo != value))
-				{
-					this.OnPagesNoChanging(value);
-					this.SendPropertyChanging();
-					this._PagesNo = value;
-					this.SendPropertyChanged("PagesNo");
-					this.OnPagesNoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubDepID", DbType="Int NOT NULL")]
-		public int SubDepID
-		{
-			get
-			{
-				return this._SubDepID;
-			}
-			set
-			{
-				if ((this._SubDepID != value))
-				{
-					if (this._tblUsers_SubDep.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSubDepIDChanging(value);
-					this.SendPropertyChanging();
-					this._SubDepID = value;
-					this.SendPropertyChanged("SubDepID");
-					this.OnSubDepIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOurCustomer", DbType="Bit NOT NULL")]
-		public bool IsOurCustomer
-		{
-			get
-			{
-				return this._IsOurCustomer;
-			}
-			set
-			{
-				if ((this._IsOurCustomer != value))
-				{
-					this.OnIsOurCustomerChanging(value);
-					this.SendPropertyChanging();
-					this._IsOurCustomer = value;
-					this.SendPropertyChanged("IsOurCustomer");
-					this.OnIsOurCustomerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusID", DbType="Int NOT NULL")]
-		public int StatusID
-		{
-			get
-			{
-				return this._StatusID;
-			}
-			set
-			{
-				if ((this._StatusID != value))
-				{
-					if (this._tblContracts_Status.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnStatusIDChanging(value);
-					this.SendPropertyChanging();
-					this._StatusID = value;
-					this.SendPropertyChanged("StatusID");
-					this.OnStatusIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status_Description", DbType="NVarChar(250)")]
-		public string Status_Description
-		{
-			get
-			{
-				return this._Status_Description;
-			}
-			set
-			{
-				if ((this._Status_Description != value))
-				{
-					this.OnStatus_DescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Status_Description = value;
-					this.SendPropertyChanged("Status_Description");
-					this.OnStatus_DescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Form_tblContract", Storage="_tblContracts_Form", ThisKey="FormID", OtherKey="ID", IsForeignKey=true)]
-		public tblContracts_Form tblContracts_Form
-		{
-			get
-			{
-				return this._tblContracts_Form.Entity;
-			}
-			set
-			{
-				tblContracts_Form previousValue = this._tblContracts_Form.Entity;
-				if (((previousValue != value) 
-							|| (this._tblContracts_Form.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblContracts_Form.Entity = null;
-						previousValue.tblContracts.Remove(this);
-					}
-					this._tblContracts_Form.Entity = value;
-					if ((value != null))
-					{
-						value.tblContracts.Add(this);
-						this._FormID = value.ID;
-					}
-					else
-					{
-						this._FormID = default(int);
-					}
-					this.SendPropertyChanged("tblContracts_Form");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Status_tblContract", Storage="_tblContracts_Status", ThisKey="StatusID", OtherKey="ID", IsForeignKey=true)]
-		public tblContracts_Status tblContracts_Status
-		{
-			get
-			{
-				return this._tblContracts_Status.Entity;
-			}
-			set
-			{
-				tblContracts_Status previousValue = this._tblContracts_Status.Entity;
-				if (((previousValue != value) 
-							|| (this._tblContracts_Status.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblContracts_Status.Entity = null;
-						previousValue.tblContracts.Remove(this);
-					}
-					this._tblContracts_Status.Entity = value;
-					if ((value != null))
-					{
-						value.tblContracts.Add(this);
-						this._StatusID = value.ID;
-					}
-					else
-					{
-						this._StatusID = default(int);
-					}
-					this.SendPropertyChanged("tblContracts_Status");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblContract", Storage="_tblUser", ThisKey="RespUserID", OtherKey="ID", IsForeignKey=true)]
-		public tblUser tblUser
-		{
-			get
-			{
-				return this._tblUser.Entity;
-			}
-			set
-			{
-				tblUser previousValue = this._tblUser.Entity;
-				if (((previousValue != value) 
-							|| (this._tblUser.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblUser.Entity = null;
-						previousValue.tblContracts.Remove(this);
-					}
-					this._tblUser.Entity = value;
-					if ((value != null))
-					{
-						value.tblContracts.Add(this);
-						this._RespUserID = value.ID;
-					}
-					else
-					{
-						this._RespUserID = default(int);
-					}
-					this.SendPropertyChanged("tblUser");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUsers_SubDep_tblContract", Storage="_tblUsers_SubDep", ThisKey="SubDepID", OtherKey="ID", IsForeignKey=true)]
-		public tblUsers_SubDep tblUsers_SubDep
-		{
-			get
-			{
-				return this._tblUsers_SubDep.Entity;
-			}
-			set
-			{
-				tblUsers_SubDep previousValue = this._tblUsers_SubDep.Entity;
-				if (((previousValue != value) 
-							|| (this._tblUsers_SubDep.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblUsers_SubDep.Entity = null;
-						previousValue.tblContracts.Remove(this);
-					}
-					this._tblUsers_SubDep.Entity = value;
-					if ((value != null))
-					{
-						value.tblContracts.Add(this);
-						this._SubDepID = value.ID;
-					}
-					else
-					{
-						this._SubDepID = default(int);
-					}
-					this.SendPropertyChanged("tblUsers_SubDep");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblContract", Storage="_tblClient", ThisKey="ClientID", OtherKey="ID", IsForeignKey=true)]
-		public tblClient tblClient
-		{
-			get
-			{
-				return this._tblClient.Entity;
-			}
-			set
-			{
-				tblClient previousValue = this._tblClient.Entity;
-				if (((previousValue != value) 
-							|| (this._tblClient.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblClient.Entity = null;
-						previousValue.tblContracts.Remove(this);
-					}
-					this._tblClient.Entity = value;
-					if ((value != null))
-					{
-						value.tblContracts.Add(this);
-						this._ClientID = value.ID;
-					}
-					else
-					{
-						this._ClientID = default(int);
-					}
-					this.SendPropertyChanged("tblClient");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblClients_Events")]
 	public partial class tblClients_Event : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3782,8 +3072,6 @@ namespace BSData.Models
 		private System.Nullable<int> _ClientID;
 		
 		private System.Nullable<int> _UserID;
-		
-		private EntitySet<tblFormsInEvent> _tblFormsInEvents;
 		
 		private EntityRef<tblUser> _tblUser;
 		
@@ -3805,7 +3093,6 @@ namespace BSData.Models
 		
 		public tblClients_Event()
 		{
-			this._tblFormsInEvents = new EntitySet<tblFormsInEvent>(new Action<tblFormsInEvent>(this.attach_tblFormsInEvents), new Action<tblFormsInEvent>(this.detach_tblFormsInEvents));
 			this._tblUser = default(EntityRef<tblUser>);
 			this._tblClient = default(EntityRef<tblClient>);
 			OnCreated();
@@ -3899,19 +3186,6 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClients_Event_tblFormsInEvent", Storage="_tblFormsInEvents", ThisKey="ID", OtherKey="EventID")]
-		public EntitySet<tblFormsInEvent> tblFormsInEvents
-		{
-			get
-			{
-				return this._tblFormsInEvents;
-			}
-			set
-			{
-				this._tblFormsInEvents.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblClients_Event", Storage="_tblUser", ThisKey="UserID", OtherKey="ID", IsForeignKey=true)]
 		public tblUser tblUser
 		{
@@ -3998,18 +3272,6 @@ namespace BSData.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_tblFormsInEvents(tblFormsInEvent entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblClients_Event = this;
-		}
-		
-		private void detach_tblFormsInEvents(tblFormsInEvent entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblClients_Event = null;
 		}
 	}
 	
@@ -4124,198 +3386,6 @@ namespace BSData.Models
 		{
 			this.SendPropertyChanging();
 			entity.tblTown = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblFormsInEvents")]
-	public partial class tblFormsInEvent : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _EventID;
-		
-		private int _ContractFormID;
-		
-		private EntityRef<tblClients_Event> _tblClients_Event;
-		
-		private EntityRef<tblContracts_Form> _tblContracts_Form;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnEventIDChanging(int value);
-    partial void OnEventIDChanged();
-    partial void OnContractFormIDChanging(int value);
-    partial void OnContractFormIDChanged();
-    #endregion
-		
-		public tblFormsInEvent()
-		{
-			this._tblClients_Event = default(EntityRef<tblClients_Event>);
-			this._tblContracts_Form = default(EntityRef<tblContracts_Form>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EventID", DbType="Int NOT NULL")]
-		public int EventID
-		{
-			get
-			{
-				return this._EventID;
-			}
-			set
-			{
-				if ((this._EventID != value))
-				{
-					if (this._tblClients_Event.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnEventIDChanging(value);
-					this.SendPropertyChanging();
-					this._EventID = value;
-					this.SendPropertyChanged("EventID");
-					this.OnEventIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContractFormID", DbType="Int NOT NULL")]
-		public int ContractFormID
-		{
-			get
-			{
-				return this._ContractFormID;
-			}
-			set
-			{
-				if ((this._ContractFormID != value))
-				{
-					if (this._tblContracts_Form.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnContractFormIDChanging(value);
-					this.SendPropertyChanging();
-					this._ContractFormID = value;
-					this.SendPropertyChanged("ContractFormID");
-					this.OnContractFormIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClients_Event_tblFormsInEvent", Storage="_tblClients_Event", ThisKey="EventID", OtherKey="ID", IsForeignKey=true)]
-		public tblClients_Event tblClients_Event
-		{
-			get
-			{
-				return this._tblClients_Event.Entity;
-			}
-			set
-			{
-				tblClients_Event previousValue = this._tblClients_Event.Entity;
-				if (((previousValue != value) 
-							|| (this._tblClients_Event.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblClients_Event.Entity = null;
-						previousValue.tblFormsInEvents.Remove(this);
-					}
-					this._tblClients_Event.Entity = value;
-					if ((value != null))
-					{
-						value.tblFormsInEvents.Add(this);
-						this._EventID = value.ID;
-					}
-					else
-					{
-						this._EventID = default(int);
-					}
-					this.SendPropertyChanged("tblClients_Event");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Form_tblFormsInEvent", Storage="_tblContracts_Form", ThisKey="ContractFormID", OtherKey="ID", IsForeignKey=true)]
-		public tblContracts_Form tblContracts_Form
-		{
-			get
-			{
-				return this._tblContracts_Form.Entity;
-			}
-			set
-			{
-				tblContracts_Form previousValue = this._tblContracts_Form.Entity;
-				if (((previousValue != value) 
-							|| (this._tblContracts_Form.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblContracts_Form.Entity = null;
-						previousValue.tblFormsInEvents.Remove(this);
-					}
-					this._tblContracts_Form.Entity = value;
-					if ((value != null))
-					{
-						value.tblFormsInEvents.Add(this);
-						this._ContractFormID = value.ID;
-					}
-					else
-					{
-						this._ContractFormID = default(int);
-					}
-					this.SendPropertyChanged("tblContracts_Form");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -5089,6 +4159,792 @@ namespace BSData.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblContracts_Types")]
+	public partial class tblContracts_Type : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Code;
+		
+		private string _Name;
+		
+		private EntitySet<tblContract> _tblContracts;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnCodeChanging(string value);
+    partial void OnCodeChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public tblContracts_Type()
+		{
+			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="Char(2) NOT NULL", CanBeNull=false)]
+		public string Code
+		{
+			get
+			{
+				return this._Code;
+			}
+			set
+			{
+				if ((this._Code != value))
+				{
+					this.OnCodeChanging(value);
+					this.SendPropertyChanging();
+					this._Code = value;
+					this.SendPropertyChanged("Code");
+					this.OnCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(60) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Type_tblContract", Storage="_tblContracts", ThisKey="ID", OtherKey="TypeID")]
+		public EntitySet<tblContract> tblContracts
+		{
+			get
+			{
+				return this._tblContracts;
+			}
+			set
+			{
+				this._tblContracts.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tblContracts(tblContract entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblContracts_Type = this;
+		}
+		
+		private void detach_tblContracts(tblContract entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblContracts_Type = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblContracts")]
+	public partial class tblContract : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<int> _FormID;
+		
+		private int _TypeID;
+		
+		private string _No;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<int> _ClientID;
+		
+		private string _ClientNo;
+		
+		private string _Description;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private string _ValidityNote;
+		
+		private System.Nullable<int> _RespUserID;
+		
+		private System.Nullable<int> _SubDepID;
+		
+		private System.Nullable<int> _StatusID;
+		
+		private string _Status_Description;
+		
+		private EntitySet<tblClients_Object> _tblClients_Objects;
+		
+		private EntityRef<tblContracts_Form> _tblContracts_Form;
+		
+		private EntityRef<tblContracts_Status> _tblContracts_Status;
+		
+		private EntityRef<tblContracts_Type> _tblContracts_Type;
+		
+		private EntityRef<tblUser> _tblUser;
+		
+		private EntityRef<tblUsers_SubDep> _tblUsers_SubDep;
+		
+		private EntityRef<tblClient> _tblClient;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFormIDChanging(System.Nullable<int> value);
+    partial void OnFormIDChanged();
+    partial void OnTypeIDChanging(int value);
+    partial void OnTypeIDChanged();
+    partial void OnNoChanging(string value);
+    partial void OnNoChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnClientIDChanging(System.Nullable<int> value);
+    partial void OnClientIDChanged();
+    partial void OnClientNoChanging(string value);
+    partial void OnClientNoChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    partial void OnValidityNoteChanging(string value);
+    partial void OnValidityNoteChanged();
+    partial void OnRespUserIDChanging(System.Nullable<int> value);
+    partial void OnRespUserIDChanged();
+    partial void OnSubDepIDChanging(System.Nullable<int> value);
+    partial void OnSubDepIDChanged();
+    partial void OnStatusIDChanging(System.Nullable<int> value);
+    partial void OnStatusIDChanged();
+    partial void OnStatus_DescriptionChanging(string value);
+    partial void OnStatus_DescriptionChanged();
+    #endregion
+		
+		public tblContract()
+		{
+			this._tblClients_Objects = new EntitySet<tblClients_Object>(new Action<tblClients_Object>(this.attach_tblClients_Objects), new Action<tblClients_Object>(this.detach_tblClients_Objects));
+			this._tblContracts_Form = default(EntityRef<tblContracts_Form>);
+			this._tblContracts_Status = default(EntityRef<tblContracts_Status>);
+			this._tblContracts_Type = default(EntityRef<tblContracts_Type>);
+			this._tblUser = default(EntityRef<tblUser>);
+			this._tblUsers_SubDep = default(EntityRef<tblUsers_SubDep>);
+			this._tblClient = default(EntityRef<tblClient>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormID", DbType="Int")]
+		public System.Nullable<int> FormID
+		{
+			get
+			{
+				return this._FormID;
+			}
+			set
+			{
+				if ((this._FormID != value))
+				{
+					if (this._tblContracts_Form.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFormIDChanging(value);
+					this.SendPropertyChanging();
+					this._FormID = value;
+					this.SendPropertyChanged("FormID");
+					this.OnFormIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeID", DbType="Int NOT NULL")]
+		public int TypeID
+		{
+			get
+			{
+				return this._TypeID;
+			}
+			set
+			{
+				if ((this._TypeID != value))
+				{
+					if (this._tblContracts_Type.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._TypeID = value;
+					this.SendPropertyChanged("TypeID");
+					this.OnTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_No", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string No
+		{
+			get
+			{
+				return this._No;
+			}
+			set
+			{
+				if ((this._No != value))
+				{
+					this.OnNoChanging(value);
+					this.SendPropertyChanging();
+					this._No = value;
+					this.SendPropertyChanged("No");
+					this.OnNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Date")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="Int")]
+		public System.Nullable<int> ClientID
+		{
+			get
+			{
+				return this._ClientID;
+			}
+			set
+			{
+				if ((this._ClientID != value))
+				{
+					if (this._tblClient.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnClientIDChanging(value);
+					this.SendPropertyChanging();
+					this._ClientID = value;
+					this.SendPropertyChanged("ClientID");
+					this.OnClientIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientNo", DbType="NVarChar(20)")]
+		public string ClientNo
+		{
+			get
+			{
+				return this._ClientNo;
+			}
+			set
+			{
+				if ((this._ClientNo != value))
+				{
+					this.OnClientNoChanging(value);
+					this.SendPropertyChanging();
+					this._ClientNo = value;
+					this.SendPropertyChanged("ClientNo");
+					this.OnClientNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(100)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="Date")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValidityNote", DbType="NVarChar(50)")]
+		public string ValidityNote
+		{
+			get
+			{
+				return this._ValidityNote;
+			}
+			set
+			{
+				if ((this._ValidityNote != value))
+				{
+					this.OnValidityNoteChanging(value);
+					this.SendPropertyChanging();
+					this._ValidityNote = value;
+					this.SendPropertyChanged("ValidityNote");
+					this.OnValidityNoteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RespUserID", DbType="Int")]
+		public System.Nullable<int> RespUserID
+		{
+			get
+			{
+				return this._RespUserID;
+			}
+			set
+			{
+				if ((this._RespUserID != value))
+				{
+					if (this._tblUser.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRespUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._RespUserID = value;
+					this.SendPropertyChanged("RespUserID");
+					this.OnRespUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubDepID", DbType="Int")]
+		public System.Nullable<int> SubDepID
+		{
+			get
+			{
+				return this._SubDepID;
+			}
+			set
+			{
+				if ((this._SubDepID != value))
+				{
+					if (this._tblUsers_SubDep.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSubDepIDChanging(value);
+					this.SendPropertyChanging();
+					this._SubDepID = value;
+					this.SendPropertyChanged("SubDepID");
+					this.OnSubDepIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusID", DbType="Int")]
+		public System.Nullable<int> StatusID
+		{
+			get
+			{
+				return this._StatusID;
+			}
+			set
+			{
+				if ((this._StatusID != value))
+				{
+					if (this._tblContracts_Status.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStatusIDChanging(value);
+					this.SendPropertyChanging();
+					this._StatusID = value;
+					this.SendPropertyChanged("StatusID");
+					this.OnStatusIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status_Description", DbType="NVarChar(250)")]
+		public string Status_Description
+		{
+			get
+			{
+				return this._Status_Description;
+			}
+			set
+			{
+				if ((this._Status_Description != value))
+				{
+					this.OnStatus_DescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Status_Description = value;
+					this.SendPropertyChanged("Status_Description");
+					this.OnStatus_DescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContract_tblClients_Object", Storage="_tblClients_Objects", ThisKey="ID", OtherKey="ContractID")]
+		public EntitySet<tblClients_Object> tblClients_Objects
+		{
+			get
+			{
+				return this._tblClients_Objects;
+			}
+			set
+			{
+				this._tblClients_Objects.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Form_tblContract", Storage="_tblContracts_Form", ThisKey="FormID", OtherKey="ID", IsForeignKey=true)]
+		public tblContracts_Form tblContracts_Form
+		{
+			get
+			{
+				return this._tblContracts_Form.Entity;
+			}
+			set
+			{
+				tblContracts_Form previousValue = this._tblContracts_Form.Entity;
+				if (((previousValue != value) 
+							|| (this._tblContracts_Form.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblContracts_Form.Entity = null;
+						previousValue.tblContracts.Remove(this);
+					}
+					this._tblContracts_Form.Entity = value;
+					if ((value != null))
+					{
+						value.tblContracts.Add(this);
+						this._FormID = value.ID;
+					}
+					else
+					{
+						this._FormID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("tblContracts_Form");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Status_tblContract", Storage="_tblContracts_Status", ThisKey="StatusID", OtherKey="ID", IsForeignKey=true)]
+		public tblContracts_Status tblContracts_Status
+		{
+			get
+			{
+				return this._tblContracts_Status.Entity;
+			}
+			set
+			{
+				tblContracts_Status previousValue = this._tblContracts_Status.Entity;
+				if (((previousValue != value) 
+							|| (this._tblContracts_Status.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblContracts_Status.Entity = null;
+						previousValue.tblContracts.Remove(this);
+					}
+					this._tblContracts_Status.Entity = value;
+					if ((value != null))
+					{
+						value.tblContracts.Add(this);
+						this._StatusID = value.ID;
+					}
+					else
+					{
+						this._StatusID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("tblContracts_Status");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Type_tblContract", Storage="_tblContracts_Type", ThisKey="TypeID", OtherKey="ID", IsForeignKey=true)]
+		public tblContracts_Type tblContracts_Type
+		{
+			get
+			{
+				return this._tblContracts_Type.Entity;
+			}
+			set
+			{
+				tblContracts_Type previousValue = this._tblContracts_Type.Entity;
+				if (((previousValue != value) 
+							|| (this._tblContracts_Type.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblContracts_Type.Entity = null;
+						previousValue.tblContracts.Remove(this);
+					}
+					this._tblContracts_Type.Entity = value;
+					if ((value != null))
+					{
+						value.tblContracts.Add(this);
+						this._TypeID = value.ID;
+					}
+					else
+					{
+						this._TypeID = default(int);
+					}
+					this.SendPropertyChanged("tblContracts_Type");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUser_tblContract", Storage="_tblUser", ThisKey="RespUserID", OtherKey="ID", IsForeignKey=true)]
+		public tblUser tblUser
+		{
+			get
+			{
+				return this._tblUser.Entity;
+			}
+			set
+			{
+				tblUser previousValue = this._tblUser.Entity;
+				if (((previousValue != value) 
+							|| (this._tblUser.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblUser.Entity = null;
+						previousValue.tblContracts.Remove(this);
+					}
+					this._tblUser.Entity = value;
+					if ((value != null))
+					{
+						value.tblContracts.Add(this);
+						this._RespUserID = value.ID;
+					}
+					else
+					{
+						this._RespUserID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("tblUser");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblUsers_SubDep_tblContract", Storage="_tblUsers_SubDep", ThisKey="SubDepID", OtherKey="ID", IsForeignKey=true)]
+		public tblUsers_SubDep tblUsers_SubDep
+		{
+			get
+			{
+				return this._tblUsers_SubDep.Entity;
+			}
+			set
+			{
+				tblUsers_SubDep previousValue = this._tblUsers_SubDep.Entity;
+				if (((previousValue != value) 
+							|| (this._tblUsers_SubDep.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblUsers_SubDep.Entity = null;
+						previousValue.tblContracts.Remove(this);
+					}
+					this._tblUsers_SubDep.Entity = value;
+					if ((value != null))
+					{
+						value.tblContracts.Add(this);
+						this._SubDepID = value.ID;
+					}
+					else
+					{
+						this._SubDepID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("tblUsers_SubDep");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblContract", Storage="_tblClient", ThisKey="ClientID", OtherKey="ID", IsForeignKey=true)]
+		public tblClient tblClient
+		{
+			get
+			{
+				return this._tblClient.Entity;
+			}
+			set
+			{
+				tblClient previousValue = this._tblClient.Entity;
+				if (((previousValue != value) 
+							|| (this._tblClient.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tblClient.Entity = null;
+						previousValue.tblContracts.Remove(this);
+					}
+					this._tblClient.Entity = value;
+					if ((value != null))
+					{
+						value.tblContracts.Add(this);
+						this._ClientID = value.ID;
+					}
+					else
+					{
+						this._ClientID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("tblClient");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tblClients_Objects(tblClients_Object entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblContract = this;
+		}
+		
+		private void detach_tblClients_Objects(tblClients_Object entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblContract = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblClients_Objects")]
 	public partial class tblClients_Object : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5099,15 +4955,7 @@ namespace BSData.Models
 		
 		private string _Name;
 		
-		private string _Description;
-		
-		private System.DateTime _StartDate;
-		
-		private System.DateTime _EndDate;
-		
-		private bool _IsCompany;
-		
-		private System.Nullable<int> _ClientID;
+		private int _ContractID;
 		
 		private string _Device;
 		
@@ -5115,19 +4963,15 @@ namespace BSData.Models
 		
 		private string _Location;
 		
-		private string _Coords;
+		private System.Nullable<int> _Coords_AutoID;
 		
-		private int _ReactionFree;
+		private System.Nullable<System.DateTime> _Coords_Time;
 		
-		private double _ReactionPrice;
+		private System.Nullable<decimal> _Lat;
 		
-		private double _PriceMonth;
+		private System.Nullable<decimal> _Lng;
 		
-		private double _PriceOnce;
-		
-		private int _StatusID;
-		
-		private string _Status_Description;
+		private EntityRef<tblContract> _tblContract;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5137,44 +4981,31 @@ namespace BSData.Models
     partial void OnIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnStartDateChanging(System.DateTime value);
-    partial void OnStartDateChanged();
-    partial void OnEndDateChanging(System.DateTime value);
-    partial void OnEndDateChanged();
-    partial void OnIsCompanyChanging(bool value);
-    partial void OnIsCompanyChanged();
-    partial void OnClientIDChanging(System.Nullable<int> value);
-    partial void OnClientIDChanged();
+    partial void OnContractIDChanging(int value);
+    partial void OnContractIDChanged();
     partial void OnDeviceChanging(string value);
     partial void OnDeviceChanged();
     partial void OnSimIMEIChanging(string value);
     partial void OnSimIMEIChanged();
     partial void OnLocationChanging(string value);
     partial void OnLocationChanged();
-    partial void OnCoordsChanging(string value);
-    partial void OnCoordsChanged();
-    partial void OnReactionFreeChanging(int value);
-    partial void OnReactionFreeChanged();
-    partial void OnReactionPriceChanging(double value);
-    partial void OnReactionPriceChanged();
-    partial void OnPriceMonthChanging(double value);
-    partial void OnPriceMonthChanged();
-    partial void OnPriceOnceChanging(double value);
-    partial void OnPriceOnceChanged();
-    partial void OnStatusIDChanging(int value);
-    partial void OnStatusIDChanged();
-    partial void OnStatus_DescriptionChanging(string value);
-    partial void OnStatus_DescriptionChanged();
+    partial void OnCoords_AutoIDChanging(System.Nullable<int> value);
+    partial void OnCoords_AutoIDChanged();
+    partial void OnCoords_TimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnCoords_TimeChanged();
+    partial void OnLatChanging(System.Nullable<decimal> value);
+    partial void OnLatChanged();
+    partial void OnLngChanging(System.Nullable<decimal> value);
+    partial void OnLngChanged();
     #endregion
 		
 		public tblClients_Object()
 		{
+			this._tblContract = default(EntityRef<tblContract>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int ID
 		{
 			get
@@ -5214,102 +5045,26 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(250)")]
-		public string Description
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContractID", DbType="Int NOT NULL")]
+		public int ContractID
 		{
 			get
 			{
-				return this._Description;
+				return this._ContractID;
 			}
 			set
 			{
-				if ((this._Description != value))
+				if ((this._ContractID != value))
 				{
-					this.OnDescriptionChanging(value);
+					if (this._tblContract.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContractIDChanging(value);
 					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Date NOT NULL")]
-		public System.DateTime StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this.OnStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="Date NOT NULL")]
-		public System.DateTime EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this.OnEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._EndDate = value;
-					this.SendPropertyChanged("EndDate");
-					this.OnEndDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsCompany", DbType="Bit NOT NULL")]
-		public bool IsCompany
-		{
-			get
-			{
-				return this._IsCompany;
-			}
-			set
-			{
-				if ((this._IsCompany != value))
-				{
-					this.OnIsCompanyChanging(value);
-					this.SendPropertyChanging();
-					this._IsCompany = value;
-					this.SendPropertyChanged("IsCompany");
-					this.OnIsCompanyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="Int")]
-		public System.Nullable<int> ClientID
-		{
-			get
-			{
-				return this._ClientID;
-			}
-			set
-			{
-				if ((this._ClientID != value))
-				{
-					this.OnClientIDChanging(value);
-					this.SendPropertyChanging();
-					this._ClientID = value;
-					this.SendPropertyChanged("ClientID");
-					this.OnClientIDChanged();
+					this._ContractID = value;
+					this.SendPropertyChanged("ContractID");
+					this.OnContractIDChanged();
 				}
 			}
 		}
@@ -5374,142 +5129,274 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Coords", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string Coords
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Coords_AutoID", DbType="Int")]
+		public System.Nullable<int> Coords_AutoID
 		{
 			get
 			{
-				return this._Coords;
+				return this._Coords_AutoID;
 			}
 			set
 			{
-				if ((this._Coords != value))
+				if ((this._Coords_AutoID != value))
 				{
-					this.OnCoordsChanging(value);
+					this.OnCoords_AutoIDChanging(value);
 					this.SendPropertyChanging();
-					this._Coords = value;
-					this.SendPropertyChanged("Coords");
-					this.OnCoordsChanged();
+					this._Coords_AutoID = value;
+					this.SendPropertyChanged("Coords_AutoID");
+					this.OnCoords_AutoIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReactionFree", DbType="Int NOT NULL")]
-		public int ReactionFree
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Coords_Time", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Coords_Time
 		{
 			get
 			{
-				return this._ReactionFree;
+				return this._Coords_Time;
 			}
 			set
 			{
-				if ((this._ReactionFree != value))
+				if ((this._Coords_Time != value))
 				{
-					this.OnReactionFreeChanging(value);
+					this.OnCoords_TimeChanging(value);
 					this.SendPropertyChanging();
-					this._ReactionFree = value;
-					this.SendPropertyChanged("ReactionFree");
-					this.OnReactionFreeChanged();
+					this._Coords_Time = value;
+					this.SendPropertyChanged("Coords_Time");
+					this.OnCoords_TimeChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReactionPrice", DbType="Float NOT NULL")]
-		public double ReactionPrice
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lat", DbType="Decimal(9,7)")]
+		public System.Nullable<decimal> Lat
 		{
 			get
 			{
-				return this._ReactionPrice;
+				return this._Lat;
 			}
 			set
 			{
-				if ((this._ReactionPrice != value))
+				if ((this._Lat != value))
 				{
-					this.OnReactionPriceChanging(value);
+					this.OnLatChanging(value);
 					this.SendPropertyChanging();
-					this._ReactionPrice = value;
-					this.SendPropertyChanged("ReactionPrice");
-					this.OnReactionPriceChanged();
+					this._Lat = value;
+					this.SendPropertyChanged("Lat");
+					this.OnLatChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceMonth", DbType="Float NOT NULL")]
-		public double PriceMonth
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lng", DbType="Decimal(9,7)")]
+		public System.Nullable<decimal> Lng
 		{
 			get
 			{
-				return this._PriceMonth;
+				return this._Lng;
 			}
 			set
 			{
-				if ((this._PriceMonth != value))
+				if ((this._Lng != value))
 				{
-					this.OnPriceMonthChanging(value);
+					this.OnLngChanging(value);
 					this.SendPropertyChanging();
-					this._PriceMonth = value;
-					this.SendPropertyChanged("PriceMonth");
-					this.OnPriceMonthChanged();
+					this._Lng = value;
+					this.SendPropertyChanged("Lng");
+					this.OnLngChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceOnce", DbType="Float NOT NULL")]
-		public double PriceOnce
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContract_tblClients_Object", Storage="_tblContract", ThisKey="ContractID", OtherKey="ID", IsForeignKey=true)]
+		public tblContract tblContract
 		{
 			get
 			{
-				return this._PriceOnce;
+				return this._tblContract.Entity;
 			}
 			set
 			{
-				if ((this._PriceOnce != value))
+				tblContract previousValue = this._tblContract.Entity;
+				if (((previousValue != value) 
+							|| (this._tblContract.HasLoadedOrAssignedValue == false)))
 				{
-					this.OnPriceOnceChanging(value);
 					this.SendPropertyChanging();
-					this._PriceOnce = value;
-					this.SendPropertyChanged("PriceOnce");
-					this.OnPriceOnceChanged();
+					if ((previousValue != null))
+					{
+						this._tblContract.Entity = null;
+						previousValue.tblClients_Objects.Remove(this);
+					}
+					this._tblContract.Entity = value;
+					if ((value != null))
+					{
+						value.tblClients_Objects.Add(this);
+						this._ContractID = value.ID;
+					}
+					else
+					{
+						this._ContractID = default(int);
+					}
+					this.SendPropertyChanged("tblContract");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusID", DbType="Int NOT NULL")]
-		public int StatusID
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tblVehicles")]
+	public partial class tblVehicle : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _AutoNo;
+		
+		private string _Make;
+		
+		private string _Model;
+		
+		private string _Region;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnAutoNoChanging(string value);
+    partial void OnAutoNoChanged();
+    partial void OnMakeChanging(string value);
+    partial void OnMakeChanged();
+    partial void OnModelChanging(string value);
+    partial void OnModelChanged();
+    partial void OnRegionChanging(string value);
+    partial void OnRegionChanged();
+    #endregion
+		
+		public tblVehicle()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
 		{
 			get
 			{
-				return this._StatusID;
+				return this._ID;
 			}
 			set
 			{
-				if ((this._StatusID != value))
+				if ((this._ID != value))
 				{
-					this.OnStatusIDChanging(value);
+					this.OnIDChanging(value);
 					this.SendPropertyChanging();
-					this._StatusID = value;
-					this.SendPropertyChanged("StatusID");
-					this.OnStatusIDChanged();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status_Description", DbType="NVarChar(100)")]
-		public string Status_Description
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AutoNo", DbType="VarChar(8) NOT NULL", CanBeNull=false)]
+		public string AutoNo
 		{
 			get
 			{
-				return this._Status_Description;
+				return this._AutoNo;
 			}
 			set
 			{
-				if ((this._Status_Description != value))
+				if ((this._AutoNo != value))
 				{
-					this.OnStatus_DescriptionChanging(value);
+					this.OnAutoNoChanging(value);
 					this.SendPropertyChanging();
-					this._Status_Description = value;
-					this.SendPropertyChanged("Status_Description");
-					this.OnStatus_DescriptionChanged();
+					this._AutoNo = value;
+					this.SendPropertyChanged("AutoNo");
+					this.OnAutoNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Make", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Make
+		{
+			get
+			{
+				return this._Make;
+			}
+			set
+			{
+				if ((this._Make != value))
+				{
+					this.OnMakeChanging(value);
+					this.SendPropertyChanging();
+					this._Make = value;
+					this.SendPropertyChanged("Make");
+					this.OnMakeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Model", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Model
+		{
+			get
+			{
+				return this._Model;
+			}
+			set
+			{
+				if ((this._Model != value))
+				{
+					this.OnModelChanging(value);
+					this.SendPropertyChanging();
+					this._Model = value;
+					this.SendPropertyChanged("Model");
+					this.OnModelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Region", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Region
+		{
+			get
+			{
+				return this._Region;
+			}
+			set
+			{
+				if ((this._Region != value))
+				{
+					this.OnRegionChanging(value);
+					this.SendPropertyChanging();
+					this._Region = value;
+					this.SendPropertyChanged("Region");
+					this.OnRegionChanged();
 				}
 			}
 		}
@@ -5543,9 +5430,13 @@ namespace BSData.Models
 		
 		private int _ID;
 		
+		private bool _Private;
+		
 		private string _Code;
 		
 		private string _Name;
+		
+		private string _SurName;
 		
 		private string _Description;
 		
@@ -5555,31 +5446,17 @@ namespace BSData.Models
 		
 		private string _Contact;
 		
-		private string _ContactDetails;
-		
 		private string _Email;
 		
-		private string _Notes;
-		
-		private string _Rec_Bank;
-		
-		private string _Rec_BankAccount;
-		
-		private string _Rec_VATCode;
-		
-		private System.Nullable<System.Guid> _Rid;
+		private System.Nullable<int> _NextContactContractFormID;
 		
 		private System.Nullable<System.DateTime> _NextContactDate;
 		
 		private System.Nullable<int> _NextContactUserID;
 		
-		private System.Nullable<int> _NextContactContractFormID;
-		
-		private EntitySet<tblContract> _tblContracts;
-		
 		private EntitySet<tblClients_Event> _tblClients_Events;
 		
-		private EntityRef<tblContracts_Form> _tblContracts_Form;
+		private EntitySet<tblContract> _tblContracts;
 		
 		private EntityRef<tblTown> _tblTown;
 		
@@ -5591,10 +5468,14 @@ namespace BSData.Models
     partial void OnCreated();
     partial void OnIDChanging(int value);
     partial void OnIDChanged();
+    partial void OnPrivateChanging(bool value);
+    partial void OnPrivateChanged();
     partial void OnCodeChanging(string value);
     partial void OnCodeChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
+    partial void OnSurNameChanging(string value);
+    partial void OnSurNameChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
     partial void OnAddressChanging(string value);
@@ -5603,33 +5484,20 @@ namespace BSData.Models
     partial void OnTownIDChanged();
     partial void OnContactChanging(string value);
     partial void OnContactChanged();
-    partial void OnContactDetailsChanging(string value);
-    partial void OnContactDetailsChanged();
     partial void OnEmailChanging(string value);
     partial void OnEmailChanged();
-    partial void OnNotesChanging(string value);
-    partial void OnNotesChanged();
-    partial void OnRec_BankChanging(string value);
-    partial void OnRec_BankChanged();
-    partial void OnRec_BankAccountChanging(string value);
-    partial void OnRec_BankAccountChanged();
-    partial void OnRec_VATCodeChanging(string value);
-    partial void OnRec_VATCodeChanged();
-    partial void OnRidChanging(System.Nullable<System.Guid> value);
-    partial void OnRidChanged();
+    partial void OnNextContactContractFormIDChanging(System.Nullable<int> value);
+    partial void OnNextContactContractFormIDChanged();
     partial void OnNextContactDateChanging(System.Nullable<System.DateTime> value);
     partial void OnNextContactDateChanged();
     partial void OnNextContactUserIDChanging(System.Nullable<int> value);
     partial void OnNextContactUserIDChanged();
-    partial void OnNextContactContractFormIDChanging(System.Nullable<int> value);
-    partial void OnNextContactContractFormIDChanged();
     #endregion
 		
 		public tblClient()
 		{
-			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
 			this._tblClients_Events = new EntitySet<tblClients_Event>(new Action<tblClients_Event>(this.attach_tblClients_Events), new Action<tblClients_Event>(this.detach_tblClients_Events));
-			this._tblContracts_Form = default(EntityRef<tblContracts_Form>);
+			this._tblContracts = new EntitySet<tblContract>(new Action<tblContract>(this.attach_tblContracts), new Action<tblContract>(this.detach_tblContracts));
 			this._tblTown = default(EntityRef<tblTown>);
 			this._tblUser = default(EntityRef<tblUser>);
 			OnCreated();
@@ -5655,7 +5523,27 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="VarChar(12) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Private", DbType="Bit NOT NULL")]
+		public bool Private
+		{
+			get
+			{
+				return this._Private;
+			}
+			set
+			{
+				if ((this._Private != value))
+				{
+					this.OnPrivateChanging(value);
+					this.SendPropertyChanging();
+					this._Private = value;
+					this.SendPropertyChanged("Private");
+					this.OnPrivateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="VarChar(12)")]
 		public string Code
 		{
 			get
@@ -5675,7 +5563,7 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(70) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -5691,6 +5579,26 @@ namespace BSData.Models
 					this._Name = value;
 					this.SendPropertyChanged("Name");
 					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SurName", DbType="NVarChar(70)")]
+		public string SurName
+		{
+			get
+			{
+				return this._SurName;
+			}
+			set
+			{
+				if ((this._SurName != value))
+				{
+					this.OnSurNameChanging(value);
+					this.SendPropertyChanging();
+					this._SurName = value;
+					this.SendPropertyChanged("SurName");
+					this.OnSurNameChanged();
 				}
 			}
 		}
@@ -5779,26 +5687,6 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactDetails", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
-		public string ContactDetails
-		{
-			get
-			{
-				return this._ContactDetails;
-			}
-			set
-			{
-				if ((this._ContactDetails != value))
-				{
-					this.OnContactDetailsChanging(value);
-					this.SendPropertyChanging();
-					this._ContactDetails = value;
-					this.SendPropertyChanged("ContactDetails");
-					this.OnContactDetailsChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(50)")]
 		public string Email
 		{
@@ -5819,102 +5707,22 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="NVarChar(300)")]
-		public string Notes
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextContactContractFormID", DbType="Int")]
+		public System.Nullable<int> NextContactContractFormID
 		{
 			get
 			{
-				return this._Notes;
+				return this._NextContactContractFormID;
 			}
 			set
 			{
-				if ((this._Notes != value))
+				if ((this._NextContactContractFormID != value))
 				{
-					this.OnNotesChanging(value);
+					this.OnNextContactContractFormIDChanging(value);
 					this.SendPropertyChanging();
-					this._Notes = value;
-					this.SendPropertyChanged("Notes");
-					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_Bank", DbType="NVarChar(50)")]
-		public string Rec_Bank
-		{
-			get
-			{
-				return this._Rec_Bank;
-			}
-			set
-			{
-				if ((this._Rec_Bank != value))
-				{
-					this.OnRec_BankChanging(value);
-					this.SendPropertyChanging();
-					this._Rec_Bank = value;
-					this.SendPropertyChanged("Rec_Bank");
-					this.OnRec_BankChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_BankAccount", DbType="VarChar(30)")]
-		public string Rec_BankAccount
-		{
-			get
-			{
-				return this._Rec_BankAccount;
-			}
-			set
-			{
-				if ((this._Rec_BankAccount != value))
-				{
-					this.OnRec_BankAccountChanging(value);
-					this.SendPropertyChanging();
-					this._Rec_BankAccount = value;
-					this.SendPropertyChanged("Rec_BankAccount");
-					this.OnRec_BankAccountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rec_VATCode", DbType="VarChar(20)")]
-		public string Rec_VATCode
-		{
-			get
-			{
-				return this._Rec_VATCode;
-			}
-			set
-			{
-				if ((this._Rec_VATCode != value))
-				{
-					this.OnRec_VATCodeChanging(value);
-					this.SendPropertyChanging();
-					this._Rec_VATCode = value;
-					this.SendPropertyChanged("Rec_VATCode");
-					this.OnRec_VATCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rid", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Rid
-		{
-			get
-			{
-				return this._Rid;
-			}
-			set
-			{
-				if ((this._Rid != value))
-				{
-					this.OnRidChanging(value);
-					this.SendPropertyChanging();
-					this._Rid = value;
-					this.SendPropertyChanged("Rid");
-					this.OnRidChanged();
+					this._NextContactContractFormID = value;
+					this.SendPropertyChanged("NextContactContractFormID");
+					this.OnNextContactContractFormIDChanged();
 				}
 			}
 		}
@@ -5963,43 +5771,6 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NextContactContractFormID", DbType="Int")]
-		public System.Nullable<int> NextContactContractFormID
-		{
-			get
-			{
-				return this._NextContactContractFormID;
-			}
-			set
-			{
-				if ((this._NextContactContractFormID != value))
-				{
-					if (this._tblContracts_Form.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnNextContactContractFormIDChanging(value);
-					this.SendPropertyChanging();
-					this._NextContactContractFormID = value;
-					this.SendPropertyChanged("NextContactContractFormID");
-					this.OnNextContactContractFormIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblContract", Storage="_tblContracts", ThisKey="ID", OtherKey="ClientID")]
-		public EntitySet<tblContract> tblContracts
-		{
-			get
-			{
-				return this._tblContracts;
-			}
-			set
-			{
-				this._tblContracts.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblClients_Event", Storage="_tblClients_Events", ThisKey="ID", OtherKey="ClientID")]
 		public EntitySet<tblClients_Event> tblClients_Events
 		{
@@ -6013,37 +5784,16 @@ namespace BSData.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblContracts_Form_tblClient", Storage="_tblContracts_Form", ThisKey="NextContactContractFormID", OtherKey="ID", IsForeignKey=true)]
-		public tblContracts_Form tblContracts_Form
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tblClient_tblContract", Storage="_tblContracts", ThisKey="ID", OtherKey="ClientID")]
+		public EntitySet<tblContract> tblContracts
 		{
 			get
 			{
-				return this._tblContracts_Form.Entity;
+				return this._tblContracts;
 			}
 			set
 			{
-				tblContracts_Form previousValue = this._tblContracts_Form.Entity;
-				if (((previousValue != value) 
-							|| (this._tblContracts_Form.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tblContracts_Form.Entity = null;
-						previousValue.tblClients.Remove(this);
-					}
-					this._tblContracts_Form.Entity = value;
-					if ((value != null))
-					{
-						value.tblClients.Add(this);
-						this._NextContactContractFormID = value.ID;
-					}
-					else
-					{
-						this._NextContactContractFormID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("tblContracts_Form");
-				}
+				this._tblContracts.Assign(value);
 			}
 		}
 		
@@ -6135,18 +5885,6 @@ namespace BSData.Models
 			}
 		}
 		
-		private void attach_tblContracts(tblContract entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblClient = this;
-		}
-		
-		private void detach_tblContracts(tblContract entity)
-		{
-			this.SendPropertyChanging();
-			entity.tblClient = null;
-		}
-		
 		private void attach_tblClients_Events(tblClients_Event entity)
 		{
 			this.SendPropertyChanging();
@@ -6154,6 +5892,18 @@ namespace BSData.Models
 		}
 		
 		private void detach_tblClients_Events(tblClients_Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblClient = null;
+		}
+		
+		private void attach_tblContracts(tblContract entity)
+		{
+			this.SendPropertyChanging();
+			entity.tblClient = this;
+		}
+		
+		private void detach_tblContracts(tblContract entity)
 		{
 			this.SendPropertyChanging();
 			entity.tblClient = null;
@@ -6678,606 +6428,6 @@ namespace BSData.Models
 		}
 	}
 	
-	public partial class proc_GetContracts_ObjectsResult
-	{
-		
-		private int _ID;
-		
-		private System.Nullable<int> _UserID;
-		
-		private string _Date;
-		
-		private string _ClientName;
-		
-		private string _Description;
-		
-		private string _ValidityDate;
-		
-		private int _DocsNo;
-		
-		private int _StatusID;
-		
-		private string _Status_Description;
-		
-		public proc_GetContracts_ObjectsResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int")]
-		public System.Nullable<int> UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					this._UserID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="Char(10)")]
-		public string Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this._Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string ClientName
-		{
-			get
-			{
-				return this._ClientName;
-			}
-			set
-			{
-				if ((this._ClientName != value))
-				{
-					this._ClientName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(250)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValidityDate", DbType="Char(10) NOT NULL", CanBeNull=false)]
-		public string ValidityDate
-		{
-			get
-			{
-				return this._ValidityDate;
-			}
-			set
-			{
-				if ((this._ValidityDate != value))
-				{
-					this._ValidityDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocsNo", DbType="Int NOT NULL")]
-		public int DocsNo
-		{
-			get
-			{
-				return this._DocsNo;
-			}
-			set
-			{
-				if ((this._DocsNo != value))
-				{
-					this._DocsNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusID", DbType="Int NOT NULL")]
-		public int StatusID
-		{
-			get
-			{
-				return this._StatusID;
-			}
-			set
-			{
-				if ((this._StatusID != value))
-				{
-					this._StatusID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status_Description", DbType="NVarChar(100)")]
-		public string Status_Description
-		{
-			get
-			{
-				return this._Status_Description;
-			}
-			set
-			{
-				if ((this._Status_Description != value))
-				{
-					this._Status_Description = value;
-				}
-			}
-		}
-	}
-	
-	public partial class proc_GetContracts_OtherResult
-	{
-		
-		private int _ID;
-		
-		private int _FormID;
-		
-		private string _Date;
-		
-		private int _ClientID;
-		
-		private string _ClientName;
-		
-		private string _Description;
-		
-		private string _ValidityDate;
-		
-		private string _ValidityNote;
-		
-		private int _DocsNo;
-		
-		private int _StatusID;
-		
-		private string _Status_Description;
-		
-		public proc_GetContracts_OtherResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormID", DbType="Int NOT NULL")]
-		public int FormID
-		{
-			get
-			{
-				return this._FormID;
-			}
-			set
-			{
-				if ((this._FormID != value))
-				{
-					this._FormID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="Char(10)")]
-		public string Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this._Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="Int NOT NULL")]
-		public int ClientID
-		{
-			get
-			{
-				return this._ClientID;
-			}
-			set
-			{
-				if ((this._ClientID != value))
-				{
-					this._ClientID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientName", DbType="NVarChar(60)")]
-		public string ClientName
-		{
-			get
-			{
-				return this._ClientName;
-			}
-			set
-			{
-				if ((this._ClientName != value))
-				{
-					this._ClientName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValidityDate", DbType="Char(10) NOT NULL", CanBeNull=false)]
-		public string ValidityDate
-		{
-			get
-			{
-				return this._ValidityDate;
-			}
-			set
-			{
-				if ((this._ValidityDate != value))
-				{
-					this._ValidityDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValidityNote", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string ValidityNote
-		{
-			get
-			{
-				return this._ValidityNote;
-			}
-			set
-			{
-				if ((this._ValidityNote != value))
-				{
-					this._ValidityNote = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocsNo", DbType="Int NOT NULL")]
-		public int DocsNo
-		{
-			get
-			{
-				return this._DocsNo;
-			}
-			set
-			{
-				if ((this._DocsNo != value))
-				{
-					this._DocsNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusID", DbType="Int NOT NULL")]
-		public int StatusID
-		{
-			get
-			{
-				return this._StatusID;
-			}
-			set
-			{
-				if ((this._StatusID != value))
-				{
-					this._StatusID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status_Description", DbType="NVarChar(250)")]
-		public string Status_Description
-		{
-			get
-			{
-				return this._Status_Description;
-			}
-			set
-			{
-				if ((this._Status_Description != value))
-				{
-					this._Status_Description = value;
-				}
-			}
-		}
-	}
-	
-	public partial class proc_GetContracts_UnsignedResult
-	{
-		
-		private int _ID;
-		
-		private string _Type;
-		
-		private string _StartDate;
-		
-		private string _ClientName;
-		
-		private string _Description;
-		
-		private string _UserName;
-		
-		private string _RecDate;
-		
-		private int _DocsNo;
-		
-		private string _Status_Description;
-		
-		private int _StatusID;
-		
-		private System.Nullable<int> _UserID;
-		
-		private System.Nullable<int> _ClientID;
-		
-		public proc_GetContracts_UnsignedResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(12) NOT NULL", CanBeNull=false)]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this._Type = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Char(10)")]
-		public string StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this._StartDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientName", DbType="NVarChar(100)")]
-		public string ClientName
-		{
-			get
-			{
-				return this._ClientName;
-			}
-			set
-			{
-				if ((this._ClientName != value))
-				{
-					this._ClientName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(250)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this._Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(71)")]
-		public string UserName
-		{
-			get
-			{
-				return this._UserName;
-			}
-			set
-			{
-				if ((this._UserName != value))
-				{
-					this._UserName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecDate", DbType="VarChar(10)")]
-		public string RecDate
-		{
-			get
-			{
-				return this._RecDate;
-			}
-			set
-			{
-				if ((this._RecDate != value))
-				{
-					this._RecDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DocsNo", DbType="Int NOT NULL")]
-		public int DocsNo
-		{
-			get
-			{
-				return this._DocsNo;
-			}
-			set
-			{
-				if ((this._DocsNo != value))
-				{
-					this._DocsNo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status_Description", DbType="NVarChar(250) NOT NULL", CanBeNull=false)]
-		public string Status_Description
-		{
-			get
-			{
-				return this._Status_Description;
-			}
-			set
-			{
-				if ((this._Status_Description != value))
-				{
-					this._Status_Description = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusID", DbType="Int NOT NULL")]
-		public int StatusID
-		{
-			get
-			{
-				return this._StatusID;
-			}
-			set
-			{
-				if ((this._StatusID != value))
-				{
-					this._StatusID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int")]
-		public System.Nullable<int> UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					this._UserID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="Int")]
-		public System.Nullable<int> ClientID
-		{
-			get
-			{
-				return this._ClientID;
-			}
-			set
-			{
-				if ((this._ClientID != value))
-				{
-					this._ClientID = value;
-				}
-			}
-		}
-	}
-	
 	public partial class proc_GetUploadedFiles1Result
 	{
 		
@@ -7407,6 +6557,230 @@ namespace BSData.Models
 				if ((this._Description != value))
 				{
 					this._Description = value;
+				}
+			}
+		}
+	}
+	
+	public partial class proc_GetContractsResult
+	{
+		
+		private int _ID;
+		
+		private string _No;
+		
+		private string _Name;
+		
+		private string _Address;
+		
+		private string _Description;
+		
+		private string _StartDate;
+		
+		private string _EndDate;
+		
+		private string _User;
+		
+		private string _RespUser;
+		
+		private string _Status_Description;
+		
+		private int _docNo;
+		
+		private int _TypeID;
+		
+		public proc_GetContractsResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_No", DbType="VarChar(29)")]
+		public string No
+		{
+			get
+			{
+				return this._No;
+			}
+			set
+			{
+				if ((this._No != value))
+				{
+					this._No = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(141) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="NVarChar(306) NOT NULL", CanBeNull=false)]
+		public string Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this._Address = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this._Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="Char(10) NOT NULL", CanBeNull=false)]
+		public string StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this._StartDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="Char(10) NOT NULL", CanBeNull=false)]
+		public string EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this._EndDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[User]", Storage="_User", DbType="NVarChar(71)")]
+		public string User
+		{
+			get
+			{
+				return this._User;
+			}
+			set
+			{
+				if ((this._User != value))
+				{
+					this._User = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RespUser", DbType="NVarChar(71) NOT NULL", CanBeNull=false)]
+		public string RespUser
+		{
+			get
+			{
+				return this._RespUser;
+			}
+			set
+			{
+				if ((this._RespUser != value))
+				{
+					this._RespUser = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status_Description", DbType="NVarChar(250) NOT NULL", CanBeNull=false)]
+		public string Status_Description
+		{
+			get
+			{
+				return this._Status_Description;
+			}
+			set
+			{
+				if ((this._Status_Description != value))
+				{
+					this._Status_Description = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_docNo", DbType="Int NOT NULL")]
+		public int docNo
+		{
+			get
+			{
+				return this._docNo;
+			}
+			set
+			{
+				if ((this._docNo != value))
+				{
+					this._docNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeID", DbType="Int NOT NULL")]
+		public int TypeID
+		{
+			get
+			{
+				return this._TypeID;
+			}
+			set
+			{
+				if ((this._TypeID != value))
+				{
+					this._TypeID = value;
 				}
 			}
 		}

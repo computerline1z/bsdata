@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using BSData.Models;
 
 namespace BSData.Classes {
@@ -19,7 +20,10 @@ namespace BSData.Classes {
 
       [HttpPost]
       public JsonResult GetUploads(string FileName, int RecordID) {
-         Repository_Uploads Rep = new Repository_Uploads();
+         Repository_Uploads Rep = null;
+         try { Rep = new Repository_Uploads(); }
+         catch (Exception e) { MyEventLog.AddException(e, false); }
+
          var obj = new { Files = Rep.GetJSON_UploadedFiles1(FileName, RecordID) };
          return Json(obj);
       }

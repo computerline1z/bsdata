@@ -10,7 +10,7 @@
    @*   <link href="@Url.Content("~/Content/css-screen.min.css")" rel="stylesheet" media="screen" type="text/css" />
    <link href="../../Content/dataTables.css" rel="stylesheet" type="text/css" />
    <link href="../../Content/jquery-ui-custom.css" rel="stylesheet" type="text/css" />
-*@ <link href="../../Content/merged.min.css" rel="stylesheet" type="text/css" />
+*@ <link href="../../Content/merged1.min.css" rel="stylesheet" type="text/css" />
    <title>@ViewBag.Title</title>
 </head>
 <body>
@@ -42,7 +42,7 @@
            Menus = (from m in Model.Menus where m.GroupID == Group.ID orderby m.OrderNo select m);
          @:<div><p class="sideBarTitle">@Group.Name</p><ul> <!------------------------->
 foreach (var M in Menus) { <li><a data-Action='@M.Action' href="#">› @M.Name</a></li> } @:</ul></div> <!------------------------->
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     }}
    </div>
    <div id="main-copy">
    </div>
@@ -58,32 +58,32 @@ foreach (var M in Menus) { <li><a data-Action='@M.Action' href="#">› @M.Name</
          <a href="http://www.bs.lt" class="doNotPrint">www.bs.lt</a>
       </div>
    </div>
-   <script src="@Url.Content("~/Scripts/Final/merged1.min.js")" type="text/javascript"></script>
-   @*<script src="@Url.Content("~/Scripts/Plugins/fauxconsole.js")" type="text/javascript"></script>
-   <script src="@Url.Content("~/Scripts/Plugins/jquery-ui-1.8.15.custom.min.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/Final/merged3.min.js")" type="text/javascript"></script>
+   @*<script src="@Url.Content("~/Scripts/Plugins/jquery-1.7.min.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/Plugins/fauxconsole.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/Plugins/jquery-ui-1.8.15.min.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/Plugins/jquery.dataTables.min.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/Plugins/json2.js")" type="text/javascript"></script>
-   <script src="@Url.Content("~/Scripts/Plugins/Plugins1.js")" type="text/javascript"></script>
- <script src="@Url.Content("~/Scripts/Plugins/jquery.validity.js")" type="text/javascript"></script>
-   *@ <script src="@Url.Content("~/Scripts/Final/mergedGeneral.min.js")" type="text/javascript"></script>
-   @*   <script src="@Url.Content("~/Scripts/General/Server.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/Plugins/Plugins.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/Plugins/jquery.validity.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/Plugins/swfupload.js")" type="text/javascript"></script>*@ <script src="@Url.Content("~/Scripts/Final/mergedGenera3.min.js")" type="text/javascript"></script>
+   @*<script src="@Url.Content("~/Scripts/General/Server.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/General/General.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/General/objFunc.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/General/clsGrid.js")" type="text/javascript"></script>
- <script src="@Url.Content("~/Scripts/General/Start.js")" type="text/javascript"></script>
-  <script src="@Url.Content("~/Scripts/General/clsDialogUi.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/General/Start.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/General/clsDialogUi.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/General/clsEditableForm.js")" type="text/javascript"></script>
    <script src="@Url.Content("~/Scripts/General/MyPlugins2.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/General/MyPlugins.js")" type="text/javascript"></script>
-   <script src="@Url.Content("~/Scripts/General/MyPlugins_ComboBox.js")" type="text/javascript"></script>
-*@<script src="../../Scripts/Form/Clients_ClientsList_Grid.js" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/General/MyPlugins.js")" type="text/javascript"></script>
+   <script src="@Url.Content("~/Scripts/General/MyPlugins_ComboBox.js")" type="text/javascript"></script>*@ <script src="../../Scripts/Form/Clients_ClientsList_Grid.js" type="text/javascript"></script>
    <script src="../../Scripts/Form/Clients_NewClient.js" type="text/javascript"></script>
-   <script src="../../Scripts/Form/Docs_Contracts_New_Object.js" type="text/javascript"></script>
+   <script src="../../Scripts/Form/Contracts_NewNo.js" type="text/javascript"></script>
+   @*   <script src="../../Scripts/Form/Docs_Contracts_New_Object.js" type="text/javascript"></script>
    <script src="../../Scripts/Form/Docs_Contracts_New_Other.js" type="text/javascript"></script>
    <script src="../../Scripts/Form/Docs_ContractsObjects_Grid.js" type="text/javascript"></script>
    <script src="../../Scripts/Form/Docs_ContractsOther_Grid.js" type="text/javascript"></script>
-   <script src="../../Scripts/Form/Docs_ContractsUnsigned_Grid.js" type="text/javascript"></script>
-   <script src="../../Scripts/Form/Title_MyEvents.js" type="text/javascript"></script>
+   <script src="../../Scripts/Form/Docs_ContractsUnsigned_Grid.js" type="text/javascript"></script>*@ <script src="../../Scripts/Form/Title_MyEvents.js" type="text/javascript"></script>
    @*<script src="../../Scripts/Form/forms.merged.min.js" type="text/javascript"></script> *@ @* <script src="../../Scripts/Plugins/Plugins.js" type="text/javascript"></script>
     <script src="../../Scripts/Plugins/swfupload.js" type="text/javascript"></script>
 *@</body>

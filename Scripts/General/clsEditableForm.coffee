@@ -34,7 +34,7 @@
 	fnLoadEditableForm: () ->
 		if !opt.form or opt.form=="Dialog"
 			dlgEditableOpt = 
-				autoOpen: false, minWidth: '45em', minHeight: '40em', width: '60em', modal: true, title: opt.Title, draggable: true
+				autoOpen: false, minWidth: '65em', minHeight: '40em', width: '80em', modal: true, title: opt.Title, draggable: true
 				buttons:
 					"Išsaugoti pakeitimus": () -> fnSaveChanges()
 					"Ištrinti": () -> $(this).dialog("close")
@@ -65,8 +65,8 @@
 	fnSaveChanges=() ->
 		DataToSave=oGLOBAL.ValidateForm($('#divEditableForm'))
 		if DataToSave
-			oGLOBAL.UpdateServer(Action: Action, DataToSave: DataToSave,
-			CallBack:
+			oGLOBAL.UpdateServer(Action: Action, DataToSave: DataToSave
+			,CallBack:
 				Success:(resp,updData) -> ##{ "Action": p.Action, "DataToSave": p.DataToSave, "CallBack": p.CallBack, "Msg": p.Msg };
 					RowLength=Row.Cols.length; RowI=0
 					updLength=updData.DataToSave.Fields.length
@@ -116,7 +116,7 @@
 						$("#"+opt.DialogFormId).dialog("close")
 					else
 						fnResetForm()
-			Msg: "", BlockCtrl:$('#divEditableForm')
+			,Msg: "", BlockCtrl:$('#divEditableForm')
 			)
 		else if DataToSave==0##reiskia, kad niekas nepakeista
 			$("#"+opt.DialogFormId).dialog("close")
@@ -171,7 +171,7 @@ class @clsEditInPlaceForm
 				$(this).remove()
 				)
 		dlgFormOpt=autoOpen:false, position: ['center', 50]
-		resize:'auto',
+		,resize:'auto',
 		##height:'auto',nifiga neveikia - uz keturiu eiluciu ikisu ranka
 		minWidth:'45em',width:'65em'
 		modal:true,title:formTitle,draggable:true##minHeight:'20em'

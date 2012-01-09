@@ -1,0 +1,15 @@
+﻿<h1 id="introduction">@ViewBag.Title</h1>
+<div id="NewContractNo" data-ctrl='{"NewRec":1,"Source":"NoData","tblUpdate":"tblContracts"}'>
+   <div>
+      <fieldset class="inputFieldset"><legend>Naujo numerio sukūrimas</legend>
+         <div class='ExtendIt' data-ctrl='{"Field":"No", "Type":"hidden","id":"No","Value":"@DateTime.Now.ToString("yy")"}'>
+         </div>
+         <div class='ExtendIt' data-ctrl='{"Field":"TypeID","id":"TypeID","sTitle":"Sutarties tipas", "labelType":"Left", "attr":"title=\"Sutarties tipas\"", "List":{"ListType":"Combo","Source":"tblContractTypes","iVal":0,"iText":[1,2]}, "Tip":"Pradėkite spausdinti arba pasirinkite sutarties tipą.."}'>
+         </div>
+         <div class='ExtendIt' data-ctrl='{"Field":"Description","id":"Description","sTitle":"Esmė/ klientas", "Type":"textarea", "labelType":"Left" ,"style":"height:5em;width:100%", "attr":"title=\"Sutarties ar kliento apibūdinimas\"","Tip":"Sutarties arba kliento apibūdinimas.."}'>
+         </div>
+      </fieldset>
+   </div>
+   <span class='ExtendIt inputRight Control' data-ctrl='{"Control":"swfUpload","CtrlToSetId":"AtachedFiles", "UserId":@BSData.Classes.UserData.UserID, "tblUpdate":"tblContracts","Legend":"Prie sutarties prisegtos bylos","Title":"Pridėti bylas prie sutarties","DialogTitle":"Bylų prisegimas prie sutarties"}'>
+   </span>
+</div>

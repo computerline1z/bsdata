@@ -61,11 +61,16 @@ namespace BSData.Models {
          //var identifier = Guid.NewGuid();
          Repositories_Update UpdateRep = new Repositories_Update();
          UploadResult ur = (UpdateRep.InsertFilePars(Pars));
-         if (ur._FileId > 0) {
-            Pars.fileBase.SaveAs(GetDiskLocation(ur._FileId, Path.GetExtension(Pars.FileName)));
+
+         try {
+            if (ur._FileId > 0) {
+               Pars.fileBase.SaveAs(GetDiskLocation(ur._FileId, Path.GetExtension(Pars.FileName)));
+            }
+            //fileBase.SaveAs(GetDiskLocation(identifier));
+            if (ur._Msg.Length > 0) { return new { Msg = ur._Msg }; }
          }
-         //fileBase.SaveAs(GetDiskLocation(identifier));
-         if (ur._Msg.Length > 0) { return new { Msg = ur._Msg }; }
+         catch (Exception e) { MyEventLog.AddException(e, false); }
+
          return ur.GetVal();//kad padarytu normalu json
       }
 
@@ -79,10 +84,13 @@ namespace BSData.Models {
       public class DownloadResult : ActionResult {
 
          public DownloadResult(int FileId) {
-            dbDataContext dc = new dbDataContext();
-            tblDocs_UploadedFile df = (from f in dc.tblDocs_UploadedFiles where f.ID == FileId select f).SingleOrDefault() ?? null;
-            this.VirtualPath = Path.Combine(ConfigurationManager.AppSettings["Uploads"], FileId.ToString() + Path.GetExtension(df.FileName));
-            this.FileDownloadName = df.FileName;
+            try {
+               dbDataContext dc = new dbDataContext();
+               tblDocs_UploadedFile df = (from f in dc.tblDocs_UploadedFiles where f.ID == FileId select f).SingleOrDefault() ?? null;
+               this.VirtualPath = Path.Combine(ConfigurationManager.AppSettings["Uploads"], FileId.ToString() + Path.GetExtension(df.FileName));
+               this.FileDownloadName = df.FileName;
+            }
+            catch (Exception e) { MyEventLog.AddException(e, false); }
          }
 
          //public DownloadResult(string virtualPath) {
@@ -101,8 +109,12 @@ namespace BSData.Models {
             //This will force the “Save As/Open With” Dialog box to show up.
 
             //string filePath = context.HttpContext.Server.MapPath(this.VirtualPath);
-
-            context.HttpContext.Response.TransmitFile(this.VirtualPath);
+            try {
+               context.HttpContext.Response.TransmitFile(this.VirtualPath);
+            }
+            catch (Exception e) {
+               MyEventLog.AddException(e, true);
+            }
          }
       }
    }
