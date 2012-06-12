@@ -3,7 +3,7 @@ table thead tr th {cursor: pointer; font-size: 1.5em; padding: 0.5em;}
 
 /* ##### BS(mûsø) Styles ##### */
 html { overflow-y: scrool; min-height: 101%; }/*del scroolo*/
-label input[type=checkbox] { padding-left: 0px; margin-left: 0px; cursor: pointer; }
+label input[type=checkbox], input[radio] { padding-left: 0px; margin-left: 0px; cursor: pointer; }
 body.wait * {cursor:wait !important;}
 
 label.toplabel > span { display: block; cursor: pointer; }
@@ -21,6 +21,7 @@ span.inputRight, div.inputRight{float:left; margin:1em;display:inline-block;padd
 
 input.inputTip, textarea.inputTip, div.inputTip, span.inputTip { color: #666666; font-style: italic; }
 input.date, input.number {width: 6em !important;}
+label[for]{cursor:pointer;}
 textarea {-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */

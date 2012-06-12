@@ -15,6 +15,10 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,8 +29,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DeployEncryptKey>Encryption password is used only if any deployment setting is marked as secure</DeployEncryptKey>
-    <ExcludeApp_Data>true</ExcludeApp_Data>
+    <ExcludeApp_Data>false</ExcludeApp_Data>
     <PackageAsSingleFile>false</PackageAsSingleFile>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,7 +44,12 @@
   <ItemGroup>
     <Reference Include="Microsoft.Build.Conversion.v4.0" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages" />
     <Reference Include="System.Web.Helpers" />
@@ -52,6 +62,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -108,24 +119,22 @@
     <Content Include="Content\images_ui\Sprite16.png" />
     <Content Include="Content\images_ui\Sprite24.png" />
     <Content Include="Content\images_ui\Sprite32.png" />
-    <Content Include="Content\merged1.min.css">
+    <Content Include="Content\merged2.min.css">
       <DependentUpon>CSS.chirp.config</DependentUpon>
     </Content>
     <Content Include="Content\qTip.css" />
+    <Content Include="Scripts\Final\ChirpBug.js" />
     <Content Include="Scripts\Final\js.chirp.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\Final\jsGeneral.chirp.config">
+    <None Include="Scripts\Final\jsGeneral.chirp.config">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
     <None Include="Scripts\Form\Clients_NewClient.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Clients_NewClient.js</LastGenOutput>
     </None>
-    <None Include="Scripts\Form\Contracts_NewNo.coffee">
-      <Generator>CoffeeScriptGenerator</Generator>
-      <LastGenOutput>Contracts_NewNo.js</LastGenOutput>
-    </None>
+    <None Include="Scripts\Form\Contracts_NewNo.coffee" />
     <None Include="Scripts\Form\Docs_Contracts_New_Object.coffee">
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Docs_Contracts_New_Object.js</LastGenOutput>
@@ -134,10 +143,10 @@
       <Generator>CoffeeScriptGenerator</Generator>
       <LastGenOutput>Docs_Contracts_New_Other.js</LastGenOutput>
     </None>
-    <Content Include="Scripts\Final\merged3.min.js">
+    <Content Include="Scripts\Final\merged4.min.js">
       <DependentUpon>js.chirp.config</DependentUpon>
     </Content>
-    <Content Include="Scripts\Final\mergedGenera3.min.js">
+    <Content Include="Scripts\Final\mergedGeneral6.min.js">
       <DependentUpon>jsGeneral.chirp.config</DependentUpon>
     </Content>
     <Content Include="Scripts\Form\Clients_NewClient.js">
@@ -146,9 +155,9 @@
       <DesignTime>True</DesignTime>
     </Content>
     <Content Include="Scripts\Form\Contracts_NewNo.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Contracts_NewNo.coffee</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Content>
     <Content Include="Scripts\Form\zForms.chirp.config">
       <SubType>Designer</SubType>
@@ -218,12 +227,6 @@
     </Content>
     <Content Include="Content\css-print.min.css">
       <DependentUpon>css-print.chirp.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css-screen.css">
-      <DependentUpon>css-screen.chirp.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css-screen.min.css">
-      <DependentUpon>css-screen.chirp.less</DependentUpon>
     </Content>
     <Content Include="Content\images\ajax-loader-bar.gif" />
     <Content Include="Content\images\ajax-loader-circle-blue.gif" />
@@ -348,7 +351,6 @@
     <Content Include="Views\Shared\Copy of Start.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\Uploads\" />
     <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,20 @@
 
   jsResData = {};
 
-  this.My = {};
+  this.My = {
+    execByName: function(fnName, context) {
+      var args, func, i, namespaces;
+      args = Array.prototype.slice.call(arguments).splice(2);
+      namespaces = fnName.split(".");
+      func = namespaces.pop();
+      i = 0;
+      while (i < namespaces.length) {
+        context = context[namespaces[i]];
+        i++;
+      }
+      return context[func].apply(this, args);
+    }
+  };
 
   Index = 0;
 
@@ -150,6 +163,40 @@
       var Row;
       Row = this.GetRow(id, obj);
       return Row.MapArrToString(Indexes);
+    },
+    SetValToControls: function(obj, id, Controls) {
+      var Cols, Row;
+      Cols = oDATA.Get(obj).Cols;
+      Row = this.GetRow(id, obj);
+      return Controls.each(function() {
+        var F, ctrl, i, row, t;
+        t = $(this);
+        ctrl = t.data("ctrl");
+        F = ctrl.Field;
+        i = oDATA.Get(obj).Cols.FNameIndex(F);
+        ctrl.Value = Row[i];
+        if (ctrl.ListType) {
+          if (ctrl.Type === "List") {
+            row = oDATA.GetRow(ctrl.Value, ctrl.Source);
+            t.data("newval", row[ctrl.iVal]);
+            t.val(row.MapArrToString(ctrl.iText));
+          } else {
+            t.val(Row[i]);
+          }
+          return t.removeClass("inputTip");
+        } else {
+          return t.val(Row[i]);
+        }
+      });
+    },
+    SetNewForm: function(frm) {
+      $.extend(frm.data("ctrl"), {
+        NewRec: 1,
+        id: 0
+      });
+      return frm.find("div.ExtendIt").find("input, textarea").each(function() {
+        return $(this).val("").data("ctrl").Value = "";
+      });
     },
     UpdateCell: function(obj, tblToUpdate, id, field, NewVal) {
       var ColNo, Row;
