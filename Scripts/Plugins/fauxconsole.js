@@ -40,7 +40,7 @@ else {
    //   console.log=logf; console.debug=logf;
 }
 var CallCONSOLE=function() { if(!CONSOLE.d) CONSOLE.init(); CONSOLE.show(); log=CONSOLE.log; }
-log("fauxconsole uzkrauta");
+//log("fauxconsole uzkrauta");
 CallCONSOLE();
 
 

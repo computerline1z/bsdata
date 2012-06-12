@@ -63,9 +63,9 @@
          if(opts.extra_rows==null||opts.extra_rows<0) {
             opts.extra_rows=0;
          }
-         if(opts.debug) {
-            console.log('opts: ', opts, ' orig: ', orig);
-         }
+//         if(opts.debug) {
+//            console.log('opts: ', opts, ' orig: ', orig);
+//         }
          // resize textares on load
          resize(ta, orig);
          // check resize on key input
@@ -94,9 +94,9 @@
          } else {
             ta.attr('rows', orig.rows);
          }
-         if(opts.debug) {
-            console.log('rows: ', ta.attr('rows'), ' nbr nl_rows: ', nl_rows.length, ' nbr_ta_rows: ', nbr_ta_rows, ' final_nbr_ta_rows: ', final_nbr_ta_rows);
-         }
+         //if(opts.debug) {
+         //   console.log('rows: ', ta.attr('rows'), ' nbr nl_rows: ', nl_rows.length, ' nbr_ta_rows: ', nbr_ta_rows, ' final_nbr_ta_rows: ', final_nbr_ta_rows);
+         //}
       } // end resize()
    }; // end autoResizeTextAreaQ()
 })(jQuery);

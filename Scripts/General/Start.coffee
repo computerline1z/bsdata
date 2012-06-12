@@ -1,9 +1,14 @@
-﻿jsResData={};@My={}
+﻿jsResData={};@My=execByName:(fnName, context)->
+	args = Array.prototype.slice.call(arguments).splice(2)
+	namespaces = fnName.split(".")
+	func = namespaces.pop(); i=0
+	while i<namespaces.length
+		context=context[namespaces[i]];i++
+	context[func].apply(@, args);
 Index=0 ##Cia jsResData indeksas jei tam paciam meniu reiks isimint ne viena langa langu
 Controller=$('#header div.subHeader a.highlight').data('controller')
 Action=""
 ##@MyProxy={In:{},Out:{},Active:false}
-
 $ ->
 	Start()
 	$('#side-bar li>a').first().trigger('click');
@@ -44,7 +49,6 @@ CallServer=(url,Par,el=$('#main-copy')) -> ##ServerPath,Ar renderint i ta pati d
 			el.parent().unblock()
 			false
 	)
-
 fnSetNewData = (jsRes,el=$('#main-copy')) ->
 	##obj = for objData, objVal of jsRes.Render
 	el.empty().html(jsRes.Render) if jsRes.Render
@@ -113,6 +117,30 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 	GetStringFromIndexes:(id,obj,Indexes) ->
 		Row=@GetRow(id,obj)
 		Row.MapArrToString(Indexes)
+	SetValToControls:(obj,id,Controls) ->##Pagal data("ctrl").Field sukisa reiksmes is objekto
+		Cols=oDATA.Get(obj).Cols
+		Row=@GetRow(id,obj)
+		Controls.each(->
+			t=$(@);ctrl=t.data("ctrl");F=ctrl.Field
+			i=oDATA.Get(obj).Cols.FNameIndex(F)
+			##col=oDATA.Get(obj).Cols[i];
+			ctrl.Value=Row[i]##pakeiciam, kad nepagalvotu, kad pakeista verte
+			if ctrl.ListType
+				if ctrl.Type=="List"
+					row=oDATA.GetRow(ctrl.Value, ctrl.Source)##isrenkam duomenis is Listo sourco
+					t.data("newval",row[ctrl.iVal])
+					t.val(row.MapArrToString(ctrl.iText))
+				else
+					t.val(Row[i])
+				t.removeClass("inputTip")
+			else
+				t.val(Row[i])##if t.is("textarea")
+		)
+	SetNewForm:(frm) ->
+		$.extend(frm.data("ctrl"),{NewRec:1,id:0})
+		frm.find("div.ExtendIt").find("input, textarea").each(->
+			$(@).val("").data("ctrl").Value="";
+		)
 	UpdateCell:(obj,tblToUpdate,id,field,NewVal) ->
 		ColNo=if (typeof(field)=="number") then field else oDATA.Get(obj).Cols.FNameIndex(field)
 		alert("Updatinimui reikalingas lauko pavadinimas") if (typeof(field)=="number" and tblToUpdate)

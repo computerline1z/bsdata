@@ -91,6 +91,7 @@ namespace ClaimsControl.Controllers {
                return View(model);
             }
             MembershipUser aUser = Membership.GetUser(currentUserName);
+            string k = aUser.UserName + " " + model.Email + " " + aUser.ProviderUserKey;
 
             SendPasswordChangedMail(aUser.UserName, model.Email, (Guid)aUser.ProviderUserKey);
             ModelState.AddModelError("", "Laiškas iškeliavo!");
@@ -104,8 +105,9 @@ namespace ClaimsControl.Controllers {
          var x = this.HttpContext.Request;// UserData.UserName
          RegisterModel model = new RegisterModel();
          string url = x.Url.Scheme + @"://" + x.Url.Authority + "/Account/NewPassword/" + UserId.ToString();
-         string messageBody = MailHelper.BuildMailMessage(this.HttpContext, "lt", "ConfirmRegistration", url, userName, email);
-         //MailHelper.SendMailMessage(email, String.Empty, String.Empty, "Registracija 'BSData' sistemoje", messageBody);
+         string messageBody="";
+         messageBody = MailHelper.BuildMailMessage(this.HttpContext, "lt", "ConfirmRegistration", url, userName, email);
+          //MailHelper.SendMailMessage(email, String.Empty, String.Empty, "Registracija 'BSData' sistemoje", messageBody);
          MailHelper.SendMailMessage(email, String.Empty, String.Empty, "Slaptažodio keitimas informacijos valdymo sistemoje", messageBody);
       }
 

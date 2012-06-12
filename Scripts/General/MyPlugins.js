@@ -164,7 +164,7 @@ oCONTROLS.UploadDialog=function(options,ToDialog) {
          tblUpdate: opt.tblUpdate
       },
       file_post_name: 'uploadfile',
-      file_size_limit: "10 MB",
+      file_size_limit: "102400",//100MB
       //file_types: "*.jpg;*.png;*.gif",
       //file_types_description: "Image files",
       file_upload_limit: 0,
